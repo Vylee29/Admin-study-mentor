@@ -4,7 +4,7 @@ import ChatPage from '../pages/chat/ChatPage';
 import DashboardPage from '../pages/dashboard/DashboardPage';
 import DetailedInfoDemoPage from '../pages/detailed-info/DetailedInfoDemo';
 import { HomePage } from '../pages/home/HomePage';
-import MentorPage from '../pages/mentor/MentorPage';
+import { MentorPage } from '../pages/mentor/MentorPage';
 import { NotFoundPage } from '../pages/not-found-page/NotFoundPage';
 import ReportPage from '../pages/report/ReportPage';
 import { StudentPage } from '../pages/student/StudentPage';
