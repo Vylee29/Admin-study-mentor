@@ -2,6 +2,7 @@ import { createBrowserRouter } from 'react-router-dom';
 import Layout from '../components/global/layout/Layout';
 import ChatPage from '../pages/chat/ChatPage';
 import DashboardPage from '../pages/dashboard/DashboardPage';
+import DetailedInfoDemoPage from '../pages/detailed-info/DetailedInfoDemo';
 import { HomePage } from '../pages/home/HomePage';
 import MentorPage from '../pages/mentor/MentorPage';
 import { NotFoundPage } from '../pages/not-found-page/NotFoundPage';
@@ -34,6 +35,10 @@ export const router = createBrowserRouter([
       {
         path: MY_ROUTE.CHAT,
         element: <ChatPage />,
+      },
+      {
+        path: MY_ROUTE.DETAILED_INFO,
+        element: <DetailedInfoDemoPage />,
       },
     ],
   },
