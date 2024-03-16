@@ -41,6 +41,11 @@ export default function Layout() {
       icon: <FileTextOutlined />,
       label: 'Report',
     },
+    {
+      key: 'detailed-info',
+      icon: <FileTextOutlined />,
+      label: 'Detailed Infor Demo',
+    },
   ];
 
   const navigate = useNavigate();
