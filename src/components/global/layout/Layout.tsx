@@ -41,6 +41,11 @@ export default function Layout() {
       icon: <FileTextOutlined />,
       label: 'Report',
     },
+    {
+      key: 'detailed-info',
+      icon: <FileTextOutlined />,
+      label: 'Detailed Infor Demo',
+    },
   ];
 
   const navigate = useNavigate();
@@ -56,7 +61,7 @@ export default function Layout() {
   };
 
   return (
-    <LayoutAntDesign className='bg-white min-h-screen'>
+    <LayoutAntDesign className='bg-white max-h-screen'>
       <Sider
         breakpoint='lg'
         collapsedWidth='0'
@@ -82,12 +87,12 @@ export default function Layout() {
       </Sider>
       <LayoutAntDesign className={`bg-white duration-500 ease-in-out ' `}>
         <Header />
-        <Content className='m-auto transition w-full p-6'>
+        <Content
+          className='m-auto transition w-full p-6 bg-white-900'
+          style={{ overflowY: 'auto', maxHeight: 'calc(100vh - 64px - 69px)' }}
+        >
           <Outlet />
         </Content>
-        <Footer style={{ textAlign: 'center' }}>
-          Ant Design ©{new Date().getFullYear()} Created by Ant UED
-        </Footer>
       </LayoutAntDesign>
     </LayoutAntDesign>
   );
