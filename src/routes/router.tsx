@@ -6,7 +6,7 @@ import { HomePage } from '../pages/home/HomePage';
 import MentorPage from '../pages/mentor/MentorPage';
 import { NotFoundPage } from '../pages/not-found-page/NotFoundPage';
 import ReportPage from '../pages/report/ReportPage';
-import StudentPage from '../pages/student/StudentPage';
+import { StudentPage } from '../pages/student/StudentPage';
 import { MY_ROUTE } from './route.constant';
 
 export const router = createBrowserRouter([
