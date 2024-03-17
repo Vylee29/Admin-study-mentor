@@ -1,22 +1,22 @@
-// import { FilterQuestionType, filterQuestionOptions } from '@core/enums/filter-question-type.enum';
 import { FilterOutlined, SearchOutlined, SortAscendingOutlined } from '@ant-design/icons';
 import { Table } from 'antd';
 import { CustomTextInput } from '../../components/ui/form/CustomTextInput';
 import { columns, mockData } from './components/columns';
 
-export type StudentTable = {
+export type MentorTable = {
   key: string;
   image: string;
   name: string;
   email: string;
-  used: boolean;
+  status: boolean;
+  major: string;
 };
 
-export function StudentPage() {
+export function MentorsPage() {
   return (
     <div>
-      <span className='text-[24px] font-bold text-black-800'>Student</span>
-      <div className='text-[16px] text-gray-500'>120 results found</div>
+      <span className='text-[24px] font-bold text-black-800'>Mentor</span>
+      <div className='text-[16px] text-gray-500 pb-6'>120 results found</div>
       <div className='flex justify-between w-full'>
         <CustomTextInput
           placeholder='Search'

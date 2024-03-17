@@ -1,5 +1,5 @@
-function ReportPage() {
+function ReportsPage() {
   return <div className='w-full'>Report page</div>;
 }
 
-export default ReportPage;
+export default ReportsPage;

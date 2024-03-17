@@ -2,6 +2,7 @@ import {
   CommentOutlined,
   DashboardOutlined,
   FileTextOutlined,
+  GiftOutlined,
   TeamOutlined,
   UserOutlined,
 } from '@ant-design/icons';
@@ -22,14 +23,14 @@ export default function Layout() {
       label: 'Dashboard',
     },
     {
-      key: 'student',
+      key: 'students',
       icon: <UserOutlined />,
-      label: 'Student',
+      label: 'Students',
     },
     {
-      key: 'mentor',
+      key: 'mentors',
       icon: <TeamOutlined />,
-      label: 'Mentor',
+      label: 'Mentors',
     },
     {
       key: 'chat',
@@ -37,9 +38,14 @@ export default function Layout() {
       label: 'Chat',
     },
     {
-      key: 'report',
+      key: 'reports',
       icon: <FileTextOutlined />,
-      label: 'Report',
+      label: 'Reports',
+    },
+    {
+      key: 'vouchers',
+      icon: <GiftOutlined />,
+      label: 'Vouchers',
     },
     {
       key: 'detailed-info',
@@ -61,7 +67,7 @@ export default function Layout() {
   };
 
   return (
-    <LayoutAntDesign className='bg-white max-h-screen'>
+    <LayoutAntDesign className='bg-white h-screen'>
       <Sider
         breakpoint='lg'
         collapsedWidth='0'
