@@ -9,6 +9,7 @@ import { NotFoundPage } from '../pages/not-found-page/NotFoundPage';
 import ReportPage from '../pages/report/ReportPage';
 import { StudentPage } from '../pages/student/StudentPage';
 import { MY_ROUTE } from './route.constant';
+import { VoucherPage } from '../pages/voucher/VoucherPage';
 
 export const router = createBrowserRouter([
   {
@@ -29,8 +30,12 @@ export const router = createBrowserRouter([
         element: <MentorPage />,
       },
       {
-        path: MY_ROUTE.REPORT,
-        element: <ReportPage />,
+        path: MY_ROUTE.MENTOR,
+        element: <MentorPage />,
+      },
+      {
+        path: MY_ROUTE.VOUCHER,
+        element: <VoucherPage />,
       },
       {
         path: MY_ROUTE.CHAT,

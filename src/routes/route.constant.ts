@@ -5,6 +5,7 @@ export const MY_ROUTE = {
   MENTOR: '/mentor',
   REPORT: '/report',
   CHAT: '/chat',
+  VOUCHER: '/voucher',
   DETAILED_INFO: '/detailed-info',
 };
 
