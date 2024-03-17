@@ -1,7 +1,7 @@
 import { QuestionModel } from './question.model';
 
 export type TextModel = {
-  chatId: string;
+  textId: string;
   userId: string;
   value: string;
   createdAt: string;
@@ -9,7 +9,7 @@ export type TextModel = {
 };
 
 export type UserChatModel = {
-  chatId: string;
+  roomId: string;
   contactId: string;
   userId: string;
   isOnline: boolean;

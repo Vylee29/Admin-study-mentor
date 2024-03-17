@@ -17,7 +17,7 @@ function ChatItem({
     <div
       className={clsx(
         'w-full flex items-center justify-between cursor-pointer hover:bg-blue-100 p-4 rounded-lg',
-        { 'bg-gray-300 hover:bg-gray-300': activeId === chatItem.chatId },
+        { 'bg-blue-300 hover:bg-blue-300': activeId === chatItem.chatId },
       )}
       onClick={() => onClick(chatItem.chatId)}
     >
@@ -37,7 +37,11 @@ function ChatItem({
         </div>
       </div>
       <div className='flex flex-col items-end gap-2 max-w-full'>
-        <div className='font-light text-gray-450 truncate'>
+        <div
+          className={clsx('font-light text-gray-450 truncate', {
+            'text-white-900': activeId === chatItem.chatId,
+          })}
+        >
           {format(
             chatItem.userReply.chats[chatItem.userReply.chats.length - 1].createdAt,
             DATE_FORMAT,
