@@ -1,10 +1,9 @@
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import { Avatar, Image } from 'antd';
 import { ColumnsType } from 'antd/es/table';
-import { Link } from 'react-router-dom';
-import { MentorTable } from '../MentorPage';
+import { StudentTable } from '../StudentsPage';
 
-export const columns: ColumnsType<MentorTable> = [
+export const columns: ColumnsType<StudentTable> = [
   {
     title: 'Name',
     dataIndex: 'name',
@@ -28,27 +27,14 @@ export const columns: ColumnsType<MentorTable> = [
     render: (value) => <div className='flex flex-col text-sm font-normal'>{value}</div>,
   },
   {
-    title: 'Status',
-    dataIndex: 'status',
+    title: 'Used Service',
+    dataIndex: 'used',
     render: (value) =>
       value ? (
-        <div className='text-[#0064FF]'>Free</div>
+        <div className='text-[#0064FF]'>Yes</div>
       ) : (
-        <div className='text-green-700'>Paid</div>
+        <div className='text-[#F63F3F]'>Not yet</div>
       ),
-  },
-  {
-    title: 'Qualification',
-    render: () => (
-      <Link to='/mentor/qualification' className='text-[#0064FF] underline'>
-        Download File
-      </Link>
-    ),
-  },
-  {
-    title: 'Major',
-    dataIndex: 'major',
-    render: (value) => <div className='text-[#0064FF]'>{value}</div>,
   },
   {
     render: () => (
@@ -60,29 +46,26 @@ export const columns: ColumnsType<MentorTable> = [
   },
 ];
 
-export const mockData: MentorTable[] = [
+export const mockData: StudentTable[] = [
   {
     key: '1',
     image: 'https://via.placeholder.com/150',
     name: 'Mark Wilson',
     email: 'mark@simmmple.com',
-    status: true,
-    major: 'IT',
+    used: true,
   },
   {
     key: '2',
     image: 'https://via.placeholder.com/150',
     name: 'Mark Wilson',
     email: 'mark@simmmple.com',
-    status: false,
-    major: 'IT',
+    used: false,
   },
   {
     key: '3',
     image: 'https://via.placeholder.com/150',
     name: 'Mark Wilson',
     email: 'mark@simmmple.com',
-    status: true,
-    major: 'IT',
+    used: true,
   },
 ];
