@@ -30,10 +30,9 @@ export const router = createBrowserRouter([
         element: <MentorsPage />,
       },
       {
-        path: MY_ROUTE.VOUCHERS,
-        element: <VouchersPage />,
+        path: MY_ROUTE.REPORTS,
+        element: <ReportsPage />,
       },
-      { path: MY_ROUTE.REPORTS, element: <ReportsPage /> },
       {
         path: MY_ROUTE.CHAT,
         element: <ChatPage />,
