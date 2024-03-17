@@ -6,7 +6,7 @@ import DetailedInfoDemoPage from '../pages/detailed-info/DetailedInfoDemo';
 import { HomePage } from '../pages/home/HomePage';
 import { MentorsPage } from '../pages/mentors/MentorsPage';
 import { NotFoundPage } from '../pages/not-found-page/NotFoundPage';
-import ReportsPage from '../pages/reports/ReportsPage';
+import { ReportsPage } from '../pages/reports/ReportsPage';
 import { StudentsPage } from '../pages/students/StudentsPage';
 import { VouchersPage } from '../pages/vouchers/VouchersPage';
 import { MY_ROUTE } from './route.constant';
