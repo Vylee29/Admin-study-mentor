@@ -1,6 +1,6 @@
 const Header = () => {
   return (
-    <header className='border-b-[1px] border-solid border-b-gray-700 p-10 flex items-center'>
+    <header className='border-b-[1px] border-solid border-b-gray-700 border-l-0 border-t-0 border-r-0 p-10 flex items-center'>
       <div className='font-light text-2xl text-center self-center m-auto'>
         Welcome back, <span className='font-medium text-4xl'>Admin</span>
       </div>
