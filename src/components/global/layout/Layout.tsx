@@ -7,8 +7,8 @@ import {
   UserOutlined,
 } from '@ant-design/icons';
 import { Layout as LayoutAntDesign, Menu } from 'antd';
-import { useState } from 'react';
-import { Outlet, useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { DEFAULT_TAB_ITEM_VALUE } from '../../../+core/constants/commons.constant';
 import Logo from '../../ui/logo/Logo';
 import Header from '../Header/Header';
@@ -55,7 +55,8 @@ export default function Layout() {
   ];
 
   const navigate = useNavigate();
-  const [selected, setSelected] = useState<string>(DEFAULT_TAB_ITEM_VALUE);
+  const location = useLocation();
+  const [selected, setSelected] = useState<string>();
   const handleClickMenuItem = (e: any) => {
     navigate(e.key);
     setSelected(e.key);
@@ -65,6 +66,15 @@ export default function Layout() {
     navigate('/');
     setSelected(DEFAULT_TAB_ITEM_VALUE);
   };
+
+  useEffect(() => {
+    const firstPart = location.pathname.split('/')[1];
+    const menuItem = menuList.find((item) => item.key === firstPart);
+
+    if (menuItem) {
+      setSelected(menuItem.key);
+    } else setSelected(DEFAULT_TAB_ITEM_VALUE);
+  }, []);
 
   return (
     <LayoutAntDesign className='bg-white h-screen'>
@@ -85,7 +95,7 @@ export default function Layout() {
             className='mt-10 !bg-blue-500'
             theme='dark'
             mode='inline'
-            selectedKeys={[selected]}
+            selectedKeys={[selected || DEFAULT_TAB_ITEM_VALUE]}
             items={menuList}
             onClick={handleClickMenuItem}
           />
