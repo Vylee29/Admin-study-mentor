@@ -8,7 +8,7 @@ import { MentorsPage } from '../pages/mentors/MentorsPage';
 import { NotFoundPage } from '../pages/not-found-page/NotFoundPage';
 import ReportsPage from '../pages/reports/ReportsPage';
 import { StudentsPage } from '../pages/students/StudentsPage';
-import VouchersPage from '../pages/vouchers/VouchersPage';
+import { VouchersPage } from '../pages/vouchers/VouchersPage';
 import { MY_ROUTE } from './route.constant';
 
 export const router = createBrowserRouter([
