@@ -1,6 +1,6 @@
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import { ColumnsType } from 'antd/es/table';
-import { VoucherTable } from '../VoucherPage';
+import { VoucherTable } from '../VouchersPage';
 
 export const columns: ColumnsType<VoucherTable> = [
   {

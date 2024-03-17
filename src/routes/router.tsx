@@ -4,12 +4,12 @@ import ChatPage from '../pages/chat/ChatPage';
 import DashboardPage from '../pages/dashboard/DashboardPage';
 import DetailedInfoDemoPage from '../pages/detailed-info/DetailedInfoDemo';
 import { HomePage } from '../pages/home/HomePage';
-import { MentorPage } from '../pages/mentor/MentorPage';
+import { MentorsPage } from '../pages/mentors/MentorsPage';
 import { NotFoundPage } from '../pages/not-found-page/NotFoundPage';
-import ReportPage from '../pages/report/ReportPage';
-import { StudentPage } from '../pages/student/StudentPage';
+import ReportsPage from '../pages/reports/ReportsPage';
+import { StudentsPage } from '../pages/students/StudentsPage';
+import { VouchersPage } from '../pages/vouchers/VouchersPage';
 import { MY_ROUTE } from './route.constant';
-import { VoucherPage } from '../pages/voucher/VoucherPage';
 
 export const router = createBrowserRouter([
   {
@@ -22,21 +22,18 @@ export const router = createBrowserRouter([
         element: <DashboardPage />,
       },
       {
-        path: MY_ROUTE.STUDENT,
-        element: <StudentPage />,
+        path: MY_ROUTE.STUDENTS,
+        element: <StudentsPage />,
       },
       {
-        path: MY_ROUTE.MENTOR,
-        element: <MentorPage />,
+        path: MY_ROUTE.MENTORS,
+        element: <MentorsPage />,
       },
       {
-        path: MY_ROUTE.MENTOR,
-        element: <MentorPage />,
+        path: MY_ROUTE.VOUCHERS,
+        element: <VouchersPage />,
       },
-      {
-        path: MY_ROUTE.VOUCHER,
-        element: <VoucherPage />,
-      },
+      { path: MY_ROUTE.REPORTS, element: <ReportsPage /> },
       {
         path: MY_ROUTE.CHAT,
         element: <ChatPage />,
@@ -44,6 +41,10 @@ export const router = createBrowserRouter([
       {
         path: MY_ROUTE.DETAILED_INFO,
         element: <DetailedInfoDemoPage />,
+      },
+      {
+        path: MY_ROUTE.VOUCHERS,
+        element: <VouchersPage />,
       },
     ],
   },
