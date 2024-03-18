@@ -23,4 +23,5 @@ export type RoomModel = {
   chatId: string;
   userChat: UserChatModel;
   userReply: UserChatModel;
+  idOfUserCreateChat: string;
 };

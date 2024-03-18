@@ -6,7 +6,7 @@ import AttachmentIcon from '../../../../assets/icons/attachment';
 import ThreeDotIcon from '../../../../assets/icons/three-dot';
 import Question from '../../../../pages/chat/components/Question';
 
-function ChatArea({ chatArea, currentUserId }: { chatArea?: RoomModel; currentUserId: string }) {
+function ChatArea({ chatArea }: { chatArea?: RoomModel }) {
   const [chats, setChats] = useState<TextModel[]>([]);
   const [currentUser, setCurrentUser] = useState<UserChatModel>();
   const [userReply, setUserReply] = useState<UserChatModel>();
@@ -14,11 +14,15 @@ function ChatArea({ chatArea, currentUserId }: { chatArea?: RoomModel; currentUs
   const chatContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    setCurrentUser(
-      chatArea?.userChat?.userId === currentUserId ? chatArea.userChat : chatArea?.userReply,
-    );
     setUserReply(
-      chatArea?.userChat.userId === currentUserId ? chatArea?.userReply : chatArea?.userChat,
+      chatArea?.userReply.userId === chatArea?.idOfUserCreateChat
+        ? chatArea?.userReply
+        : chatArea?.userChat,
+    );
+    setCurrentUser(
+      chatArea?.userChat?.userId === chatArea?.idOfUserCreateChat
+        ? chatArea?.userReply
+        : chatArea?.userChat,
     );
   }, [chatArea?.chatId]);
 
@@ -101,18 +105,24 @@ function ChatArea({ chatArea, currentUserId }: { chatArea?: RoomModel; currentUs
           <div className='mt-8 h-[400px] overflow-y-scroll pb-5' ref={chatContainerRef}>
             {chats &&
               chats.length > 0 &&
-              chats.map((chat: TextModel, index: number) => {
-                return chat.userId !== currentUserId ? (
-                  <div
-                    key={chat.textId}
-                    className='text-left p-4 rounded-lg bg-gray-550 max-w-[400px] w-fit mt-4'
-                  >
-                    {chat.value}
+              chats.map((chat: TextModel) => {
+                return chat.userId === chatArea.idOfUserCreateChat ? (
+                  <div className='mt-4 flex items-end gap-2' key={chat.textId}>
+                    <div className='w-6 h-6 rounded-full'>
+                      <img
+                        src={userReply.avatar}
+                        alt='Avatar'
+                        className='w-full h-full rounded-full'
+                      />
+                    </div>
+                    <div className='text-left p-4 rounded-2xl bg-gray-550 max-w-[400px] w-fit'>
+                      {chat.value}
+                    </div>
                   </div>
                 ) : (
                   <div
                     key={chat.textId}
-                    className='text-right p-4 rounded-lg bg-blue-400 text-white-900 max-w-[400px] w-fit ml-auto my-0 mr-0 mt-4'
+                    className='mt-4 text-right p-4 rounded-2xl bg-blue-400 text-white-900 max-w-[400px] w-fit ml-auto my-0 mr-0 mt-4'
                   >
                     {chat.value}
                   </div>
