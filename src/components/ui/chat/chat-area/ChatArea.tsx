@@ -2,6 +2,7 @@ import { SendOutlined } from '@ant-design/icons';
 import { Button, Input } from 'antd';
 import { KeyboardEvent, useEffect, useRef, useState } from 'react';
 import { RoomModel, TextModel, UserChatModel } from '../../../../+core/models/chat.model';
+import AttachmentIcon from '../../../../assets/icons/attachment';
 import ThreeDotIcon from '../../../../assets/icons/three-dot';
 import Question from '../../../../pages/chat/components/Question';
 
@@ -29,17 +30,23 @@ function ChatArea({ chatArea, currentUserId }: { chatArea?: RoomModel; currentUs
     setInputValue(e.target.value);
   };
 
-  const handleEnterInput = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter' && currentUser && userReply) {
+  const handleSendMessage = () => {
+    if (currentUser && userReply) {
       const newChat: TextModel = {
         textId: (Math.random() * (999 - 1) + 1).toString(),
-        userId: currentUser.userId,
+        userId: currentUser?.userId,
         value: inputValue,
         createdAt: new Date().toString(),
         textReplyId: userReply?.userId,
       };
       chats && setChats([...chats, newChat]);
       setInputValue('');
+    }
+  };
+
+  const handleEnterInput = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter' && currentUser && userReply) {
+      handleSendMessage();
     }
   };
 
@@ -112,13 +119,15 @@ function ChatArea({ chatArea, currentUserId }: { chatArea?: RoomModel; currentUs
                 );
               })}
           </div>
-          <div className='absolute bottom-0 left-0 right-0 mt-5'>
+          <div className='absolute bottom-0 left-0 right-0 mt-8'>
             <Input
-              addonAfter={<SendOutlined className='cursor-pointer' />}
+              addonAfter={<SendOutlined className='cursor-pointer' onClick={handleSendMessage} />}
+              addonBefore={<AttachmentIcon color='#333333' className='h-4 w-4 cursor-pointer' />}
               placeholder='Send something ...'
               onChange={handleInputChange}
               onKeyDown={handleEnterInput}
               value={inputValue}
+              size='large'
             />
           </div>
         </div>
