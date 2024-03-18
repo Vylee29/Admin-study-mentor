@@ -26,7 +26,11 @@ function ChatItem({
           <img
             alt='Avatar'
             className='w-full h-full object-cover rounded-full'
-            src={chatItem.userReply.avatar}
+            src={
+              chatItem.userReply.userId === chatItem.idOfUserCreateChat
+                ? chatItem.userReply.avatar
+                : chatItem.userChat.avatar
+            }
           />
         </div>
         <div>

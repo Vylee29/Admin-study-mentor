@@ -21,7 +21,7 @@ function ChatPage() {
   };
   const chatExample1 = {
     textId: 'textId1',
-    userId: 'userId',
+    userId: 'string',
     value: 'Xin Chao Cac Ban Xin Chao Cac Ban Xin Chao Cac Ban Xin Chao Cac Ban',
     createdAt: new Date().toString(),
     textReplyId: 'string1',
@@ -60,49 +60,55 @@ function ChatPage() {
       chatId: '1',
       userChat: userForChat1,
       userReply: userForChat2,
+      idOfUserCreateChat: 'string',
     },
     {
       chatId: '2',
       userChat: userForChat1,
       userReply: userForChat2,
+      idOfUserCreateChat: 'currentUser',
     },
     {
       chatId: '3',
       userChat: userForChat1,
       userReply: userForChat2,
+      idOfUserCreateChat: 'string',
     },
     {
       chatId: '4',
       userChat: userForChat1,
       userReply: userForChat2,
+      idOfUserCreateChat: 'string',
     },
     {
       chatId: '5',
       userChat: userForChat1,
       userReply: userForChat2,
+      idOfUserCreateChat: 'string',
     },
     {
       chatId: '6',
       userChat: userForChat1,
       userReply: userForChat2,
+      idOfUserCreateChat: 'string',
     },
     {
       chatId: '7',
       userChat: userForChat1,
       userReply: userForChat2,
+      idOfUserCreateChat: 'string',
     },
     {
       chatId: '8',
       userChat: userForChat1,
       userReply: userForChat2,
+      idOfUserCreateChat: 'string',
     },
   ];
   const [activeStudent, setActiveStudent] = useState<RoomModel>();
   const [activeMentor, setActiveMentor] = useState<RoomModel>();
   const [chatArea, setChatArea] = useState<RoomModel>();
   const [selectedTab, setSelectedTab] = useState<string>(STUDENTS);
-
-  const userId = 'currentUser'; // fake data
 
   const handleClickStudentChatItem = (id: string) => {
     const student = chatList.find((chat) => chat.chatId === id);
@@ -160,7 +166,7 @@ function ChatPage() {
         />
       </div>
       <div className='w-[70%] bg-gray-100 rounded-xl shadow-md p-5'>
-        <ChatArea chatArea={chatArea} currentUserId={userId} />
+        <ChatArea chatArea={chatArea} />
       </div>
     </div>
   );

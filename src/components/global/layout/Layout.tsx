@@ -81,12 +81,6 @@ export default function Layout() {
       <Sider
         breakpoint='lg'
         collapsedWidth='0'
-        onBreakpoint={(broken) => {
-          console.log(broken);
-        }}
-        onCollapse={(collapsed, type) => {
-          console.log(collapsed, type);
-        }}
         className='!w-[280px] !max-w-[250px] !min-w-[280px] !bg-blue-500 !px-5'
       >
         <div className='flex flex-col w-full'>
