@@ -1,19 +1,21 @@
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import { Avatar, Image } from 'antd';
 import { ColumnsType } from 'antd/es/table';
-import { StudentTable } from '../StudentsPage';
+import {StudentTable} from  '../../../+core/models/student.model';
+import {Colors} from '../../../+core/enums/colors.enum';
 
 export const columns: ColumnsType<StudentTable> = [
   {
     title: 'Name',
-    dataIndex: 'name',
+    dataIndex: 'fullName',
     render: (value, record) => {
       return (
         <div className='flex items-center gap-4'>
           <div className='w-[44px] h-[44px]'>
             <Avatar
               size={44}
-              icon={<Image alt={'image of question'} loading='lazy' src={record.image} />}
+              key={record.avatar?.fileKey}
+              icon={<Image alt={'image of question'} loading='lazy' src={record.avatar?.fileName} />}
             />
           </div>
           <span className='text-sm font-bold text-black-800'>{value}</span>
@@ -27,14 +29,25 @@ export const columns: ColumnsType<StudentTable> = [
     render: (value) => <div className='flex flex-col text-sm font-normal'>{value}</div>,
   },
   {
-    title: 'Used Service',
-    dataIndex: 'used',
+    title: 'Status',
+    dataIndex: 'status',
     render: (value) =>
-      value ? (
-        <div className='text-[#0064FF]'>Yes</div>
+      value == 0 ? (
+        <div className='text-[#28A745]'>Active</div>
       ) : (
-        <div className='text-[#F63F3F]'>Not yet</div>
+        <div className='text-[#F63F3F]'>Inactive</div>
       ),
+  },
+  {
+    title: 'Role',
+    dataIndex: 'role',
+    render: (value) => 
+     value == 0 ? (
+      <div className='flex flex-col text-sm font-normal'>Student</div>
+      ) : (
+        <div className='flex flex-col text-sm font-normal'>Tutor</div>
+      ),
+  
   },
   {
     render: () => (
@@ -43,29 +56,5 @@ export const columns: ColumnsType<StudentTable> = [
         <DeleteOutlined />
       </div>
     ),
-  },
-];
-
-export const mockData: StudentTable[] = [
-  {
-    key: '1',
-    image: 'https://via.placeholder.com/150',
-    name: 'Mark Wilson',
-    email: 'mark@simmmple.com',
-    used: true,
-  },
-  {
-    key: '2',
-    image: 'https://via.placeholder.com/150',
-    name: 'Mark Wilson',
-    email: 'mark@simmmple.com',
-    used: false,
-  },
-  {
-    key: '3',
-    image: 'https://via.placeholder.com/150',
-    name: 'Mark Wilson',
-    email: 'mark@simmmple.com',
-    used: true,
   },
 ];

@@ -2,21 +2,38 @@
 import { FilterOutlined, SearchOutlined, SortAscendingOutlined } from '@ant-design/icons';
 import { Table } from 'antd';
 import { CustomTextInput } from '../../components/ui/form/CustomTextInput';
-import { columns, mockData } from './components/columns';
+import { columns } from './components/columns';
+import React, {useEffect, useState} from 'react';
+import axios from 'axios';
+import {StudentModel} from  '../../+core/models/student.model';
 
-export type StudentTable = {
-  key: string;
-  image: string;
-  name: string;
-  email: string;
-  used: boolean;
-};
 
 export function StudentsPage() {
+ const [students, setStudents] = useState<StudentModel[]>([]);
+ const [error, setError] = useState<string | null>(null);
+ const [token, setToken] = useState<string | null>(localStorage.getItem('token'));
+
+ useEffect(() => {
+  axios.get('http://localhost:3000/api/admin/students',{
+    headers: {
+          Authorization: `Bearer ${token}`,
+        },
+  }).then((res) => {
+    if (Array.isArray(res.data.data)) {
+      setStudents(res.data.data);
+    } else {
+      throw new Error('Invalid data format');
+    }
+  })
+  .catch(error => {
+    setError(error.message);
+  });
+  }, [token]);
+
   return (
     <div>
       <span className='text-[24px] font-bold text-black-800'>Student</span>
-      <div className='text-[16px] text-gray-500'>120 results found</div>
+      <div className='text-[16px] text-gray-500 pb-6'>{students.length} results found</div>
       <div className='flex justify-between w-full'>
         <CustomTextInput
           placeholder='Search'
@@ -31,14 +48,14 @@ export function StudentsPage() {
       <div className='flex flex-col gap-8 p-8 rounded-md bg-white-900'>
         <Table
           columns={columns}
-          dataSource={mockData}
-          //centered pagination
+          dataSource={students}
+          rowKey={(students) => students.id}
           pagination={{
             position: ['bottomCenter'],
             showSizeChanger: false,
             pageSize: 5,
             size: 'small',
-            total: 50,
+            total: students.length,
             // showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} items`,
           }}
         />
