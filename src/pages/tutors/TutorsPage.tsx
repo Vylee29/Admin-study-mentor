@@ -35,7 +35,7 @@ export function TutorsPage() {
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(event.target.value);
   }
-
+console.log(tutors)
   return (
     <div>
       <span className='text-[24px] font-bold text-black-800'>Tutor</span>

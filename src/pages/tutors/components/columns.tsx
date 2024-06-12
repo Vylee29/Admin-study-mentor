@@ -52,11 +52,12 @@ export const columns: ColumnsType<TutorTable> = [
   },
   {
     title: 'Certificate',
-    render: (value: IFileAttachment[] = []) => (
+    dataIndex: 'certificate',
+    render: (value: IFileAttachment[]) => (
       <div className='flex flex-col text-sm font-normal'>
         {Array.isArray(value) && value.length > 0 ? (
           value.map((item, index) => (
-            <Link key={index} to={`/mentor/qualification/${item.fileKey}`} className='text-[#0064FF] underline'>
+            <Link key={index} to={`${item.fileKey}`} className='text-[#0064FF] underline'>
               {item.fileName}
             </Link>
           ))
