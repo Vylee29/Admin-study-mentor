@@ -28,9 +28,9 @@ export default function Layout() {
       label: 'Students',
     },
     {
-      key: 'mentors',
+      key: 'tutors',
       icon: <TeamOutlined />,
-      label: 'Mentors',
+      label: 'Tutors',
     },
     {
       key: 'chat',
@@ -77,7 +77,7 @@ export default function Layout() {
   }, []);
 
   return (
-    <LayoutAntDesign className='bg-white h-screen'>
+    <LayoutAntDesign className='h-screen bg-white'>
       <Sider
         breakpoint='lg'
         collapsedWidth='0'
@@ -98,7 +98,7 @@ export default function Layout() {
       <LayoutAntDesign className={`bg-white duration-500 ease-in-out ' `}>
         <Header />
         <Content
-          className='m-auto transition w-full p-6 bg-white-900'
+          className='w-full p-6 m-auto transition bg-white-900'
           style={{ overflowY: 'auto', maxHeight: 'calc(100vh - 64px - 69px)' }}
         >
           <Outlet />
