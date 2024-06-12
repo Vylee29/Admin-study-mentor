@@ -12,11 +12,15 @@ export function StudentsPage() {
  const [students, setStudents] = useState<StudentModel[]>([]);
  const [error, setError] = useState<string | null>(null);
  const [token, setToken] = useState<string | null>(localStorage.getItem('token'));
+ const [search, setSearch] = useState<string>('');
 
  useEffect(() => {
   axios.get('http://localhost:3000/api/admin/students',{
     headers: {
           Authorization: `Bearer ${token}`,
+        },
+        params: {
+          search: search,
         },
   }).then((res) => {
     if (Array.isArray(res.data.data)) {
@@ -28,7 +32,11 @@ export function StudentsPage() {
   .catch(error => {
     setError(error.message);
   });
-  }, [token]);
+  }, [token, search]);
+
+const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
+  setSearch(event.target.value);
+}
 
   return (
     <div>
@@ -39,6 +47,7 @@ export function StudentsPage() {
           placeholder='Search'
           prefix={<SearchOutlined />}
           classNameForm='w-3/5 mb-3'
+          onChange={handleSearch}
         />
         <div className='flex gap-5'>
           <FilterOutlined />

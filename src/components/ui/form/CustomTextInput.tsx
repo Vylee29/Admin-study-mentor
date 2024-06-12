@@ -13,6 +13,7 @@ export type CustomTextInputProps<T extends object> = {
   prefix?: React.ReactNode;
   label?: React.ReactNode;
   rules?: Rule[];
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
 export const CustomTextInput = <T extends object>({
@@ -27,13 +28,14 @@ export const CustomTextInput = <T extends object>({
   defaultValue,
   prefix,
   type = 'text',
+  onChange,
 }: CustomTextInputProps<T>) => {
   return (
     <Form.Item<T>
       name={name as any}
       rules={rules}
       labelCol={{ span: 24 }}
-      label={label && <label className='whitespace-normal w-full'>{label}</label>}
+      label={label && <label className='w-full whitespace-normal'>{label}</label>}
       wrapperCol={{ span: spanCol }}
       className={`${classNameForm} `}
     >
@@ -44,6 +46,7 @@ export const CustomTextInput = <T extends object>({
         type={type}
         className={`h-[39px] ${classNameInput}`}
         disabled={disabled}
+        onChange={onChange}
       />
     </Form.Item>
   );
