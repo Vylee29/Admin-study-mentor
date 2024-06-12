@@ -2,7 +2,7 @@ export const MY_ROUTE = {
   HOME: '',
   DASHBOARD: '/dashboard',
   STUDENTS: '/students',
-  MENTORS: '/mentors',
+  TUTORS: '/tutors',
   REPORTS: '/reports',
   CHAT: '/chat',
   DETAILED_INFO: '/detailed-info',
