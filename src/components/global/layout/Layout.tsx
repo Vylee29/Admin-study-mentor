@@ -10,6 +10,7 @@ import { Layout as LayoutAntDesign, Menu } from 'antd';
 import { useEffect, useState } from 'react';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { DEFAULT_TAB_ITEM_VALUE } from '../../../+core/constants/commons.constant';
+import { Providers } from '../../../+core/store/provider';
 import Logo from '../../ui/logo/Logo';
 import Header from '../Header/Header';
 
@@ -78,32 +79,34 @@ export default function Layout() {
 
   return (
     <LayoutAntDesign className='h-screen bg-white'>
-      <Sider
-        breakpoint='lg'
-        collapsedWidth='0'
-        className='!w-[280px] !max-w-[250px] !min-w-[280px] !bg-blue-500 !px-5'
-      >
-        <div className='flex flex-col w-full'>
-          <Logo title='Study Mentor' className='mt-5 ml-4' onClick={handleClickLogo} />
-          <Menu
-            className='mt-10 !bg-blue-500'
-            theme='dark'
-            mode='inline'
-            selectedKeys={[selected || DEFAULT_TAB_ITEM_VALUE]}
-            items={menuList}
-            onClick={handleClickMenuItem}
-          />
-        </div>
-      </Sider>
-      <LayoutAntDesign className={`bg-white duration-500 ease-in-out ' `}>
-        <Header />
-        <Content
-          className='w-full p-6 m-auto transition bg-white-900'
-          style={{ overflowY: 'auto', maxHeight: 'calc(100vh - 64px - 69px)' }}
+      <Providers>
+        <Sider
+          breakpoint='lg'
+          collapsedWidth='0'
+          className='!w-[280px] !max-w-[250px] !min-w-[280px] !bg-blue-500 !px-5'
         >
-          <Outlet />
-        </Content>
-      </LayoutAntDesign>
+          <div className='flex flex-col w-full'>
+            <Logo title='Study Mentor' className='mt-5 ml-4' onClick={handleClickLogo} />
+            <Menu
+              className='mt-10 !bg-blue-500'
+              theme='dark'
+              mode='inline'
+              selectedKeys={[selected || DEFAULT_TAB_ITEM_VALUE]}
+              items={menuList}
+              onClick={handleClickMenuItem}
+            />
+          </div>
+        </Sider>
+        <LayoutAntDesign className={`bg-white duration-500 ease-in-out ' `}>
+          <Header />
+          <Content
+            className='w-full p-6 m-auto transition bg-white-900'
+            style={{ overflowY: 'auto', maxHeight: 'calc(100vh - 64px - 69px)' }}
+          >
+            <Outlet />
+          </Content>
+        </LayoutAntDesign>
+      </Providers>
     </LayoutAntDesign>
   );
 }
