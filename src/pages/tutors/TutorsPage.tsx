@@ -1,70 +1,82 @@
+// import { FilterQuestionType, filterQuestionOptions } from '@core/enums/filter-question-type.enum';
 import { FilterOutlined, SearchOutlined, SortAscendingOutlined } from '@ant-design/icons';
+import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { Table } from 'antd';
+import { useMemo } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import { usePagingFilter } from '../../+core/hooks/usePagingFilter';
+import { StudentListFilter } from '../../+core/models/student.model';
+import { getTutorsListApi, tutorListKeys } from '../../+core/services/tutors.service';
+import { IPaginationInfo, initialPagingState } from '../../+core/types/paging.type';
 import { CustomTextInput } from '../../components/ui/form/CustomTextInput';
+import { PaginationCore } from '../../components/ui/pagination/pagination';
 import { columns } from './components/columns';
-import React, {useEffect, useState} from 'react';
-import axios from 'axios'; 
-import {TutorModel} from '../../+core/models/tutor.model';
 
 export function TutorsPage() {
-  const [tutors, setTutors] = useState<TutorModel[]>([]);
- const [error, setError] = useState<string | null>(null);
- const [token, setToken] = useState<string | null>(localStorage.getItem('token'));
- const [search, setSearch] = useState<string>('');
+  const [searchParams] = useSearchParams();
 
- useEffect(() => {
-  axios.get('http://localhost:3000/api/admin/tutors',{
-    headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        params: {
-          search: search,
-        },
-  }).then((res) => {
-    if (Array.isArray(res.data.data)) {
-      setTutors(res.data.data);
-    } else {
-      throw new Error('Invalid data format');
-    }
-  })
-  .catch(error => {
-    setError(error.message);
+  const { initialPaging, initialFilter } = useMemo(() => {
+    const initialFilter: StudentListFilter = {
+      search: searchParams.get('search') || '',
+    };
+    const initialPaging: IPaginationInfo = {
+      pageSize: +(searchParams.get('pageSize') || initialPagingState.pageSize),
+      page: +(searchParams.get('page') || initialPagingState.page),
+    };
+    return { initialPaging, initialFilter };
+  }, [searchParams]);
+
+  const { filter, handlePageChange, handleFilterChange } = usePagingFilter<StudentListFilter>({
+    initialPaging,
+    initialFilter,
+    debounceTime: 500,
   });
-  }, [token, search]);
 
-  const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearch(event.target.value);
-  }
-console.log(tutors)
+  const studentListQuery = useQuery({
+    queryKey: tutorListKeys.list(filter),
+    queryFn: () => getTutorsListApi(filter),
+    select: (resp) => {
+      return {
+        pagination: resp.data.paginationInfo,
+        data: resp.data.data,
+      };
+    },
+    placeholderData: keepPreviousData,
+  });
+
   return (
     <div>
-      <span className='text-[24px] font-bold text-black-800'>Tutor</span>
-      <div className='text-[16px] text-gray-500 pb-6'>{tutors.length} results found</div>
+      <span className='text-[24px] font-bold text-black-800'>Người hướng dẫn</span>
+      <div className='text-[16px] text-gray-500 pb-6'>
+        {studentListQuery.data?.data.length} kết quả tìm thấy
+      </div>
       <div className='flex justify-between w-full'>
         <CustomTextInput
           placeholder='Search'
           prefix={<SearchOutlined />}
           classNameForm='w-3/5 mb-3'
-          onChange={handleSearch}
+          onChange={(e) => {
+            handleFilterChange({ search: e.target.value });
+          }}
         />
         <div className='flex gap-5'>
           <FilterOutlined />
           <SortAscendingOutlined />
         </div>
       </div>
-      <div className='flex flex-col gap-8 p-8 rounded-md bg-white-900'>
+      <div className='flex flex-col py-8 rounded-md bg-white-900'>
         <Table
           columns={columns}
-          dataSource={tutors}
-          rowKey={(tutors) => tutors.id}
-          pagination={{
-            position: ['bottomCenter'],
-            showSizeChanger: false,
-            pageSize: 5,
-            size: 'small',
-            total: tutors.length,
-            // showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} items`,
-          }}
+          dataSource={studentListQuery.data?.data || []}
+          rowKey={(students) => students.id}
+          loading={studentListQuery.isFetching}
+          pagination={false}
+        />
+        <PaginationCore
+          current={studentListQuery.data?.pagination.page || 1}
+          pageSize={studentListQuery.data?.pagination.pageSize || 10}
+          total={studentListQuery.data?.pagination.total || 0}
+          onPageNumberChange={handlePageChange}
         />
       </div>
     </div>

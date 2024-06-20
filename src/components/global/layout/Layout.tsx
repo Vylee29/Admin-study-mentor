@@ -101,7 +101,7 @@ export default function Layout() {
           <Header />
           <Content
             className='w-full p-6 m-auto transition bg-white-900'
-            style={{ overflowY: 'auto', maxHeight: 'calc(100vh - 64px - 69px)' }}
+            style={{ overflowY: 'auto', maxHeight: 'calc(100vh - 64px )' }}
           >
             <Outlet />
           </Content>

@@ -1,3 +1,5 @@
+import { UserResp } from './profile.model';
+
 export interface IFileAttachment {
   fileName: string;
   fileKey: string;
@@ -26,4 +28,4 @@ export interface TutorModel extends IGetUserResponse {
   certificate: IFileAttachment[];
   subject: string;
 }
-export type TutorTable = TutorModel;
+export type TutorTable = TutorModel & UserResp;

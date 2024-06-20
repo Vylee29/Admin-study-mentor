@@ -1,3 +1,5 @@
+import { IPaginationInfo } from '../types/paging.type';
+
 export interface IAvatar {
   fileName: string;
   fileKey: string;
@@ -21,4 +23,11 @@ export type StudentModel = {
   status: Status;
   avatar?: IAvatar;
 };
+
+export type StudentListFilter = {
+  search?: string;
+};
+
+export type StudentListReq = StudentListFilter & IPaginationInfo;
+
 export type StudentTable = StudentModel;

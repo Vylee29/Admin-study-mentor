@@ -1,19 +1,24 @@
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../+core/store';
+
 const Header = () => {
+  const user = useSelector((state: RootState) => state.user);
+
   return (
-    <header className='border-b-[1px] border-solid border-b-gray-700 border-l-0 border-t-0 border-r-0 p-10 flex items-center'>
-      <div className='font-light text-2xl text-center self-center m-auto'>
-        Welcome back, <span className='font-medium text-4xl'>Admin</span>
+    <header className='flex items-center h-16 shadow-xl'>
+      <div className='self-center m-auto text-2xl font-light text-center'>
+        Welcome back, <span className='text-4xl font-medium'>{user.user?.fullName}</span>
       </div>
-      <div className='flex gap-4 items-center'>
+      <div className='flex items-center gap-4'>
         <div className='w-[55px] h-[55px] rounded-full cursor-pointer'>
           <img
             src='https://images.unsplash.com/photo-1499952127939-9bbf5af6c51c?q=80&w=2676&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
             alt='Admin'
-            className='w-full h-full object-cover rounded-full'
+            className='object-cover w-full h-full rounded-full'
           />
         </div>
-        <div className='flex flex-col'>
-          <div className='font-semibold text-xl'>Sterling</div>
+        <div className='flex flex-col pr-2'>
+          <div className='text-xl font-semibold'>Sterling</div>
           <div className='font-normal text-gray-400'>Super admin</div>
         </div>
       </div>

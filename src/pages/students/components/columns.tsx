@@ -1,10 +1,10 @@
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import { Avatar, Image } from 'antd';
 import { ColumnsType } from 'antd/es/table';
-import {StudentTable} from  '../../../+core/models/student.model';
-import {Colors} from '../../../+core/enums/colors.enum';
+import { UserResp } from '../../../+core/models/profile.model';
+import { imageUtility } from '../../../+core/utilities/image.utility';
 
-export const columns: ColumnsType<StudentTable> = [
+export const columns: ColumnsType<UserResp> = [
   {
     title: 'Name',
     dataIndex: 'fullName',
@@ -15,7 +15,13 @@ export const columns: ColumnsType<StudentTable> = [
             <Avatar
               size={44}
               key={record.avatar?.fileKey}
-              icon={<Image alt={'image of question'} loading='lazy' src={record.avatar?.fileName} />}
+              icon={
+                <Image
+                  alt={'image of question'}
+                  loading='lazy'
+                  src={imageUtility(record.avatar?.fileKey)}
+                />
+              }
             />
           </div>
           <span className='text-sm font-bold text-black-800'>{value}</span>
@@ -32,7 +38,7 @@ export const columns: ColumnsType<StudentTable> = [
     title: 'Status',
     dataIndex: 'status',
     render: (value) =>
-      value == 0 ? (
+      value === 0 ? (
         <div className='text-[#28A745]'>Active</div>
       ) : (
         <div className='text-[#F63F3F]'>Inactive</div>
@@ -41,13 +47,12 @@ export const columns: ColumnsType<StudentTable> = [
   {
     title: 'Role',
     dataIndex: 'role',
-    render: (value) => 
-     value == 0 ? (
-      <div className='flex flex-col text-sm font-normal'>Student</div>
+    render: (value) =>
+      value == 0 ? (
+        <div className='flex flex-col text-sm font-normal'>Student</div>
       ) : (
         <div className='flex flex-col text-sm font-normal'>Tutor</div>
       ),
-  
   },
   {
     render: () => (

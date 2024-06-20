@@ -2,8 +2,8 @@ import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import { Avatar, Image } from 'antd';
 import { ColumnsType } from 'antd/es/table';
 import { Link } from 'react-router-dom';
-import {IFileAttachment, TutorTable} from  '../../../+core/models/tutor.model';
-import {Colors} from '../../../+core/enums/colors.enum';
+import { IFileAttachment, TutorTable } from '../../../+core/models/tutor.model';
+import { imageUtility } from '../../../+core/utilities/image.utility';
 
 export const columns: ColumnsType<TutorTable> = [
   {
@@ -16,7 +16,13 @@ export const columns: ColumnsType<TutorTable> = [
             <Avatar
               size={44}
               key={record.avatar?.fileKey}
-              icon={<Image alt={'image of question'} loading='lazy' src={record.avatar?.fileName} />}
+              icon={
+                <Image
+                  alt={'image of question'}
+                  loading='lazy'
+                  src={imageUtility(record.avatar?.fileKey)}
+                />
+              }
             />
           </div>
           <span className='text-sm font-bold text-black-800'>{value}</span>
@@ -42,13 +48,12 @@ export const columns: ColumnsType<TutorTable> = [
   {
     title: 'Role',
     dataIndex: 'role',
-    render: (value) => 
-     value == 0 ? (
-      <div className='flex flex-col text-sm font-normal'>Student</div>
+    render: (value) =>
+      value == 0 ? (
+        <div className='flex flex-col text-sm font-normal'>Student</div>
       ) : (
         <div className='flex flex-col text-sm font-normal'>Tutor</div>
       ),
-  
   },
   {
     title: 'Certificate',
