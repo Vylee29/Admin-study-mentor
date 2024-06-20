@@ -2,7 +2,7 @@ import { Button, Input, Modal } from 'antd';
 import React, { useEffect, useState } from 'react';
 
 interface Data {
-  [key: string]: string;
+  [key: string]: string | string[];
 }
 
 interface EditableModalProps {
@@ -10,34 +10,56 @@ interface EditableModalProps {
   onClose: () => void;
   data: Data | null;
   onSave: (editedData: Data) => void;
+  onDelete: (id: any) => void;
   title: string;
 }
 
-const EditableModal: React.FC<EditableModalProps> = ({ title, visible, onClose, data, onSave }) => {
+const EditableModal: React.FC<EditableModalProps> = ({
+  title,
+  visible,
+  onClose,
+  data,
+  onSave,
+  onDelete,
+}) => {
   const [editedData, setEditedData] = useState<Data | null>(null);
-  const [tempData, setTempData] = useState<Data | null>(null);
 
   useEffect(() => {
     setEditedData(data);
-    setTempData(data);
   }, [data]);
 
-  const handleChange = (field: string, value: string) => {
-    if (tempData) {
-      setTempData({ ...tempData, [field]: value });
-    }
+  const handleChange = (key: string, value: string) => {
+    setEditedData((prev) => ({
+      ...prev,
+      [key]: Array.isArray(prev ? prev[key] : false)
+        ? value.split(',').map((item) => item.trim())
+        : value,
+    }));
   };
 
   const handleSave = () => {
-    if (tempData) {
-      onSave(tempData);
+    if (editedData) {
+      onSave(editedData);
       onClose();
     }
   };
 
   const handleCancel = () => {
-    setTempData(editedData); // Restore original data
+    setEditedData(data);
     onClose();
+  };
+
+  const handleDelete = () => {
+    onDelete(data.voucherId);
+    onClose();
+  };
+
+  const renderValue = (key: string) => {
+    const value = editedData ? editedData[key] : '';
+    if (Array.isArray(value)) {
+      return value.join(', ');
+    }
+    return value || '';
   };
 
   return (
@@ -51,16 +73,19 @@ const EditableModal: React.FC<EditableModalProps> = ({ title, visible, onClose, 
         <Button key='save' onClick={handleSave} className='!bg-blue-600 !text-white-900'>
           Lưu
         </Button>,
+        <Button key='delete' onClick={handleDelete} danger>
+          Xóa
+        </Button>,
       ]}
       title={title}
     >
-      {tempData && (
+      {editedData && (
         <>
-          {Object.keys(tempData).map((key) => (
+          {Object.keys(editedData).map((key) => (
             <div key={key} className='mb-2'>
-              <label className='font-semibold text-lg'>{key}</label>
+              <label className='text-lg font-semibold'>{key}</label>
               <Input.TextArea
-                value={tempData[key]}
+                value={renderValue(key)}
                 onChange={(e) => handleChange(key, e.target.value)}
                 autoSize={{ minRows: 1 }}
               />

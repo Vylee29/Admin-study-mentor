@@ -1,19 +1,89 @@
 import { FilterOutlined, SearchOutlined, SortAscendingOutlined } from '@ant-design/icons';
 import { Table } from 'antd';
 import { CustomTextInput } from '../../components/ui/form/CustomTextInput';
-import { columns, mockData } from './components/columns';
-
-export type VoucherTable = {
-  key: string;
-  id: string;
-  code: string;
-  percent: number;
-  startDate: Date;
-  endDate: Date;
-  quantity: number;
-};
+import { columns } from './components/columns';
+import { VoucherModel } from '../../+core/models/voucher.model';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import React from 'react';
+import EditableModal from '../../components/ui/editable-modal/EditableModal';
 
 export function VouchersPage() {
+  const queryClient = useQueryClient();
+
+  const [modalVisible, setModalVisible] = React.useState(false);
+  const [selectedRow, setSelectedRow] = React.useState<any | null>(null);
+
+  const { data } = useQuery({
+    queryKey: ['voucher'],
+    queryFn: async () => {
+      const response = await fetch('http://localhost:3001/api/admin/manage/voucher', {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      });
+      return response.json();
+    },
+  });
+
+  const mutation = useMutation({
+    mutationFn: async (data: any) => {
+      const response = await fetch('http://localhost:3001/api/admin/manage/voucher', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+        body: JSON.stringify(data),
+      });
+      console.log('DATA', data);
+      return response.json();
+    },
+    onSuccess: () => {
+      console.log('success');
+      queryClient.invalidateQueries(['voucher']);
+    },
+  });
+
+  const deleteMutation = useMutation({
+    mutationFn: async (voucherId: string) => {
+      const response = await fetch(`http://localhost:3001/api/admin/manage/voucher/${voucherId}`, {
+        method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      });
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json();
+    },
+    onSuccess: () => {
+      console.log('Delete successful');
+      queryClient.invalidateQueries(['voucher']);
+    },
+  });
+
+  const handleDelete = (voucherId: string) => {
+    deleteMutation.mutate(voucherId);
+    queryClient.invalidateQueries(['voucher']);
+    closeModal();
+  };
+
+  const handleRowClick = (record: any) => {
+    setSelectedRow(record);
+    setModalVisible(true);
+  };
+
+  const closeModal = () => {
+    setModalVisible(false);
+  };
+
+  const handleSave = (voucher: any) => {
+    mutation.mutate(voucher);
+    queryClient.invalidateQueries(['voucher']);
+    closeModal();
+  };
+
   return (
     <div>
       <span className='text-[24px] font-bold text-black-800'>Voucher</span>
@@ -31,18 +101,30 @@ export function VouchersPage() {
       </div>
       <div className='flex flex-col gap-8 p-8 rounded-md bg-white-900'>
         <Table
+          rowKey={(data) => data.voucherId}
           columns={columns}
-          dataSource={mockData}
-          //centered pagination
+          dataSource={data?.data}
           pagination={{
             position: ['bottomCenter'],
             showSizeChanger: false,
             pageSize: 5,
             size: 'small',
             total: 50,
-            // showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} items`,
           }}
+          onRow={(record: any) => ({
+            onClick: () => handleRowClick(record),
+          })}
         />
+        {selectedRow && (
+          <EditableModal
+            title='Detail Voucher'
+            visible={modalVisible}
+            onClose={closeModal}
+            data={selectedRow}
+            onSave={handleSave}
+            onDelete={handleDelete}
+          />
+        )}
       </div>
     </div>
   );

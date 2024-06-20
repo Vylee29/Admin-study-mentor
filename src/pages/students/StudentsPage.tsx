@@ -3,40 +3,41 @@ import { FilterOutlined, SearchOutlined, SortAscendingOutlined } from '@ant-desi
 import { Table } from 'antd';
 import { CustomTextInput } from '../../components/ui/form/CustomTextInput';
 import { columns } from './components/columns';
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import {StudentModel} from  '../../+core/models/student.model';
-
+import { StudentModel } from '../../+core/models/student.model';
 
 export function StudentsPage() {
- const [students, setStudents] = useState<StudentModel[]>([]);
- const [error, setError] = useState<string | null>(null);
- const [token, setToken] = useState<string | null>(localStorage.getItem('token'));
- const [search, setSearch] = useState<string>('');
+  const [students, setStudents] = useState<StudentModel[]>([]);
+  const [error, setError] = useState<string | null>(null);
+  const [token, setToken] = useState<string | null>(localStorage.getItem('token'));
+  const [search, setSearch] = useState<string>('');
 
- useEffect(() => {
-  axios.get('http://localhost:3000/api/admin/students',{
-    headers: {
+  useEffect(() => {
+    axios
+      .get('http://localhost:3001/api/admin/students', {
+        headers: {
           Authorization: `Bearer ${token}`,
         },
         params: {
           search: search,
         },
-  }).then((res) => {
-    if (Array.isArray(res.data.data)) {
-      setStudents(res.data.data);
-    } else {
-      throw new Error('Invalid data format');
-    }
-  })
-  .catch(error => {
-    setError(error.message);
-  });
+      })
+      .then((res) => {
+        if (Array.isArray(res.data.data)) {
+          setStudents(res.data.data);
+        } else {
+          throw new Error('Invalid data format');
+        }
+      })
+      .catch((error) => {
+        setError(error.message);
+      });
   }, [token, search]);
 
-const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
-  setSearch(event.target.value);
-}
+  const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearch(event.target.value);
+  };
 
   return (
     <div>

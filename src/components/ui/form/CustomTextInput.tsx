@@ -14,6 +14,7 @@ export type CustomTextInputProps<T extends object> = {
   label?: React.ReactNode;
   rules?: Rule[];
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  value?: string;
 };
 
 export const CustomTextInput = <T extends object>({
@@ -29,6 +30,7 @@ export const CustomTextInput = <T extends object>({
   prefix,
   type = 'text',
   onChange,
+  value,
 }: CustomTextInputProps<T>) => {
   return (
     <Form.Item<T>
@@ -47,6 +49,7 @@ export const CustomTextInput = <T extends object>({
         className={`h-[39px] ${classNameInput}`}
         disabled={disabled}
         onChange={onChange}
+        value={value}
       />
     </Form.Item>
   );
