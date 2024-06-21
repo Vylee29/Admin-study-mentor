@@ -28,6 +28,7 @@ const ResponseModal: React.FC<ResponseModalProps> = ({ title, visible, onClose, 
     console.log('feedback');
     data.contentFeedback = feedback;
     const sendMailModel = {
+      reportId: data?.reportId,
       fullName: data?.fullName,
       userId: data?.userId,
       questionName: data?.questionName,

@@ -47,7 +47,7 @@ export const columns: ColumnsType<VoucherTable> = [
     title: 'Status',
     dataIndex: 'status',
     render: (value) =>
-      value == 0 ? (
+      value == 1 ? (
         <div className='text-[#28A745]'>Active</div>
       ) : (
         <div className='text-[#F63F3F]'>Inactive</div>
