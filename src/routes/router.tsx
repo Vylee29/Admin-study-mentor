@@ -1,11 +1,11 @@
 import { createBrowserRouter } from 'react-router-dom';
 import Layout from '../components/global/layout/Layout';
+import NotFoundPage from '../pages/404/NotFoundPage';
 import ChatPage from '../pages/chat/ChatPage';
 import DashboardPage from '../pages/dashboard/DashboardPage';
 import DetailedInfoDemoPage from '../pages/detailed-info/DetailedInfoDemo';
 import { HomePage } from '../pages/home/HomePage';
 import LoginPage from '../pages/login/LoginPage';
-import { NotFoundPage } from '../pages/not-found-page/NotFoundPage';
 import { ReportsPage } from '../pages/reports/ReportsPage';
 import { StudentsPage } from '../pages/students/StudentsPage';
 import { TutorsPage } from '../pages/tutors/TutorsPage';

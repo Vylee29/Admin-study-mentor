@@ -1,11 +1,28 @@
+import { Button } from 'antd';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../+core/store';
+import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
 
-const Header = () => {
+type Props = {
+  collapsed: boolean;
+  setCollapsed: (collapsed: boolean) => void;
+};
+
+const Header = ({ collapsed, setCollapsed }: Props) => {
   const user = useSelector((state: RootState) => state.user);
 
   return (
     <header className='flex items-center h-16 shadow-xl'>
+      <Button
+        type='text'
+        icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+        onClick={() => setCollapsed(!collapsed)}
+        style={{
+          fontSize: '16px',
+          width: 64,
+          height: 64,
+        }}
+      />
       <div className='self-center m-auto text-2xl font-light text-center'>
         Welcome back, <span className='text-4xl font-medium'>{user.user?.fullName}</span>
       </div>

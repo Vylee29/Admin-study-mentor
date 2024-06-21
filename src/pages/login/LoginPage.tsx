@@ -4,9 +4,10 @@ import { useForm } from 'antd/es/form/Form';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { loginApi, setAccessTokenCookie } from '../../+core/services/authentication.service';
-import { setUser } from '../../+core/store/reducers/authentication.reducer';
+import { setLoggedIn, setUser } from '../../+core/store/reducers/authentication.reducer';
 import { handleError } from '../../+core/utilities/failure-handler.utitlity';
 import ButtonPrimary from '../../components/ui/button';
+import CustomPasswordInput from '../../components/ui/form/CustomPasswordInput';
 import { CustomTextInput } from '../../components/ui/form/CustomTextInput';
 
 type LoginInput = {
@@ -25,6 +26,7 @@ export default function LoginPage() {
     onSuccess: (resp) => {
       setAccessTokenCookie(resp.data.data.accessToken);
       dispatch(setUser(resp.data.data.user));
+      dispatch(setLoggedIn(true));
       message.success('Đăng Nhập thành công');
       navigate('/dashboard');
     },
@@ -62,12 +64,10 @@ export default function LoginPage() {
             classNameForm='mb-6'
             placeholder='email'
           />
-          <CustomTextInput<LoginInput>
+          <CustomPasswordInput
             name='password'
             rules={[{ required: true, message: 'Please input your password!' }]}
             classNameInput='h-[54px] px-[15px]'
-            placeholder='password'
-            type='password'
             classNameForm='mb-6'
           />
 

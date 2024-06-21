@@ -11,6 +11,7 @@ export type CustomPasswordInputProps = {
   wrapperCol?: number;
   disabled?: boolean;
   classNameInput?: string;
+  classNameForm?: string;
 };
 
 const CustomPasswordInput: React.FC<CustomPasswordInputProps> = ({
@@ -21,6 +22,7 @@ const CustomPasswordInput: React.FC<CustomPasswordInputProps> = ({
   classNameInput,
   labelCol = 24,
   wrapperCol = 24,
+  classNameForm,
 }: CustomPasswordInputProps) => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
@@ -35,6 +37,7 @@ const CustomPasswordInput: React.FC<CustomPasswordInputProps> = ({
       label={label}
       labelCol={{ span: labelCol }}
       wrapperCol={{ span: wrapperCol }}
+      className={classNameForm}
     >
       <Input.Password
         className={classNameInput}

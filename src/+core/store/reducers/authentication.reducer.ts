@@ -4,11 +4,13 @@ import { UserResp } from '../../models/profile.model';
 interface AuthenticationState {
   accessToken: string;
   user?: UserResp;
+  isLoggedIn: boolean;
 }
 
 const initialState: AuthenticationState = {
   accessToken: '',
   user: undefined,
+  isLoggedIn: false,
 };
 
 export const authenticationSlice = createSlice({
@@ -17,6 +19,9 @@ export const authenticationSlice = createSlice({
   reducers: {
     setAccessToken: (state, action: { payload: string }) => {
       state.accessToken = action.payload;
+    },
+    setLoggedIn: (state, action: { payload: boolean }) => {
+      state.isLoggedIn = action.payload;
     },
     removeAccessToken: (state) => {
       state.accessToken = '';
@@ -30,7 +35,7 @@ export const authenticationSlice = createSlice({
   },
 });
 
-export const { setAccessToken, removeAccessToken, setUser, removeUser } =
+export const { setAccessToken, removeAccessToken, setUser, removeUser, setLoggedIn } =
   authenticationSlice.actions;
 
 export default authenticationSlice.reducer;
