@@ -1,19 +1,47 @@
 import { FilterOutlined, SearchOutlined, SortAscendingOutlined } from '@ant-design/icons';
+import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { Table } from 'antd';
+import { useMemo } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import { usePagingFilter } from '../../+core/hooks/usePagingFilter';
+import {
+  convertVoucherListModelToTable,
+  getVoucherListApi,
+  voucherListKeys,
+} from '../../+core/services/tutors.service';
+import { IPaginationInfo, initialPagingState } from '../../+core/types/paging.type';
 import { CustomTextInput } from '../../components/ui/form/CustomTextInput';
-import { columns, mockData } from './components/columns';
-
-export type VoucherTable = {
-  key: string;
-  id: string;
-  code: string;
-  percent: number;
-  startDate: Date;
-  endDate: Date;
-  quantity: number;
-};
+import { PaginationCore } from '../../components/ui/pagination/pagination';
+import { columns } from './components/columns';
 
 export function VouchersPage() {
+  const [searchParams] = useSearchParams();
+
+  const { initialPaging } = useMemo(() => {
+    const initialPaging: IPaginationInfo = {
+      pageSize: +(searchParams.get('pageSize') || initialPagingState.pageSize),
+      page: +(searchParams.get('page') || initialPagingState.page),
+    };
+    return { initialPaging };
+  }, [searchParams]);
+
+  const { filter, handlePageChange, handleFilterChange } = usePagingFilter({
+    initialPaging,
+    debounceTime: 500,
+  });
+
+  const voucherListQuery = useQuery({
+    queryKey: voucherListKeys.list(filter),
+    queryFn: () => getVoucherListApi(filter),
+    select: (resp) => {
+      return {
+        pagination: resp.data.paginationInfo,
+        data: resp.data.data.map(convertVoucherListModelToTable),
+      };
+    },
+    placeholderData: keepPreviousData,
+  });
+
   return (
     <div>
       <span className='text-[24px] font-bold text-black-800'>Voucher</span>
@@ -29,19 +57,18 @@ export function VouchersPage() {
           <SortAscendingOutlined />
         </div>
       </div>
-      <div className='flex flex-col gap-8 p-8 rounded-md bg-white-900'>
+      <div className='flex flex-col py-8 rounded-md bg-white-900'>
         <Table
           columns={columns}
-          dataSource={mockData}
-          //centered pagination
-          pagination={{
-            position: ['bottomCenter'],
-            showSizeChanger: false,
-            pageSize: 5,
-            size: 'small',
-            total: 50,
-            // showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} items`,
-          }}
+          dataSource={voucherListQuery.data?.data || []}
+          loading={voucherListQuery.isFetching}
+          pagination={false}
+        />
+        <PaginationCore
+          current={voucherListQuery.data?.pagination.page || 1}
+          pageSize={voucherListQuery.data?.pagination.pageSize || 10}
+          total={voucherListQuery.data?.pagination.total || 0}
+          onPageNumberChange={handlePageChange}
         />
       </div>
     </div>

@@ -1,22 +1,19 @@
+import { useQuery } from '@tanstack/react-query';
 import Search from 'antd/es/input/Search';
-import { RoomModel } from '../../../../+core/models/chat.model';
-import ChatList from '../chat-list/ChatList';
+import { getChatRoomListApi, getChatRoomListKeys } from '../../../../+core/services/chat.service';
+import RoomList from '../room-list/RoomList';
 
-function ChatTab({
-  title,
-  chatList,
-  activeId,
-  onClick,
-}: {
-  title: string;
-  chatList: RoomModel[];
-  activeId: string;
-  onClick: (id: string) => void;
-}) {
+function ChatTab({ title }: { title: string }) {
+  const roomQuery = useQuery({
+    queryKey: getChatRoomListKeys.all,
+    queryFn: () => getChatRoomListApi(),
+    select: (data) => data.data.listRoom,
+  });
+
   return (
     <div className='w-full'>
       <Search placeholder='Search someone' allowClear size='large' className='mb-5' />
-      <ChatList title={title} activeId={activeId} chatList={chatList} onClick={onClick} />
+      <RoomList title={title} chatList={roomQuery.data || []} />
     </div>
   );
 }

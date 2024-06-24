@@ -1,82 +1,67 @@
-import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
-import { Avatar, Image } from 'antd';
 import { ColumnsType } from 'antd/es/table';
-import { ReportTable } from '../ReportsPage';
+import { Link } from 'react-router-dom';
+import { FileReq } from '../../../+core/models/file.model';
+import { ReportTable } from '../../../+core/models/report.model';
 
 export const columns: ColumnsType<ReportTable> = [
   {
-    title: 'Name',
-    dataIndex: 'name',
-    render: (value, record) => {
-      return (
-        <div className='flex items-center gap-4'>
-          <div className='w-[44px] h-[44px]'>
-            <Avatar
-              size={44}
-              icon={<Image alt={'image of question'} loading='lazy' src={record.image} />}
-            />
-          </div>
-          <span className='text-sm font-bold text-black-800'>{value}</span>
-        </div>
-      );
-    },
+    title: 'Question ID',
+    dataIndex: 'questionId',
+    render: (value) => <div className='flex flex-col text-sm font-semibold'>{value}</div>,
   },
   {
-    title: 'Title of Report',
-    dataIndex: 'title',
+    title: 'Question name',
+    dataIndex: 'questionName',
     render: (value) => <div className='flex flex-col text-sm font-normal'>{value}</div>,
   },
   {
-    title: 'Status',
-    dataIndex: 'status',
-    render: (value) => {
-      if (value === 0) {
-        return <div className='text-[#FF0000]'>Chưa xử lý</div>;
-      } else if (value === 1) {
-        return <div className='text-[#FF8A00]'>Đang xử lý</div>;
-      } else {
-        return <div className='text-[#0064FF]'>Đã xử lý</div>;
-      }
-    },
+    title: 'Content report',
+    dataIndex: 'content',
+    render: (value) => <div className='flex flex-col text-sm font-bold'>{value}</div>,
   },
   {
-    title: 'Role',
-    dataIndex: 'role',
+    title: 'Reporter',
+    dataIndex: 'fullName',
     render: (value) => <div className='flex flex-col text-sm font-normal'>{value}</div>,
   },
   {
-    render: () => (
-      <div className='flex gap-[15px]'>
-        <EditOutlined />
-        <DeleteOutlined />
+    title: 'Report date',
+    dataIndex: 'createdAt',
+    render: (value) => <div className='flex flex-col text-sm font-normal'>{value}</div>,
+  },
+  {
+    title: 'Attachment',
+    dataIndex: 'attachFiles',
+    render: (value: FileReq[]) => (
+      <div className='flex flex-col text-sm font-normal'>
+        {Array.isArray(value) && value.length > 0 ? (
+          value.map((item, index) => (
+            <Link key={index} to={`${item.fileKey}`} className='text-[#0064FF] underline'>
+              {item.fileName}
+            </Link>
+          ))
+        ) : (
+          <span>No attachments</span>
+        )}
       </div>
     ),
   },
-];
-
-export const mockData: ReportTable[] = [
   {
-    key: '1',
-    image: 'https://via.placeholder.com/150',
-    name: 'Mark Wilson',
-    title: 'NHD tôi không meeting',
-    status: 0,
-    role: 'Student',
+    title: 'Respond status',
+    dataIndex: 'hasFeedback',
+    render: (value) =>
+      value == true ? (
+        <div className='text-[#28A745] font-semibold'>Done</div>
+      ) : (
+        <div className='text-[#F63F3F] font-semibold '>Not yet</div>
+      ),
   },
-  {
-    key: '2',
-    image: 'https://via.placeholder.com/150',
-    name: 'Mark Wilson',
-    title: 'NHD tôi không meeting',
-    status: 1,
-    role: 'Student',
-  },
-  {
-    key: '3',
-    image: 'https://via.placeholder.com/150',
-    name: 'Mark Wilson',
-    title: 'NHD tôi không meeting',
-    status: 2,
-    role: 'Student',
-  },
+  // {
+  //   render: () => (
+  //     <div className='flex gap-[15px]'>
+  //       <EditOutlined />
+  //       <DeleteOutlined />
+  //     </div>
+  //   ),
+  // },
 ];

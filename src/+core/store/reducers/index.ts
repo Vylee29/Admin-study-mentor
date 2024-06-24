@@ -1,9 +1,11 @@
 import { combineReducers } from 'redux';
 import userReducer from './authentication.reducer';
-import counterReducer from './counter.reducer';
+import sidebarReducer from './sidebar.reducer';
+import socketReducer from './socket.reducer';
 
 const rootReducer = combineReducers({
-  counter: counterReducer,
+  sidebar: sidebarReducer,
+  socket: socketReducer,
   user: userReducer,
 });
 

@@ -1,0 +1,58 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    .placeholder-color .ant-select-selection-placeholder {
+        color: #313636 !important;
+    }
+
+    .overflow-y-auto::-webkit-scrollbar,
+    .overflow-x-auto::-webkit-scrollbar,
+    .overflow-auto::-webkit-scrollbar,
+    .ant-table-content::-webkit-scrollbar {
+        @apply w-1 h-2 bg-primary-400 rounded-[10px];
+    }
+    .overflow-y-auto::-webkit-scrollbar-thumb,
+    .overflow-x-auto::-webkit-scrollbar-thumb,
+    .overflow-auto::-webkit-scrollbar-thumb,
+    .ant-table-content::-webkit-scrollbar-thumb {
+        @apply bg-primary-800 rounded-[10px] border border-primary-800;
+    }
+
+    .ant-input-suffix {
+        @apply flex items-center justify-center;
+    }
+
+    .rce-input {
+        @apply flex items-center justify-center  px-2 border-none rounded-[5px] text-base #{!important};
+    }
+    .text-area {
+        .ant-input-outlined:focus {
+            @apply border-none border-white-900 shadow-none #{!important};
+        }
+        &:has(.ant-input-outlined:focus) {
+            border-color: #1677ff !important;
+            box-shadow: 0 0 0 2px rgba(5, 145, 255, 0.1) !important;
+            outline: 0 !important;
+            background-color: #ffffff !important;
+        }
+    }
+    .rce-input-textarea {
+        @apply px-2 py-2 resize-none #{!important};
+    }
+    .file-message {
+        .ant-upload-list-picture-card {
+            @apply flex gap-2 #{!important};
+        }
+        .ant-upload.ant-upload-select,
+        .ant-upload-list-item-container {
+            width: 48px !important;
+            height: 48px !important;
+            margin: 0 !important;
+            .ant-upload-list-item {
+                @apply p-0 overflow-clip #{!important};
+            }
+        }
+    }
+}

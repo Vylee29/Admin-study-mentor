@@ -6,7 +6,20 @@
 @import './menu.scss';
 @import './modal.scss';
 @import './chat.scss';
+@import './form.scss';
+@import 'nprogress/nprogress.css';
+
+#nprogress .bar {
+  height: 4px;
+  @apply bg-primary-800;
+}
 
 body {
   margin: 0;
+}
+
+.tag-p {
+  p {
+    @apply m-0 p-0 #{!important};
+  }
 }

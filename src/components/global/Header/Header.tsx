@@ -1,22 +1,56 @@
-import { Button } from 'antd';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../../+core/store';
 import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
+import { Button } from 'antd';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../../+core/store';
+import { setCollapsed } from '../../../+core/store/reducers/sidebar.reducer';
+import { onConnect, onDisconnect } from '../../../+core/store/reducers/socket.reducer';
+import { defaultSocket } from '../../../socket';
 
-type Props = {
-  collapsed: boolean;
-  setCollapsed: (collapsed: boolean) => void;
-};
-
-const Header = ({ collapsed, setCollapsed }: Props) => {
+const Header = () => {
   const user = useSelector((state: RootState) => state.user);
+  const collapsed = useSelector((state: RootState) => state.sidebar.collapsed);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (user?.user?.id) {
+      dispatch(onDisconnect());
+
+      const socket = defaultSocket(user?.user?.id);
+
+      if (socket) {
+        const onConnectSocket = () => {
+          dispatch(onConnect(socket));
+          console.log('connect with id:', user?.user?.id);
+        };
+
+        const onDisconnectSocket = () => {
+          dispatch(onDisconnect());
+        };
+
+        socket.on('connect', onConnectSocket);
+        socket.on('disconnect', onDisconnectSocket);
+        socket.on('error', (error) => {
+          console.error('Socket error:', error);
+        });
+
+        return () => {
+          socket.off('connect', onConnectSocket);
+          socket.off('disconnect', onDisconnectSocket);
+          socket.off('error');
+        };
+      }
+    }
+  }, [user?.user?.id]);
 
   return (
     <header className='flex items-center h-16 shadow-xl'>
       <Button
         type='text'
         icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-        onClick={() => setCollapsed(!collapsed)}
+        onClick={() => {
+          dispatch(setCollapsed(!collapsed));
+        }}
         style={{
           fontSize: '16px',
           width: 64,

@@ -1,162 +1,101 @@
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { Tabs, TabsProps } from 'antd';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { useSearchParams } from 'react-router-dom';
+import { v4 as uuidv4 } from 'uuid';
 import { MENTORS, STUDENTS } from '../../+core/constants/commons.constant';
-import { RoomModel } from '../../+core/models/chat.model';
-import ChatArea from '../../components/ui/chat/chat-area/ChatArea';
+import { SocketEvent } from '../../+core/enums/socket.enum';
+import { ChatModel } from '../../+core/models/chat.model';
+import { FileReq } from '../../+core/models/file.model';
+import {
+  getChatMessageListApi,
+  getChatRoomListApi,
+  getChatRoomListKeys,
+} from '../../+core/services/chat.service';
+import { RootState } from '../../+core/store';
+import IMAGES from '../../assets/images';
 import ChatTab from '../../components/ui/chat/chat-tab/ChatTab';
+import ChatHeader from './components/ChatHeader';
+import { ChatList } from './components/ChatList';
+const items: TabsProps['items'] = [
+  {
+    key: STUDENTS,
+    label: 'Students',
+    children: <ChatTab title='Students' />,
+  },
+  {
+    key: MENTORS,
+    label: 'Mentors',
+    children: <ChatTab title='Mentors' />,
+  },
+];
 
 function ChatPage() {
-  const onChange = (key: string) => {
-    console.log(key);
+  const collapsed = useSelector((state: RootState) => state.sidebar.collapsed);
+  const [selectedTab, setSelectedTab] = useState<string>(STUDENTS);
+  const [dataChat, setDataChat] = useState<ChatModel[]>([]);
+  const user = useSelector((state: RootState) => state.user);
+  const [searchParams] = useSearchParams();
+  const activeId = useMemo(() => searchParams.get('roomId') || '', [searchParams]);
 
+  const onChange = (key: string) => {
     setSelectedTab(key);
   };
 
-  const questionExample = {
-    id: 'string',
-    title: 'Hoc Code Cung Toi',
-    content: 'Ban Da Biet Code React Chua?',
-    createAt: new Date().toString(),
-    isCompleted: false,
-  };
-  const chatExample1 = {
-    textId: 'textId1',
-    userId: 'string',
-    value: 'Xin Chao Cac Ban Xin Chao Cac Ban Xin Chao Cac Ban Xin Chao Cac Ban',
-    createdAt: new Date().toString(),
-    textReplyId: 'string1',
-  };
-  const chatExample2 = {
-    textId: 'textId2',
-    userId: 'currentUser',
-    value: 'Chao Cai Gi',
-    createdAt: new Date().toString(),
-    textReplyId: 'string1',
-  };
-  const userForChat1 = {
-    roomId: 'roomId',
-    contactId: 'string',
-    userId: 'string',
-    isOnline: true,
-    avatar:
-      'https://images.unsplash.com/photo-1661174585122-83a2909163ad?q=80&w=2669&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    name: 'David Nguyen',
-    chats: [chatExample1],
-    question: questionExample,
-  };
-  const userForChat2 = {
-    roomId: 'roomId',
-    contactId: 'string',
-    userId: 'currentUser',
-    isOnline: true,
-    avatar:
-      'https://plus.unsplash.com/premium_photo-1705091981530-364352828985?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    name: 'David Nguyen',
-    chats: [chatExample2],
-    question: questionExample,
-  };
-  const chatList: RoomModel[] = [
-    {
-      chatId: '1',
-      userChat: userForChat1,
-      userReply: userForChat2,
-      idOfUserCreateChat: 'string',
-    },
-    {
-      chatId: '2',
-      userChat: userForChat1,
-      userReply: userForChat2,
-      idOfUserCreateChat: 'currentUser',
-    },
-    {
-      chatId: '3',
-      userChat: userForChat1,
-      userReply: userForChat2,
-      idOfUserCreateChat: 'string',
-    },
-    {
-      chatId: '4',
-      userChat: userForChat1,
-      userReply: userForChat2,
-      idOfUserCreateChat: 'string',
-    },
-    {
-      chatId: '5',
-      userChat: userForChat1,
-      userReply: userForChat2,
-      idOfUserCreateChat: 'string',
-    },
-    {
-      chatId: '6',
-      userChat: userForChat1,
-      userReply: userForChat2,
-      idOfUserCreateChat: 'string',
-    },
-    {
-      chatId: '7',
-      userChat: userForChat1,
-      userReply: userForChat2,
-      idOfUserCreateChat: 'string',
-    },
-    {
-      chatId: '8',
-      userChat: userForChat1,
-      userReply: userForChat2,
-      idOfUserCreateChat: 'string',
-    },
-  ];
-  const [activeStudent, setActiveStudent] = useState<RoomModel>();
-  const [activeMentor, setActiveMentor] = useState<RoomModel>();
-  const [chatArea, setChatArea] = useState<RoomModel>();
-  const [selectedTab, setSelectedTab] = useState<string>(STUDENTS);
+  const roomQuery = useQuery({
+    queryKey: getChatRoomListKeys.all,
+    queryFn: () => getChatRoomListApi(),
+    select: (data) => data.data.listRoom,
+  });
 
-  const handleClickStudentChatItem = (id: string) => {
-    const student = chatList.find((chat) => chat.chatId === id);
+  const mutateGetMessage = useMutation({
+    mutationFn: (id: string) => getChatMessageListApi(id),
+    onSuccess: (resp) => {
+      setDataChat(resp.data.listMessage);
+    },
+  });
 
-    setActiveStudent(student);
-  };
-
-  const handleClickMentorChatItem = (id: string) => {
-    const mentor = chatList.find((chat) => chat.chatId === id);
-
-    setActiveMentor(mentor);
-  };
+  const socketReducer = useSelector((state: RootState) => state.socket.socket);
 
   useEffect(() => {
-    if (selectedTab === STUDENTS) setChatArea(activeStudent);
-    else setChatArea(activeMentor);
-  }, [activeStudent, activeMentor]);
+    socketReducer?.on(SocketEvent.RECEIVE_MESSAGE, (data: ChatModel) => {
+      setDataChat((prev) => [...prev, data]);
+    });
+    return () => {
+      socketReducer?.off(SocketEvent.RECEIVE_MESSAGE);
+    };
+  }, []);
 
-  const items: TabsProps['items'] = [
-    {
-      key: STUDENTS,
-      label: 'Students',
-      children: (
-        <ChatTab
-          title='Students'
-          activeId={activeStudent?.chatId ?? ''}
-          chatList={chatList}
-          onClick={handleClickStudentChatItem}
-        />
-      ),
-    },
-    {
-      key: MENTORS,
-      label: 'Mentors',
-      children: (
-        <ChatTab
-          title='Mentors'
-          activeId={activeMentor?.chatId ?? ''}
-          chatList={chatList}
-          onClick={handleClickMentorChatItem}
-        />
-      ),
-    },
-  ];
+  useEffect(() => {
+    if (activeId) {
+      mutateGetMessage.mutate(activeId);
+    }
+  }, [activeId]);
+
+  const handleSubmit = async (value: string, files?: FileReq[] | null) => {
+    if (socketReducer) {
+      const chatContent: ChatModel = {
+        questionId: uuidv4(),
+        senderId: user?.user?.id || '',
+        recipientId: roomQuery.data?.find((room) => room.roomId === activeId)?.senderId || '',
+        roomId: activeId,
+        content: value,
+        files: files,
+      };
+      setDataChat((prev) => [...prev, chatContent]);
+      socketReducer.emit(SocketEvent.SEND_MESSAGE, chatContent);
+    }
+  };
 
   return (
-    <div className='w-full flex gap-10 max-h-full'>
-      <div className='w-[30%] bg-gray-100 p-5 max-h-full rounded-xl shadow-md'>
+    <div
+      className='fixed h-[calc(100vh-100px)] right-0 duration-200 ease-in-out'
+      style={{
+        left: collapsed ? '100px' : '280px',
+      }}
+    >
+      <div className='absolute w-[30%] h-full bg-gray-100 p-5 rounded-xl shadow-md transition'>
         <Tabs
           defaultActiveKey='1'
           items={items}
@@ -165,8 +104,29 @@ function ChatPage() {
           activeKey={selectedTab}
         />
       </div>
-      <div className='w-[70%] bg-gray-100 rounded-xl shadow-md p-5'>
-        <ChatArea chatArea={chatArea} />
+      <div className='absolute w-[70%] right-0 h-full '>
+        <div className='h-full px-5'>
+          <div className='h-full bg-gray-100 shadow-md rounded-xl'>
+            <ChatHeader
+              className='absolute top-4 left-12 right-12'
+              avatar={
+                roomQuery.data?.find((e) => e.roomId === activeId)?.avatar || IMAGES.defaultAvatar
+              }
+              name={
+                roomQuery.data?.find((e) => e.roomId === activeId)?.title || IMAGES.defaultAvatar
+              }
+            />
+            <ChatList
+              avatar={
+                roomQuery.data?.find((e) => e.roomId === activeId)?.avatar || IMAGES.defaultAvatar
+              }
+              dataList={dataChat}
+              className='absolute left-12 right-12 top-20 max-h-[calc(100vh-356px)] overflow-auto'
+              onSubmit={handleSubmit}
+              classNameMessage='absolute bottom-2 left-10 right-10'
+            />
+          </div>
+        </div>
       </div>
     </div>
   );

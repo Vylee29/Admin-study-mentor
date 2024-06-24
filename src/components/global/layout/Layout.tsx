@@ -58,7 +58,7 @@ const menuList = [
 const { Content, Sider } = LayoutAntDesign;
 
 export default function Layout() {
-  const [collapsed, setCollapsed] = useState(false);
+  const collapsed = useSelector((state: RootState) => state.sidebar.collapsed);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -115,7 +115,7 @@ export default function Layout() {
           </div>
         </Sider>
         <LayoutAntDesign className={`bg-white duration-500 ease-in-out ' `}>
-          <Header collapsed={collapsed} setCollapsed={setCollapsed} />
+          <Header />
           <Content
             className='w-full p-6 m-auto transition bg-white-900'
             style={{ overflowY: 'auto', maxHeight: 'calc(100vh - 64px )' }}

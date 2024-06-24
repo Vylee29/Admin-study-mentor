@@ -1,4 +1,4 @@
-import { ACCESS_TOKEN, IS_LOGIN, REFRESH_TOKEN } from '@core/constants/authentication.constants';
+import { ACCESS_TOKEN, IS_LOGIN, REFRESH_TOKEN } from '../constants/authentication.constants';
 
 export const getLocalAccessToken = () => localStorage.getItem(ACCESS_TOKEN);
 
