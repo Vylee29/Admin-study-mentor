@@ -3,7 +3,6 @@ import Layout from '../components/global/layout/Layout';
 import NotFoundPage from '../pages/404/NotFoundPage';
 import ChatPage from '../pages/chat/ChatPage';
 import DashboardPage from '../pages/dashboard/DashboardPage';
-import DetailedInfoDemoPage from '../pages/detailed-info/DetailedInfoDemo';
 import { HomePage } from '../pages/home/HomePage';
 import LoginPage from '../pages/login/LoginPage';
 import { ReportsPage } from '../pages/reports/ReportsPage';
@@ -37,10 +36,6 @@ export const router = createBrowserRouter([
       {
         path: MY_ROUTE.CHAT,
         element: <ChatPage />,
-      },
-      {
-        path: MY_ROUTE.DETAILED_INFO,
-        element: <DetailedInfoDemoPage />,
       },
       {
         path: MY_ROUTE.VOUCHERS,

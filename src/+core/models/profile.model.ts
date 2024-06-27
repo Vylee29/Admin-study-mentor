@@ -1,6 +1,6 @@
 import { Dayjs } from 'dayjs';
+import { Gender, Status } from '../enums/user.enum';
 import { FileAntd, FileReq } from './file.model';
-import { Gender } from '../enums/user.enum';
 
 export type PersonalInformationInput = {
   fullName: string;
@@ -61,6 +61,7 @@ export type UserResp = {
   isActive: boolean;
   averageRate: number;
   avatar: FileReq;
+  status: Status;
 };
 
 export type EducationInfoResp = {

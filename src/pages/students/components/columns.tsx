@@ -1,4 +1,3 @@
-import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import { Avatar, Image } from 'antd';
 import { ColumnsType } from 'antd/es/table';
 import { UserResp } from '../../../+core/models/profile.model';
@@ -45,21 +44,7 @@ export const columns: ColumnsType<UserResp> = [
       ),
   },
   {
-    title: 'Role',
-    dataIndex: 'role',
-    render: (value) =>
-      value == 0 ? (
-        <div className='flex flex-col text-sm font-normal'>Student</div>
-      ) : (
-        <div className='flex flex-col text-sm font-normal'>Tutor</div>
-      ),
-  },
-  {
-    render: () => (
-      <div className='flex gap-[15px]'>
-        <EditOutlined />
-        <DeleteOutlined />
-      </div>
-    ),
+    title: 'Action',
+    dataIndex: 'action',
   },
 ];

@@ -1,11 +1,12 @@
 import { useMutation } from '@tanstack/react-query';
-import { Divider, Form, message } from 'antd';
+import { Divider, Form } from 'antd';
 import { useForm } from 'antd/es/form/Form';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { loginApi, setAccessTokenCookie } from '../../+core/services/authentication.service';
 import { setLoggedIn, setUser } from '../../+core/store/reducers/authentication.reducer';
 import { handleError } from '../../+core/utilities/failure-handler.utitlity';
+import { toastSuccess } from '../../+core/utilities/toast.utility';
 import ButtonPrimary from '../../components/ui/button';
 import CustomPasswordInput from '../../components/ui/form/CustomPasswordInput';
 import { CustomTextInput } from '../../components/ui/form/CustomTextInput';
@@ -27,7 +28,7 @@ export default function LoginPage() {
       setAccessTokenCookie(resp.data.data.accessToken);
       dispatch(setUser(resp.data.data.user));
       dispatch(setLoggedIn(true));
-      message.success('Đăng Nhập thành công');
+      toastSuccess('Đăng Nhập thành công');
       navigate('/dashboard');
     },
     onError: handleError,

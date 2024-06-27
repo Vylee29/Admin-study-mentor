@@ -1,3 +1,4 @@
+import { UserType } from '../enums/user.enum';
 import { FileReq } from './file.model';
 
 export enum OptionReport {
@@ -20,9 +21,11 @@ export type ReportModel = {
   questionId: string;
   questionTitle: string;
   hasFeedback: boolean;
+  userType: UserType;
 };
 
 export type ReportTable = {
+  reportId: string;
   key: string;
   questionName: string;
   FullName: string;
