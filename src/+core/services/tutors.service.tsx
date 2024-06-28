@@ -1,9 +1,7 @@
 import { api } from '../https/http';
-import { ReportListFilter, ReportModel, ReportTable } from '../models/report.model';
 import { StudentListReq } from '../models/student.model';
 import { TutorTable } from '../models/tutor.model';
-import { VoucherModel, VoucherTable } from '../models/voucher.model';
-import { IPaginationInfo, PagingResp } from '../types/paging.type';
+import { PagingResp } from '../types/paging.type';
 import { initKeys } from '../utilities/query-key.utility';
 
 export const tutorListKeys = initKeys('tutor-list-keys');
@@ -12,31 +10,3 @@ export const getTutorsListApi = async (params: StudentListReq) => {
     params,
   });
 };
-
-export const reportListKeys = initKeys('tutor-list-keys');
-export const getReportListApi = async (params: ReportListFilter & IPaginationInfo) => {
-  return api.get<PagingResp<ReportModel[]>>(`api/admin/users/reports`, {
-    params,
-  });
-};
-
-export function convertReportListModelToTable(r: ReportModel): ReportTable {
-  return {
-    key: r.reportId,
-    ...r,
-  };
-}
-
-export const voucherListKeys = initKeys('tutor-list-keys');
-export const getVoucherListApi = async (params: IPaginationInfo) => {
-  return api.get<PagingResp<VoucherModel[]>>(`api/admin/manage/voucher`, {
-    params,
-  });
-};
-
-export function convertVoucherListModelToTable(r: VoucherModel): VoucherTable {
-  return {
-    key: r.voucherId,
-    ...r,
-  };
-}

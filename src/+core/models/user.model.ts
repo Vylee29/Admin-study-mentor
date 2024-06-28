@@ -1,4 +1,5 @@
 import { FileReq } from './file.model';
+import { IFileAttachment } from './tutor.model';
 
 export enum UserRole {
   STUDENT = 0,
@@ -22,6 +23,12 @@ export type UserModel = {
   averageRate: number;
   isOnline: boolean;
   avatar?: FileReq;
+  subjects?: Subject[];
+  certificates: IFileAttachment[];
+};
+
+export type Subject = {
+  name: string;
 };
 
 export type OverviewTutorInfo = {

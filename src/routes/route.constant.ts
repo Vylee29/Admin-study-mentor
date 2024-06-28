@@ -5,9 +5,9 @@ export const MY_ROUTE = {
   TUTORS: '/tutors',
   REPORTS: '/reports',
   CHAT: '/chat',
-  DETAILED_INFO: '/detailed-info',
   VOUCHERS: '/vouchers',
   LOGIN: '/login',
+  QUESTIONS: '/questions',
 };
 
 export const DEFAULT_ROUTE = MY_ROUTE.HOME;

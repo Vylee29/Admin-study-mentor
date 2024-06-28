@@ -3,6 +3,7 @@ import {
   DashboardOutlined,
   FileTextOutlined,
   GiftOutlined,
+  QuestionCircleOutlined,
   TeamOutlined,
   UserOutlined,
 } from '@ant-design/icons';
@@ -10,6 +11,7 @@ import { Layout as LayoutAntDesign, Menu } from 'antd';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Navigate, Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 import { DEFAULT_TAB_ITEM_VALUE } from '../../../+core/constants/commons.constant';
 import { RootState } from '../../../+core/store';
 import { Providers } from '../../../+core/store/provider';
@@ -21,37 +23,37 @@ const menuList = [
   {
     key: 'dashboard',
     icon: <DashboardOutlined />,
-    label: 'Dashboard',
+    label: 'Bảng điều khiển',
   },
   {
     key: 'students',
     icon: <UserOutlined />,
-    label: 'Students',
+    label: 'Học viên',
   },
   {
     key: 'tutors',
     icon: <TeamOutlined />,
-    label: 'Tutors',
+    label: 'Người hướng dẫn',
+  },
+  {
+    key: 'questions',
+    icon: <QuestionCircleOutlined />,
+    label: 'Câu hỏi',
   },
   {
     key: 'chat',
     icon: <CommentOutlined />,
-    label: 'Chat',
+    label: 'Trò chuyện',
   },
   {
     key: 'reports',
     icon: <FileTextOutlined />,
-    label: 'Reports',
+    label: 'Báo cáo',
   },
   {
     key: 'vouchers',
     icon: <GiftOutlined />,
-    label: 'Vouchers',
-  },
-  {
-    key: 'detailed-info',
-    icon: <FileTextOutlined />,
-    label: 'Detailed Infor Demo',
+    label: 'Mã giảm giá',
   },
 ];
 
@@ -98,6 +100,7 @@ export default function Layout() {
     <LayoutAntDesign className='h-screen bg-white'>
       <Providers>
         <Sider breakpoint='lg' width={250} collapsed={collapsed} className=' !bg-blue-500 !px-5 '>
+          <ToastContainer />
           <div className='flex flex-col w-full'>
             <Logo
               title={collapsed ? undefined : 'Study Mentor'}

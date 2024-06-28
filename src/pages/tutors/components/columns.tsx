@@ -1,13 +1,11 @@
-import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import { Avatar, Image } from 'antd';
 import { ColumnsType } from 'antd/es/table';
-import { Link } from 'react-router-dom';
-import { IFileAttachment, TutorTable } from '../../../+core/models/tutor.model';
+import { TutorTable } from '../../../+core/models/tutor.model';
 import { imageUtility } from '../../../+core/utilities/image.utility';
 
 export const columns: ColumnsType<TutorTable> = [
   {
-    title: 'Name',
+    title: 'Tên người hướng dẫn',
     dataIndex: 'fullName',
     render: (value, record) => {
       return (
@@ -36,7 +34,7 @@ export const columns: ColumnsType<TutorTable> = [
     render: (value) => <div className='flex flex-col text-sm font-normal'>{value}</div>,
   },
   {
-    title: 'Status',
+    title: 'Trạng thái',
     dataIndex: 'status',
     render: (value) =>
       value == 0 ? (
@@ -45,44 +43,30 @@ export const columns: ColumnsType<TutorTable> = [
         <div className='text-[#F63F3F]'>Inactive</div>
       ),
   },
+  // {
+  //   title: 'Certificate',
+  //   dataIndex: 'certificate',
+  //   render: (value: IFileAttachment[]) => (
+  //     <div className='flex flex-col text-sm font-normal'>
+  //       {Array.isArray(value) && value.length > 0 ? (
+  //         value.map((item, index) => (
+  //           <Link key={index} to={`${item.fileKey}`} className='text-[#0064FF] underline'>
+  //             {item.fileName}
+  //           </Link>
+  //         ))
+  //       ) : (
+  //         <span>No certificates</span>
+  //       )}
+  //     </div>
+  //   ),
+  // },
   {
-    title: 'Role',
-    dataIndex: 'role',
-    render: (value) =>
-      value == 0 ? (
-        <div className='flex flex-col text-sm font-normal'>Student</div>
-      ) : (
-        <div className='flex flex-col text-sm font-normal'>Tutor</div>
-      ),
-  },
-  {
-    title: 'Certificate',
-    dataIndex: 'certificate',
-    render: (value: IFileAttachment[]) => (
-      <div className='flex flex-col text-sm font-normal'>
-        {Array.isArray(value) && value.length > 0 ? (
-          value.map((item, index) => (
-            <Link key={index} to={`${item.fileKey}`} className='text-[#0064FF] underline'>
-              {item.fileName}
-            </Link>
-          ))
-        ) : (
-          <span>No certificates</span>
-        )}
-      </div>
-    ),
-  },
-  {
-    title: 'Subject',
+    title: 'Môn học',
     dataIndex: 'subject',
     render: (value) => <div className='text-[#0064FF] text-sm font-semibold'>{value}</div>,
   },
   {
-    render: () => (
-      <div className='flex gap-[15px]'>
-        <EditOutlined />
-        <DeleteOutlined />
-      </div>
-    ),
+    title: 'Hành động',
+    dataIndex: 'action',
   },
 ];

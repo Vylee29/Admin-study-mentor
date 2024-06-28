@@ -2,6 +2,7 @@ import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
 import { Button } from 'antd';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import 'react-toastify/dist/ReactToastify.css';
 import { RootState } from '../../../+core/store';
 import { setCollapsed } from '../../../+core/store/reducers/sidebar.reducer';
 import { onConnect, onDisconnect } from '../../../+core/store/reducers/socket.reducer';

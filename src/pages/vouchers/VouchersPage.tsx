@@ -1,4 +1,4 @@
-import { FilterOutlined, SearchOutlined, SortAscendingOutlined } from '@ant-design/icons';
+import { SearchOutlined } from '@ant-design/icons';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { Table } from 'antd';
 import { useMemo } from 'react';
@@ -8,7 +8,7 @@ import {
   convertVoucherListModelToTable,
   getVoucherListApi,
   voucherListKeys,
-} from '../../+core/services/tutors.service';
+} from '../../+core/services/user.service';
 import { IPaginationInfo, initialPagingState } from '../../+core/types/paging.type';
 import { CustomTextInput } from '../../components/ui/form/CustomTextInput';
 import { PaginationCore } from '../../components/ui/pagination/pagination';
@@ -52,10 +52,6 @@ export function VouchersPage() {
           prefix={<SearchOutlined />}
           classNameForm='w-3/5 mb-3'
         />
-        <div className='flex gap-5'>
-          <FilterOutlined />
-          <SortAscendingOutlined />
-        </div>
       </div>
       <div className='flex flex-col py-8 rounded-md bg-white-900'>
         <Table
