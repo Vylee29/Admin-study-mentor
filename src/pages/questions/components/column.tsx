@@ -1,50 +1,33 @@
 import { ColumnsType } from 'antd/es/table';
 import { format } from 'date-fns';
 import { DATE_FORMAT } from '../../../+core/constants/commons.constant';
-import { QuestionStatus } from '../../../+core/enums/question.enum';
 import { GetQuestionResponseModel } from '../../../+core/models/question.model';
-
-const getQuestionStatus = (status: number) => {
-  switch (status) {
-    case QuestionStatus.NEW:
-      return 'New';
-    case QuestionStatus.ACCEPTED:
-      return 'Accepted';
-    case QuestionStatus.DONE:
-      return 'Done';
-    case QuestionStatus.REJECTED:
-      return 'Rejected';
-    case QuestionStatus.EXPIRED:
-      return 'Expired';
-    default:
-      return '-';
-  }
-};
+import { getQuestionStatus } from '../../../+core/utilities/question.utility';
 
 export const columns: ColumnsType<GetQuestionResponseModel> = [
   {
-    title: 'Title',
+    title: 'Tiêu đề câu hỏi',
     dataIndex: 'title',
     render: (value) => {
       return <div className='flex flex-col text-sm font-normal'>{value}</div>;
     },
   },
   {
-    title: 'Ten hoc vien',
+    title: 'Tên học viên',
     dataIndex: 'studentName',
     render: (_, record) => (
       <div className='flex flex-col text-sm font-normal'>{record?.student?.fullName}</div>
     ),
   },
   {
-    title: 'Ten nguoi huong dan',
+    title: 'Tên người hướng dẫn',
     dataIndex: 'tutorName',
     render: (_, record) => (
       <div className='flex flex-col text-sm font-normal'>{record?.tutor?.fullName}</div>
     ),
   },
   {
-    title: 'Thoi gian tao cau hoi',
+    title: 'Thời gian tạo câu hỏi',
     dataIndex: 'createdAt',
     render: (_, record) => (
       <div className='flex flex-col text-sm font-normal'>
@@ -53,7 +36,7 @@ export const columns: ColumnsType<GetQuestionResponseModel> = [
     ),
   },
   {
-    title: 'Thoi gian tra loi',
+    title: 'Thời gian trả lời',
     dataIndex: 'createdAt',
     render: (_, record) => (
       <div className='flex flex-col text-sm font-normal'>
@@ -62,14 +45,14 @@ export const columns: ColumnsType<GetQuestionResponseModel> = [
     ),
   },
   {
-    title: 'Status',
+    title: 'Trạng thái',
     dataIndex: 'status',
     render: (_, record) => (
       <div className='flex flex-col text-sm font-normal'>{getQuestionStatus(record.status)}</div>
     ),
   },
   {
-    title: 'Action',
+    title: 'Hành động',
     dataIndex: 'action',
   },
 ];

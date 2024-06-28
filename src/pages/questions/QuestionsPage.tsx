@@ -1,16 +1,16 @@
-import { SearchOutlined } from '@ant-design/icons';
+import { EyeOutlined, SearchOutlined } from '@ant-design/icons';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
-import { Table } from 'antd';
+import { Button, Table, Tooltip } from 'antd';
 import { useMemo, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { ActionType } from '../../+core/enums/question.enum';
+import { ACTION_TITLE } from '../../+core/constants/shared.contant';
 import { usePagingFilter } from '../../+core/hooks/usePagingFilter';
-import { UserResp } from '../../+core/models/profile.model';
+import { GetQuestionResponseModel } from '../../+core/models/question.model';
 import { StudentListFilter } from '../../+core/models/student.model';
 import { getQuestionListApi, questionListKeys } from '../../+core/services/question.service';
 import { IPaginationInfo, initialPagingState } from '../../+core/types/paging.type';
-import UserAction from '../../components/ui/action/Action';
 import { CustomTextInput } from '../../components/ui/form/CustomTextInput';
+import DetailedQuestionModal from '../../components/ui/modal/DetailedQuestionModal';
 import { PaginationCore } from '../../components/ui/pagination/pagination';
 import { columns as baseColumns } from './components/column';
 
@@ -33,7 +33,7 @@ export function QuestionsPage() {
     debounceTime: 500,
   });
   const [visible, setVisible] = useState(false);
-  const [selectedStudentId, setSelectedStudentId] = useState('');
+  const [selectedQuestion, setSelectedQuestion] = useState<GetQuestionResponseModel>();
 
   const questionListQuery = useQuery({
     queryKey: questionListKeys.list(filter),
@@ -47,23 +47,25 @@ export function QuestionsPage() {
     placeholderData: keepPreviousData,
   });
 
-  const handleViewDetail = (student: UserResp) => {
-    setSelectedStudentId(student.id);
+  const handleViewDetail = (question: GetQuestionResponseModel) => {
+    setSelectedQuestion(question);
     setVisible(true);
   };
 
   // Update the columns with action handlers
   const columns = useMemo(() => {
     return baseColumns.map((col) => {
-      if (col.title === 'Action') {
+      if (col.title === ACTION_TITLE) {
         return {
           ...col,
-          render: (value: any, record: UserResp) => (
-            <UserAction
-              record={record}
-              handleViewDetail={handleViewDetail}
-              type={ActionType.QUESTION}
-            />
+          render: (value: any, record: GetQuestionResponseModel) => (
+            <Tooltip placement='top' title='Xem chi tiết'>
+              <Button
+                type='primary'
+                icon={<EyeOutlined />}
+                onClick={() => handleViewDetail(record)}
+              />
+            </Tooltip>
           ),
         };
       }
@@ -73,6 +75,13 @@ export function QuestionsPage() {
 
   return (
     <div>
+      <DetailedQuestionModal
+        setVisible={setVisible}
+        title='Chi tiết câu hỏi'
+        visible={visible}
+        questionId={selectedQuestion?.questionId}
+        status={selectedQuestion?.status}
+      />
       <span className='text-[24px] font-bold text-black-800'>Questions</span>
       <div className='text-[16px] text-gray-500 pb-6'>
         {questionListQuery.data?.data.length} kết quả tìm thấy

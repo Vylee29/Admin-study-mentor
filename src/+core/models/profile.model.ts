@@ -62,6 +62,7 @@ export type UserResp = {
   averageRate: number;
   avatar: FileReq;
   status: Status;
+  createdAt: Date;
 };
 
 export type EducationInfoResp = {

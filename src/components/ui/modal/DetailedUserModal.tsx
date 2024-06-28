@@ -61,13 +61,11 @@ function DetailedUserModal({
       <div>
         <div className='flex gap-x-2 items-center'>
           {/* Avatar and full name */}
-          <div className='w-10 h-10 rounded-full'>
-            <Image
-              className='w-full h-full rounded-full'
-              src={imageUtility(getUserByIdQuery?.data?.avatar?.fileKey)}
-              alt='avatar'
-            />
-          </div>
+          <Image
+            className='!w-10 !h-10 rounded-full object-cover'
+            src={imageUtility(getUserByIdQuery?.data?.avatar?.fileKey)}
+            alt='avatar'
+          />
           <p className='font-semibold'>{getUserByIdQuery?.data?.fullName}</p>
         </div>
         {/* Email */}

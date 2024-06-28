@@ -3,6 +3,7 @@ import { keepPreviousData, useMutation, useQuery } from '@tanstack/react-query';
 import { Table } from 'antd';
 import { useMemo, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import { ACTION_TITLE } from '../../+core/constants/shared.contant';
 import { Status, UserType } from '../../+core/enums/user.enum';
 import { usePagingFilter } from '../../+core/hooks/usePagingFilter';
 import { UserResp } from '../../+core/models/profile.model';
@@ -12,10 +13,10 @@ import { updateUserStatus } from '../../+core/services/user.service';
 import { IPaginationInfo, initialPagingState } from '../../+core/types/paging.type';
 import { handleError } from '../../+core/utilities/failure-handler.utitlity';
 import { toastSuccess } from '../../+core/utilities/toast.utility';
-import UserAction from '../../components/ui/action/Action';
 import { CustomTextInput } from '../../components/ui/form/CustomTextInput';
 import DetailedUserModal from '../../components/ui/modal/DetailedUserModal';
 import { PaginationCore } from '../../components/ui/pagination/pagination';
+import UserAction from '../../components/ui/user-action/UserAction';
 import { columns as baseColumns } from './components/columns';
 
 export function StudentsPage() {
@@ -89,7 +90,7 @@ export function StudentsPage() {
   // Update the columns with action handlers
   const columns = useMemo(() => {
     return baseColumns.map((col) => {
-      if (col.title === 'Action') {
+      if (col.title === ACTION_TITLE) {
         return {
           ...col,
           render: (value: any, record: UserResp) => (

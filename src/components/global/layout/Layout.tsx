@@ -23,37 +23,37 @@ const menuList = [
   {
     key: 'dashboard',
     icon: <DashboardOutlined />,
-    label: 'Dashboard',
+    label: 'Bảng điều khiển',
   },
   {
     key: 'students',
     icon: <UserOutlined />,
-    label: 'Students',
+    label: 'Học viên',
   },
   {
     key: 'tutors',
     icon: <TeamOutlined />,
-    label: 'Tutors',
+    label: 'Người hướng dẫn',
   },
   {
     key: 'questions',
     icon: <QuestionCircleOutlined />,
-    label: 'Quetions',
+    label: 'Câu hỏi',
   },
   {
     key: 'chat',
     icon: <CommentOutlined />,
-    label: 'Chat',
+    label: 'Trò chuyện',
   },
   {
     key: 'reports',
     icon: <FileTextOutlined />,
-    label: 'Reports',
+    label: 'Báo cáo',
   },
   {
     key: 'vouchers',
     icon: <GiftOutlined />,
-    label: 'Vouchers',
+    label: 'Mã giảm giá',
   },
 ];
 

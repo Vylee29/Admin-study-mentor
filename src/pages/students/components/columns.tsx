@@ -5,7 +5,7 @@ import { imageUtility } from '../../../+core/utilities/image.utility';
 
 export const columns: ColumnsType<UserResp> = [
   {
-    title: 'Name',
+    title: 'Tên học viên',
     dataIndex: 'fullName',
     render: (value, record) => {
       return (
@@ -34,7 +34,7 @@ export const columns: ColumnsType<UserResp> = [
     render: (value) => <div className='flex flex-col text-sm font-normal'>{value}</div>,
   },
   {
-    title: 'Status',
+    title: 'Trạng thái',
     dataIndex: 'status',
     render: (value) =>
       value === 0 ? (
@@ -44,7 +44,7 @@ export const columns: ColumnsType<UserResp> = [
       ),
   },
   {
-    title: 'Action',
+    title: 'Hành động',
     dataIndex: 'action',
   },
 ];

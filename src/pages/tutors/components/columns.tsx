@@ -5,7 +5,7 @@ import { imageUtility } from '../../../+core/utilities/image.utility';
 
 export const columns: ColumnsType<TutorTable> = [
   {
-    title: 'Name',
+    title: 'Tên người hướng dẫn',
     dataIndex: 'fullName',
     render: (value, record) => {
       return (
@@ -34,7 +34,7 @@ export const columns: ColumnsType<TutorTable> = [
     render: (value) => <div className='flex flex-col text-sm font-normal'>{value}</div>,
   },
   {
-    title: 'Status',
+    title: 'Trạng thái',
     dataIndex: 'status',
     render: (value) =>
       value == 0 ? (
@@ -61,12 +61,12 @@ export const columns: ColumnsType<TutorTable> = [
   //   ),
   // },
   {
-    title: 'Subject',
+    title: 'Môn học',
     dataIndex: 'subject',
     render: (value) => <div className='text-[#0064FF] text-sm font-semibold'>{value}</div>,
   },
   {
-    title: 'Action',
+    title: 'Hành động',
     dataIndex: 'action',
   },
 ];
