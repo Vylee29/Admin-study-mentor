@@ -1,4 +1,10 @@
-import { QuestionStatus, QuestionStep } from '../enums/question.enum';
+import {
+  QuestionEnum,
+  QuestionStatus,
+  QuestionStatusString,
+  QuestionStep,
+} from '../enums/question.enum';
+import { IPaginationInfo } from '../types/paging.type';
 import { FileReq } from './file.model';
 import { Subject, UserModel } from './user.model';
 
@@ -16,11 +22,6 @@ export interface AnswerResponseModel {
   updatedAt: Date;
   content: string;
   fileAttachmentAnswers: FileReq[];
-}
-
-export enum QuestionEnum {
-  GG_MEET = 0,
-  FILE = 1,
 }
 
 export type GetQuestionResponseModel = {
@@ -47,3 +48,8 @@ export type GetQuestionResponseModel = {
   timeMetting?: number;
   meetingURL?: string;
 };
+
+export type QuestionListFilter = {
+  status?: QuestionStatusString;
+};
+export type QuestionListReq = QuestionListFilter & IPaginationInfo;

@@ -128,13 +128,13 @@ function ReportQuestionPage({
                   className='text-lg text-black'
                 />
                 {detailedQuestionQuery?.data?.answers &&
-                  detailedQuestionQuery?.data?.answers[0].fileAttachmentAnswers.length > 0 && (
+                  detailedQuestionQuery?.data?.answers[0]?.fileAttachmentAnswers.length > 0 && (
                     <>
                       <div className='w-full font-bold text-lg text-black mb-4 items-center flex'>
                         Tệp đính kèm
                       </div>
                       <ul className='flex gap-2 flex-wrap pl-0 w-full'>
-                        {detailedQuestionQuery?.data?.answers?.[0].fileAttachmentAnswers?.map(
+                        {detailedQuestionQuery?.data?.answers?.[0]?.fileAttachmentAnswers?.map(
                           (file) => {
                             return (
                               <div

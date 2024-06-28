@@ -36,4 +36,5 @@ export type ReportTable = {
   questionId: string;
   questionTitle: string;
   hasFeedback: boolean;
+  userType: UserType;
 };

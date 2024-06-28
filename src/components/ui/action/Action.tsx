@@ -1,14 +1,16 @@
 import { EyeOutlined, LineOutlined, PlusOutlined } from '@ant-design/icons';
 import { Button, Tooltip } from 'antd';
+import { ActionType } from '../../../+core/enums/question.enum';
 import { UserResp } from '../../../+core/models/profile.model';
 
 type UserActionProps = {
   handleViewDetail: (record: UserResp) => void;
   handleStatusChange?: (record: UserResp) => void;
   record: UserResp;
+  type?: ActionType;
 };
 
-function UserAction({ record, handleStatusChange, handleViewDetail }: UserActionProps) {
+function UserAction({ record, handleStatusChange, handleViewDetail, type }: UserActionProps) {
   return (
     <div className='flex gap-[15px]'>
       <Tooltip placement='top' title='Xem chi tiết'>
@@ -23,13 +25,15 @@ function UserAction({ record, handleStatusChange, handleViewDetail }: UserAction
           />
         </Tooltip>
       ) : (
-        <Tooltip placement='top' title='Kích hoạt'>
-          <Button
-            className='bg-green-500'
-            icon={<PlusOutlined />}
-            onClick={() => handleStatusChange && handleStatusChange(record)}
-          />
-        </Tooltip>
+        type === ActionType.USER && (
+          <Tooltip placement='top' title='Kích hoạt'>
+            <Button
+              className='bg-green-500'
+              icon={<PlusOutlined />}
+              onClick={() => handleStatusChange && handleStatusChange(record)}
+            />
+          </Tooltip>
+        )
       )}
     </div>
   );

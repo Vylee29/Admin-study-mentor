@@ -40,6 +40,8 @@ function DetailedUserModal({
     <Modal
       open={visible}
       title={title}
+      closable={true}
+      onCancel={onClose}
       closeIcon={null}
       footer={[
         <Button key='cancel' onClick={onClose}>

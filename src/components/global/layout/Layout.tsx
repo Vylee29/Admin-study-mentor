@@ -3,6 +3,7 @@ import {
   DashboardOutlined,
   FileTextOutlined,
   GiftOutlined,
+  QuestionCircleOutlined,
   TeamOutlined,
   UserOutlined,
 } from '@ant-design/icons';
@@ -35,6 +36,11 @@ const menuList = [
     label: 'Tutors',
   },
   {
+    key: 'questions',
+    icon: <QuestionCircleOutlined />,
+    label: 'Quetions',
+  },
+  {
     key: 'chat',
     icon: <CommentOutlined />,
     label: 'Chat',
@@ -48,11 +54,6 @@ const menuList = [
     key: 'vouchers',
     icon: <GiftOutlined />,
     label: 'Vouchers',
-  },
-  {
-    key: 'detailed-info',
-    icon: <FileTextOutlined />,
-    label: 'Detailed Infor Demo',
   },
 ];
 

@@ -8,11 +8,26 @@ type IProps = {
   title: string;
   questionId?: string;
   userType?: UserType;
+  setVisible: (value: boolean) => void;
 };
 
-function DetailedReportModal({ title, visible, reportId, questionId, userType }: IProps) {
+function DetailedReportModal({
+  title,
+  visible,
+  reportId,
+  questionId,
+  userType,
+  setVisible,
+}: IProps) {
   return (
-    <Modal open={visible} title={title} closeIcon={null} className='!w-2/3' footer={null}>
+    <Modal
+      open={visible}
+      title={title}
+      closeIcon={true}
+      className='!w-2/3'
+      footer={null}
+      onCancel={() => setVisible(false)}
+    >
       {questionId && reportId && userType && (
         <ReportQuestionPage questionId={questionId} reportId={reportId} userType={userType} />
       )}

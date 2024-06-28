@@ -85,6 +85,7 @@ export function ReportsPage() {
         questionId={selectedReport?.questionId}
         visible={visible}
         userType={selectedReport?.userType}
+        setVisible={setVisible}
       />
       <span className='text-[24px] font-bold text-black-800'>Newest Report</span>
       <div className='text-[16px] text-gray-500 pb-6'>
