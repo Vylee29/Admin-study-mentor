@@ -1,4 +1,4 @@
-import { SearchOutlined } from '@ant-design/icons';
+import { SearchOutlined, SortAscendingOutlined, SortDescendingOutlined } from '@ant-design/icons';
 import { keepPreviousData, useMutation, useQuery } from '@tanstack/react-query';
 import { Table } from 'antd';
 import { useMemo, useState } from 'react';
@@ -39,6 +39,11 @@ export function TutorsPage() {
   });
   const [visible, setVisible] = useState(false);
   const [selectedTutorId, setSelectedStudentId] = useState('');
+  const [sortOrder, setSortOrder] = useState<'ascend' | 'descend' | null>('ascend');
+
+  const handleSort = () => {
+    setSortOrder((prevOrder) => (prevOrder === 'ascend' ? 'descend' : 'ascend'));
+  };
 
   const studentListQuery = useQuery({
     queryKey: tutorListKeys.list(filter),
@@ -90,6 +95,14 @@ export function TutorsPage() {
   // Update the columns with action handlers
   const columns = useMemo(() => {
     return baseColumns.map((col) => {
+      if ('dataIndex' in col && col.dataIndex === 'fullName') {
+        return {
+          ...col,
+          sorter: (a: UserResp, b: UserResp) => a.fullName.localeCompare(b.fullName),
+          sortOrder: col.dataIndex === 'fullName' ? sortOrder : null,
+          sortDirections: ['ascend', 'descend'],
+        };
+      }
       if (col.title === ACTION_TITLE) {
         return {
           ...col,
@@ -104,7 +117,7 @@ export function TutorsPage() {
       }
       return col;
     });
-  }, [handleViewDetail, handleStatusChange]);
+  }, [handleViewDetail, handleStatusChange, sortOrder]);
 
   return (
     <div>
@@ -130,6 +143,11 @@ export function TutorsPage() {
             handleFilterChange({ search: e.target.value });
           }}
         />
+        {sortOrder === 'ascend' ? (
+          <SortAscendingOutlined onClick={handleSort} />
+        ) : (
+          <SortDescendingOutlined onClick={handleSort} />
+        )}
       </div>
       <div className='flex flex-col py-8 rounded-md bg-white-900'>
         <Table

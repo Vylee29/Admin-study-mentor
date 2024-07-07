@@ -1,4 +1,9 @@
-import { EyeOutlined, SearchOutlined } from '@ant-design/icons';
+import {
+  EyeOutlined,
+  SearchOutlined,
+  SortAscendingOutlined,
+  SortDescendingOutlined,
+} from '@ant-design/icons';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { Button, Table, Tooltip } from 'antd';
 import { useMemo, useState } from 'react';
@@ -34,7 +39,11 @@ export function QuestionsPage() {
   });
   const [visible, setVisible] = useState(false);
   const [selectedQuestion, setSelectedQuestion] = useState<GetQuestionResponseModel>();
+  const [sortOrder, setSortOrder] = useState<'ascend' | 'descend' | null>('ascend');
 
+  const handleSort = () => {
+    setSortOrder((prevOrder) => (prevOrder === 'ascend' ? 'descend' : 'ascend'));
+  };
   const questionListQuery = useQuery({
     queryKey: questionListKeys.list(filter),
     queryFn: () => getQuestionListApi(filter),
@@ -55,6 +64,26 @@ export function QuestionsPage() {
   // Update the columns with action handlers
   const columns = useMemo(() => {
     return baseColumns.map((col) => {
+      if ('dataIndex' in col && col.dataIndex === 'title') {
+        return {
+          ...col,
+          sorter: (a: GetQuestionResponseModel, b: GetQuestionResponseModel) => {
+            if (a.title && b.title) {
+              return a.title.localeCompare(b.title);
+            }
+            if (a.title === null || a.title === undefined) {
+              return 1;
+            }
+            if (b.title === null || b.title === undefined) {
+              return -1;
+            }
+            return 0;
+          },
+          sortOrder: col.dataIndex === 'title' ? sortOrder : null,
+          sortDirections: ['ascend', 'descend'],
+        };
+      }
+
       if (col.title === ACTION_TITLE) {
         return {
           ...col,
@@ -71,7 +100,7 @@ export function QuestionsPage() {
       }
       return col;
     });
-  }, [handleViewDetail]);
+  }, [handleViewDetail, sortOrder]);
 
   return (
     <div>
@@ -95,6 +124,11 @@ export function QuestionsPage() {
             handleFilterChange({ search: e.target.value });
           }}
         />
+        {sortOrder === 'ascend' ? (
+          <SortAscendingOutlined onClick={handleSort} />
+        ) : (
+          <SortDescendingOutlined onClick={handleSort} />
+        )}
       </div>
       <div className='flex flex-col py-8 rounded-md bg-white-900'>
         <Table
