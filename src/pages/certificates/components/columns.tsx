@@ -1,25 +1,25 @@
 import { ColumnsType } from 'antd/es/table';
-import { format } from 'date-fns';
-import { DATE_FORMAT } from '../../../+core/constants/commons.constant';
 import { ACTION_TITLE } from '../../../+core/constants/shared.contant';
-import { ReportTable } from '../../../+core/models/report.model';
+import { CertificateNotApproved } from '../../../+core/models/tutor.model';
 
-export const columns: ColumnsType<ReportTable> = [
+export const columns: ColumnsType<CertificateNotApproved> = [
   {
-    title: 'Tiêu đề câu hỏi',
-    dataIndex: 'questionTitle',
-    render: (value) => <div className='flex flex-col text-sm font-normal'>{value}</div>,
-  },
-  {
-    title: 'Người báo cáo',
+    title: 'Tên người hướng dẫn',
     dataIndex: 'fullName',
     render: (value) => <div className='flex flex-col text-sm font-normal'>{value}</div>,
   },
   {
-    title: 'Ngày báo cáo',
-    dataIndex: 'createdAt',
-    render: (value) => (
-      <div className='flex flex-col text-sm font-normal'>{format(value, DATE_FORMAT)}</div>
+    title: 'Email',
+    dataIndex: 'email',
+    render: (value) => <div className='flex flex-col text-sm font-normal'>{value}</div>,
+  },
+  {
+    title: 'Môn học đăng ký',
+    dataIndex: 'subjectIds',
+    render: (value, record) => (
+      <div className='flex flex-col text-sm font-normal'>
+        {record.subjectIds.map((subject) => subject.name).join(', ')}
+      </div>
     ),
   },
   // {
@@ -39,16 +39,6 @@ export const columns: ColumnsType<ReportTable> = [
   //     </div>
   //   ),
   // },
-  {
-    title: 'Trạng thái phản hổi',
-    dataIndex: 'hasFeedback',
-    render: (value) =>
-      value ? (
-        <div className='text-[#28A745] font-semibold'>Done</div>
-      ) : (
-        <div className='text-[#F63F3F] font-semibold '>Not yet</div>
-      ),
-  },
   {
     title: ACTION_TITLE,
     dataIndex: 'action',

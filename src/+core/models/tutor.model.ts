@@ -1,3 +1,4 @@
+import { TutorState } from '../enums/user.enum';
 import { UserResp } from './profile.model';
 
 export interface IFileAttachment {
@@ -29,3 +30,21 @@ export interface TutorModel extends IGetUserResponse {
   subject: string;
 }
 export type TutorTable = TutorModel & UserResp;
+
+export type Subject = {
+  id: string;
+  name: string;
+};
+
+export type CertificateNotApproved = {
+  userId: string;
+  fullName: string;
+  email: string;
+  certificates: IFileAttachment[];
+  subjectIds: Subject[];
+};
+
+export type VerifyCertificateReq = {
+  userId: string;
+  tutorState: TutorState;
+};

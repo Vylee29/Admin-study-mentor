@@ -11,6 +11,7 @@ import { CustomTextInput } from '../../components/ui/form/CustomTextInput';
 import { PaginationCore } from '../../components/ui/pagination/pagination';
 import { columns as baseColumns } from './components/columns';
 
+import { ACTION_TITLE } from '../../+core/constants/shared.contant';
 import {
   convertReportListModelToTable,
   getReportListApi,
@@ -59,7 +60,7 @@ export function ReportsPage() {
   // Update the columns with action handlers
   const columns = useMemo(() => {
     return baseColumns.map((col) => {
-      if (col.title === 'Action') {
+      if (col.title === ACTION_TITLE) {
         return {
           ...col,
           render: (value: any, record: ReportModel) => (

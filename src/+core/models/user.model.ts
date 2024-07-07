@@ -1,3 +1,4 @@
+import { TutorState } from '../enums/user.enum';
 import { FileReq } from './file.model';
 import { IFileAttachment } from './tutor.model';
 
@@ -17,7 +18,7 @@ export type UserModel = {
   fullName: string;
   role: number;
   phone: string;
-  tutorState?: number;
+  tutorState?: TutorState;
   status: number;
   dateOfBirth?: number;
   averageRate: number;

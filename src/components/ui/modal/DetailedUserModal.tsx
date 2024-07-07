@@ -106,7 +106,7 @@ function DetailedUserModal({
                     <span key={index}>{item.name},&nbsp; </span>
                   ))
                 ) : (
-                  <span>No certificates</span>
+                  <span>Không có môn học nào</span>
                 )}
               </div>
             </div>

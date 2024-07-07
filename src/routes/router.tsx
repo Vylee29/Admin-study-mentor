@@ -1,6 +1,7 @@
 import { createBrowserRouter } from 'react-router-dom';
 import Layout from '../components/global/layout/Layout';
 import NotFoundPage from '../pages/404/NotFoundPage';
+import { CertificatesPage } from '../pages/certificates/CertificatesPage';
 import ChatPage from '../pages/chat/ChatPage';
 import DashboardPage from '../pages/dashboard/DashboardPage';
 import { HomePage } from '../pages/home/HomePage';
@@ -45,6 +46,10 @@ export const router = createBrowserRouter([
       {
         path: MY_ROUTE.VOUCHERS,
         element: <VouchersPage />,
+      },
+      {
+        path: MY_ROUTE.CERTIFICATES,
+        element: <CertificatesPage />,
       },
     ],
   },

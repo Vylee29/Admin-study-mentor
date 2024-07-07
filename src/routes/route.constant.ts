@@ -8,6 +8,7 @@ export const MY_ROUTE = {
   VOUCHERS: '/vouchers',
   LOGIN: '/login',
   QUESTIONS: '/questions',
+  CERTIFICATES: '/certificates',
 };
 
 export const DEFAULT_ROUTE = MY_ROUTE.HOME;

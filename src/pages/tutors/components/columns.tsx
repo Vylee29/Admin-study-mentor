@@ -1,5 +1,6 @@
 import { Avatar, Image } from 'antd';
 import { ColumnsType } from 'antd/es/table';
+import { ACTION_TITLE } from '../../../+core/constants/shared.contant';
 import { TutorTable } from '../../../+core/models/tutor.model';
 import { imageUtility } from '../../../+core/utilities/image.utility';
 
@@ -66,7 +67,7 @@ export const columns: ColumnsType<TutorTable> = [
     render: (value) => <div className='text-[#0064FF] text-sm font-semibold'>{value}</div>,
   },
   {
-    title: 'Hành động',
+    title: ACTION_TITLE,
     dataIndex: 'action',
   },
 ];

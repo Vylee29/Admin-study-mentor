@@ -4,6 +4,7 @@ import {
   FileTextOutlined,
   GiftOutlined,
   QuestionCircleOutlined,
+  SafetyCertificateOutlined,
   TeamOutlined,
   UserOutlined,
 } from '@ant-design/icons';
@@ -39,6 +40,11 @@ const menuList = [
     key: 'questions',
     icon: <QuestionCircleOutlined />,
     label: 'Câu hỏi',
+  },
+  {
+    key: 'certificates',
+    icon: <SafetyCertificateOutlined />,
+    label: 'Chứng chỉ',
   },
   {
     key: 'chat',

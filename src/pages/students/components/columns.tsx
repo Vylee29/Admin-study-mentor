@@ -1,5 +1,6 @@
 import { Avatar, Image } from 'antd';
 import { ColumnsType } from 'antd/es/table';
+import { ACTION_TITLE } from '../../../+core/constants/shared.contant';
 import { UserResp } from '../../../+core/models/profile.model';
 import { imageUtility } from '../../../+core/utilities/image.utility';
 
@@ -44,7 +45,7 @@ export const columns: ColumnsType<UserResp> = [
       ),
   },
   {
-    title: 'Hành động',
+    title: ACTION_TITLE,
     dataIndex: 'action',
   },
 ];

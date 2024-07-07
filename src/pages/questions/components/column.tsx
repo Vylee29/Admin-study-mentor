@@ -1,6 +1,7 @@
 import { ColumnsType } from 'antd/es/table';
 import { format } from 'date-fns';
 import { DATE_FORMAT } from '../../../+core/constants/commons.constant';
+import { ACTION_TITLE } from '../../../+core/constants/shared.contant';
 import { GetQuestionResponseModel } from '../../../+core/models/question.model';
 import { getQuestionStatus } from '../../../+core/utilities/question.utility';
 
@@ -52,7 +53,7 @@ export const columns: ColumnsType<GetQuestionResponseModel> = [
     ),
   },
   {
-    title: 'Hành động',
+    title: ACTION_TITLE,
     dataIndex: 'action',
   },
 ];
