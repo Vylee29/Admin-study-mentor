@@ -44,9 +44,9 @@ export const columns: ColumnsType<ReportTable> = [
     dataIndex: 'hasFeedback',
     render: (value) =>
       value ? (
-        <div className='text-[#28A745] font-semibold'>Done</div>
+        <div className='text-[#28A745] font-semibold'>Đã xong</div>
       ) : (
-        <div className='text-[#F63F3F] font-semibold '>Not yet</div>
+        <div className='text-[#F63F3F] font-semibold '>Chưa phản hồi</div>
       ),
   },
   {

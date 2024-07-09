@@ -21,7 +21,7 @@ export type CustomTextAreaInputProps<T extends object> = {
   value?: string;
   onChange?: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
   autoFocus?: boolean;
-  fileUpload: React.ReactNode;
+  fileUpload?: React.ReactNode;
   isActive?: boolean;
 } & FormItemProps<T>;
 

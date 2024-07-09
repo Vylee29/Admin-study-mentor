@@ -44,20 +44,28 @@ export function DetailedQuestion({ questionId }: IProps) {
           <div className='h-[27px] w-[3px] bg-primary-600 mr-2 inline-block' />
           Thông tin câu hỏi
         </div>
-        <div className='h-[1px] w-full mb-4 bg-gray-600' />
         {detailedQuestionQuery?.isFetching ? (
           <CustomSkeletonParagraph height={60} />
         ) : (
           <>
+            {detailedQuestionQuery?.data?.title ? (
+              <div className='text-lg text-black flex items-center gap-1'>
+                <div className='font-bold'>Tiêu đề: </div>
+                <span>{detailedQuestionQuery?.data?.title}</span>
+              </div>
+            ) : (
+              <div className='text-gray-500 italic text-sm'>Không có tiêu đề</div>
+            )}
+            <div className='font-bold text-lg'>Nội dung câu hỏi:</div>
             {detailedQuestionQuery?.data?.content ? (
               <div
                 dangerouslySetInnerHTML={{
-                  __html: detailedQuestionQuery?.data?.content || '',
+                  __html: detailedQuestionQuery?.data.content,
                 }}
-                className='text-lg text-black'
+                className='border rounded-lg border-gray-600 border-solid p-2 mt-2'
               />
             ) : (
-              <div className='text-gray-500 italic text-sm'>Trống</div>
+              <div className='text-gray-300 text-base italic'>Không có nội dung</div>
             )}
 
             {detailedQuestionQuery?.data?.fileQuestions &&
@@ -69,12 +77,12 @@ export function DetailedQuestion({ questionId }: IProps) {
                   <ul className='flex gap-2 flex-wrap pl-0 w-full'>
                     {detailedQuestionQuery?.data?.fileQuestions?.map((file) => {
                       return (
-                        <div key={file.fileKey} className='flex gap-2 items-center'>
+                        <div key={file.fileKey} className='flex gap-2 items-center w-full'>
                           <div
                             key={file.fileKey}
-                            className='border rounded-lg border-gray-600 flex items-center justify-between p-4 border-solid'
+                            className='border rounded-lg border-gray-600 flex items-center justify-between p-4 border-solid w-full'
                           >
-                            <div className='flex items-center'></div>
+                            <div className='flex items-center'>{file.fileName}</div>
                             <DownloadOutlined className='text-[#4EA8B4] text-2xl cursor-pointer' />
                           </div>
                         </div>
@@ -91,7 +99,6 @@ export function DetailedQuestion({ questionId }: IProps) {
           <div className='h-[27px] w-[3px] bg-primary-600 mr-2 inline-block' />
           Thông tin câu trả lời
         </div>
-        <div className='h-[1px] w-full mb-4 bg-gray-600' />
         {detailedQuestionQuery?.isFetching ? (
           <CustomSkeletonParagraph height={60} />
         ) : (
@@ -99,17 +106,17 @@ export function DetailedQuestion({ questionId }: IProps) {
             {detailedQuestionQuery?.data?.answers?.[0]?.content ? (
               <div
                 dangerouslySetInnerHTML={{
-                  __html: detailedQuestionQuery?.data?.answers?.[0]?.content || '',
+                  __html: detailedQuestionQuery?.data.answers?.[0]?.content,
                 }}
-                className='text-lg text-black'
+                className='border rounded-lg border-gray-600 border-solid p-2'
               />
             ) : (
-              <div className='text-gray-500 italic text-sm'>Trống</div>
+              <div className='text-gray-300 text-base italic'>Không có nội dung</div>
             )}
             {detailedQuestionQuery?.data?.answers &&
               detailedQuestionQuery?.data?.answers[0]?.fileAttachmentAnswers.length > 0 && (
                 <>
-                  <div className='w-full font-bold text-lg text-black mb-4 items-center flex'>
+                  <div className='w-full font-bold text-lg text-black mb-4 items-center flex mt-2'>
                     Tệp đính kèm
                   </div>
                   <ul className='flex gap-2 flex-wrap pl-0 w-full'>

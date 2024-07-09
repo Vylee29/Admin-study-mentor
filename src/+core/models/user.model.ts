@@ -60,3 +60,16 @@ export type ResetPasswordReq = {
   passwordOld: string;
   passwordNew: string;
 };
+
+export type FeedbackReportInput = {
+  content: string;
+};
+
+export type FeedbackReportReq = {
+  reportId: string;
+  fullName: string;
+  userId: string;
+  questionName: string;
+  content: string;
+  feedback: string;
+};

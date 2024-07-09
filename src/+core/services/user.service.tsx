@@ -2,7 +2,7 @@ import { Status } from '../enums/user.enum';
 import { api } from '../https/http';
 import { BaseResp } from '../models/base.model';
 import { ReportListFilter, ReportModel, ReportTable } from '../models/report.model';
-import { UserModel } from '../models/user.model';
+import { FeedbackReportReq, UserModel } from '../models/user.model';
 import { VoucherModel, VoucherTable } from '../models/voucher.model';
 import { IPaginationInfo, PagingResp } from '../types/paging.type';
 import { initKeys } from '../utilities/query-key.utility';
@@ -46,12 +46,11 @@ export function convertVoucherListModelToTable(r: VoucherModel): VoucherTable {
   };
 }
 
-export const getStudentReportKeys = initKeys('student-report-keys');
-export const getStudentReportApi = async (reportId: string) => {
-  return api.get<PagingResp<ReportModel>>(`/api/student/report-student/${reportId}`);
+export const getDetailedReportKeys = initKeys('detailed-report-keys');
+export const getDetailedReportApi = async (reportId: string) => {
+  return api.get<PagingResp<ReportModel>>(`api/admin/users/report/${reportId}`);
 };
 
-export const getTutorReportKeys = initKeys('tutor-report-keys');
-export const getTutorReportApi = async (reportId: string) => {
-  return api.get<PagingResp<ReportModel>>(`/api/tutor/report-tutor/${reportId}`);
+export const feedbackReportApi = async (req: FeedbackReportReq) => {
+  return api.post('api/admin/report/feedback', req);
 };

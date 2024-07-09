@@ -13,7 +13,7 @@ export type ReportListFilter = {
 export type ReportModel = {
   reportId: string;
   questionName: string;
-  FullName: string;
+  fullName: string;
   content: string;
   userId: string;
   attachFiles?: FileReq[];
@@ -22,13 +22,14 @@ export type ReportModel = {
   questionTitle: string;
   hasFeedback: boolean;
   userType: UserType;
+  contentFeedback?: string;
 };
 
 export type ReportTable = {
   reportId: string;
   key: string;
   questionName: string;
-  FullName: string;
+  fullName: string;
   content: string;
   userId: string;
   attachFiles?: FileReq[];
