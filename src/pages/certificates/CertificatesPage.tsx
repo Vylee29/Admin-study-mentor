@@ -79,10 +79,11 @@ export function CertificatesPage() {
     setVisible(false);
   };
 
-  const handleDeclineStudent = () => {
+  const handleDeclineStudent = (content: string) => {
     updateCertificateStatusMutation.mutate({
       userId: selectedCertificate?.userId || '',
       tutorState: TutorState.CERTIFICATE_REJECTED,
+      content,
     });
     setVisible(false);
   };

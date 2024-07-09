@@ -47,4 +47,5 @@ export type CertificateNotApproved = {
 export type VerifyCertificateReq = {
   userId: string;
   tutorState: TutorState;
+  content?: string;
 };

@@ -1,6 +1,8 @@
 'use client';
 import { DownloadOutlined } from '@ant-design/icons';
 import { Button, Modal } from 'antd';
+import TextArea from 'antd/es/input/TextArea';
+import { ChangeEvent, useState } from 'react';
 import { CertificateNotApproved } from '../../../+core/models/tutor.model';
 import { imageUtility } from '../../../+core/utilities/image.utility';
 
@@ -16,27 +18,40 @@ function DetailedCertificate({
   visible: boolean;
   setVisible: (value: boolean) => void;
   onApprove: () => void;
-  onDecline: () => void;
+  onDecline: (content: string) => void;
   title: string;
 }) {
+  const [showInput, setShowInput] = useState(false);
+  const [input, setInput] = useState('');
+
+  const handleDecline = () => {
+    if (showInput) {
+      onDecline(input);
+    } else setShowInput(true);
+  };
+
   return (
     <Modal
+      width={700}
       open={visible}
       title={title}
       closable={true}
       onCancel={() => setVisible(false)}
+      afterClose={() => setShowInput(false)}
       closeIcon={null}
       footer={[
         <Button key='cancel' onClick={() => setVisible(false)}>
           Hủy
         </Button>,
         <>
-          <Button key='save' onClick={onDecline} className='!bg-red-600 !text-white-900'>
-            Từ chối
+          <Button key='save' onClick={handleDecline} className='!bg-red-600 !text-white-900'>
+            {showInput ? 'Từ chối' : 'Nhập lý do từ chối'}
           </Button>
-          <Button key='save' onClick={onApprove} className='!bg-blue-600 !text-white-900'>
-            Duyệt
-          </Button>
+          {!showInput && (
+            <Button key='save' onClick={onApprove} className='!bg-blue-600 !text-white-900'>
+              Duyệt
+            </Button>
+          )}
         </>,
       ]}
     >
@@ -95,6 +110,16 @@ function DetailedCertificate({
             </div>
           </div>
         </div>
+        {showInput && (
+          <div className='mt-2'>
+            <div className='font-bold mb-1'>Nhập lý do từ chối: </div>
+            <TextArea
+              value={input}
+              rows={4}
+              onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setInput(e.target.value)}
+            />
+          </div>
+        )}
       </div>
     </Modal>
   );

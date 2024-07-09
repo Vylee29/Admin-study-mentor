@@ -1,3 +1,5 @@
+import { useQuery } from '@tanstack/react-query';
+import { Select } from 'antd';
 import {
   CategoryScale,
   Chart as ChartJS,
@@ -9,7 +11,12 @@ import {
   Title,
   Tooltip,
 } from 'chart.js';
+import { format } from 'date-fns';
+import { useEffect, useState } from 'react';
 import { Line } from 'react-chartjs-2';
+import { SHORT_DATE_FORMAT } from '../../../+core/constants/commons.constant';
+import { getChartRevenueApi, getChartRevenueKeys } from '../../../+core/services/user.service';
+import CustomSkeletonParagraph from '../skeleton/CustomSkeletonParagraphProps';
 
 ChartJS.register(
   CategoryScale,
@@ -21,12 +28,6 @@ ChartJS.register(
   Legend,
   Filler, // 1. Register Filler plugin
 );
-
-const labels = ['T1', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'T8', 'T9', 'T10', 'T11', 'T12'];
-
-const generateRandomData = () => {
-  return labels.map(() => Math.floor(Math.random() * 500));
-};
 
 export const options = {
   plugins: {
@@ -45,41 +46,64 @@ export const options = {
   },
 };
 
-export const data = {
-  labels,
-  datasets: [
-    {
-      label: 'Dataset 1',
-      data: generateRandomData(),
-      borderColor: 'rgb(255, 99, 132)',
-      backgroundColor: 'rgba(255, 0, 0)',
-      fill: {
-        target: 'origin', // Set the fill options
-        above: 'rgba(255, 0, 0, 0.3)',
-      },
-    },
-    {
-      label: 'Dataset 2',
-      data: generateRandomData(),
-      borderColor: 'rgb(53, 162, 235)',
-      backgroundColor: 'rgba(53, 162, 235, 0.3)',
-      fill: 'origin', // Set the fill options
-    },
-  ],
-};
+export function AreaChart({ optionsChart }: { optionsChart: { value: number; label: string }[] }) {
+  const [option, setOption] = useState(optionsChart[0].value);
+  const [labels, setLabels] = useState<string[]>([]);
+  const [revenues, setRevenues] = useState<number[]>([]);
 
-export function AreaChart() {
+  const getChartRevenueQuery = useQuery({
+    queryKey: getChartRevenueKeys.list({ option }),
+    queryFn: () => getChartRevenueApi(option),
+  });
+
+  const handleChangeFilterChart = (value: any) => {
+    setOption(value);
+  };
+
+  useEffect(() => {
+    if (getChartRevenueQuery?.data?.data?.data) {
+      const data = getChartRevenueQuery.data.data.data.sort(
+        (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime(),
+      );
+
+      setLabels(data.map((item) => format(new Date(item.date), SHORT_DATE_FORMAT)));
+      setRevenues(data.map((item) => item.totalCost));
+    }
+  }, [getChartRevenueQuery?.data?.data?.data]);
+
+  const data = {
+    labels,
+    datasets: [
+      {
+        label: 'Chart Revenue',
+        data: revenues,
+        borderColor: 'rgb(255, 99, 132)',
+        backgroundColor: 'rgba(255, 0, 0)',
+        fill: {
+          target: 'origin', // Set the fill options
+          above: 'rgba(255, 0, 0, 0.3)',
+        },
+      },
+    ],
+  };
   return (
     <div className='w-full bg-white-900 rounded-sm p-9 shadow-lg mb-9'>
-      <div className='flex flex-col mb-14'>
-        <span className='text-xl font-normal text-gray-300'>Doanh thu</span>
-        <div className='text-sm font-bold text-green-900 flex items-baseline'>
-          <div className='font-bold text-3xl text-black-800 mr-1'>$12.7k</div>
-          (+1.3 %) &nbsp;
-          <span className='uppercase text-gray-300 font-normal'>so với tháng trước</span>
+      <div className='flex flex-col px-4 pt-0 pb-6'>
+        <span className='text-lg font-bold text-black-500'>Doanh thu</span>
+        <div className='w-full flex justify-end'>
+          <Select
+            options={optionsChart}
+            className='w-[200px]'
+            value={option}
+            onChange={handleChangeFilterChart}
+          />
         </div>
       </div>
-      <Line options={options} data={data} className='!h-[521px] !w-full' />
+      {getChartRevenueQuery.isFetching ? (
+        <CustomSkeletonParagraph height={300} />
+      ) : (
+        <Line options={options} data={data} className='!h-[300px] !w-full' />
+      )}
     </div>
   );
 }

@@ -2,7 +2,7 @@ import { Status } from '../enums/user.enum';
 import { api } from '../https/http';
 import { BaseResp } from '../models/base.model';
 import { ReportListFilter, ReportModel, ReportTable } from '../models/report.model';
-import { FeedbackReportReq, UserModel } from '../models/user.model';
+import { ChartRevenueItem, FeedbackReportReq, UserModel } from '../models/user.model';
 import { VoucherModel, VoucherTable } from '../models/voucher.model';
 import { IPaginationInfo, PagingResp } from '../types/paging.type';
 import { initKeys } from '../utilities/query-key.utility';
@@ -53,4 +53,12 @@ export const getDetailedReportApi = async (reportId: string) => {
 
 export const feedbackReportApi = async (req: FeedbackReportReq) => {
   return api.post('api/admin/report/feedback', req);
+};
+
+export const getChartRevenueKeys = initKeys('get-chart-revenue-keys');
+
+export const getChartRevenueApi = async (days: number) => {
+  return api.get<BaseResp<ChartRevenueItem[]>>(`api/admin/chart/system-income`, {
+    params: { option: days },
+  });
 };
