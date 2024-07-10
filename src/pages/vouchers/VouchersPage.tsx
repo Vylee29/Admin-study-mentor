@@ -84,7 +84,7 @@ export function VouchersPage() {
 
   return (
     <div className='px-4'>
-      <span className='text-[24px] font-bold text-black-800'>Voucher</span>
+      <span className='text-[24px] font-bold text-black-800'>Mã giảm giá</span>
       <div className='flex items-center justify-between pb-10'>
         <div className='text-[16px] text-gray-500 '>Manage your vouchers</div>
         <Button

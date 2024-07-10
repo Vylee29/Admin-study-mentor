@@ -26,7 +26,6 @@ function DetailedQuestionModal({ title, visible, questionId, setVisible, status 
         <div className='h-[27px] w-[3px] bg-primary-600 mr-2 inline-block' />
         Trạng thái câu hỏi
       </div>
-      <div className='h-[1px] w-full mb-4 bg-gray-600' />
       {status && <div>{getQuestionStatus(status)}</div>}
     </Modal>
   );

@@ -27,7 +27,7 @@ export default function Columns({
       },
     },
     {
-      title: 'Code',
+      title: 'Mã',
       dataIndex: 'code',
       render: (value) => <div className='flex flex-col text-sm font-bold'>{value}</div>,
       onHeaderCell: () => {
@@ -43,7 +43,7 @@ export default function Columns({
       },
     },
     {
-      title: 'Percentage',
+      title: 'Phần trăm',
       dataIndex: 'percentage',
       onHeaderCell: () => {
         return {
@@ -73,7 +73,7 @@ export default function Columns({
     //   ),
     // },
     {
-      title: 'Quantity',
+      title: 'Số lượng',
       dataIndex: 'quantity',
       onHeaderCell: () => {
         return {
@@ -89,17 +89,17 @@ export default function Columns({
       render: (value) => <div className='text-sm font-normal'>{value}</div>,
     },
     {
-      title: 'Status',
+      title: 'Trạng thái',
       dataIndex: 'status',
       render: (value) =>
         value == 1 ? (
-          <div className='text-[#28A745]'>Active</div>
+          <div className='text-[#28A745]'>Đã kích hoạt</div>
         ) : (
-          <div className='text-[#F63F3F]'>Inactive</div>
+          <div className='text-[#F63F3F]'>Vô hiệu hóa</div>
         ),
     },
     {
-      title: 'Tùy chọn',
+      title: 'Hành động',
       dataIndex: 'key',
       render: (_, record) => (
         <div className='flex items-center w-full h-full gap-4'>
