@@ -2,11 +2,16 @@ import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import { Button, Tooltip } from 'antd';
 import { ColumnsType } from 'antd/es/table';
 import { useNavigate } from 'react-router-dom';
+import { StudentListFilter } from '../../../+core/models/student.model';
 import { VoucherTable } from '../../../+core/models/voucher.model';
 export default function Columns({
   handleDeleteVoucher,
+  filter,
+  handleFilterChange,
 }: {
   handleDeleteVoucher: (voucher: VoucherTable) => void;
+  filter: StudentListFilter;
+  handleFilterChange: (filter: StudentListFilter) => void;
 }): ColumnsType<VoucherTable> {
   const navigate = useNavigate();
   return [
@@ -25,10 +30,32 @@ export default function Columns({
       title: 'Code',
       dataIndex: 'code',
       render: (value) => <div className='flex flex-col text-sm font-bold'>{value}</div>,
+      onHeaderCell: () => {
+        return {
+          className: 'cursor-pointer hover:!bg-gray-600',
+          onClick: () => {
+            handleFilterChange({
+              sortDir: filter.sortBy === 'code' ? !filter.sortDir : true,
+              sortBy: 'code',
+            });
+          },
+        };
+      },
     },
     {
       title: 'Percentage',
       dataIndex: 'percentage',
+      onHeaderCell: () => {
+        return {
+          className: 'cursor-pointer hover:!bg-gray-600',
+          onClick: () => {
+            handleFilterChange({
+              sortDir: filter.sortBy === 'percentage' ? !filter.sortDir : true,
+              sortBy: 'percentage',
+            });
+          },
+        };
+      },
       render: (value) => <div className='text-[#0064FF] font-semibold'>{value}%</div>,
     },
     // {
@@ -48,6 +75,17 @@ export default function Columns({
     {
       title: 'Quantity',
       dataIndex: 'quantity',
+      onHeaderCell: () => {
+        return {
+          className: 'cursor-pointer hover:!bg-gray-600',
+          onClick: () => {
+            handleFilterChange({
+              sortDir: filter.sortBy === 'quantity' ? !filter.sortDir : true,
+              sortBy: 'quantity',
+            });
+          },
+        };
+      },
       render: (value) => <div className='text-sm font-normal'>{value}</div>,
     },
     {
@@ -64,7 +102,7 @@ export default function Columns({
       title: 'Tùy chọn',
       dataIndex: 'key',
       render: (_, record) => (
-        <div className='w-full h-full flex items-center gap-4'>
+        <div className='flex items-center w-full h-full gap-4'>
           <Tooltip placement='top' title='Chỉnh sửa'>
             <Button
               type='primary'

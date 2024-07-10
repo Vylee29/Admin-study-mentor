@@ -89,7 +89,7 @@ export function TutorsPage() {
 
   // Update the columns with action handlers
   const columns = useMemo(() => {
-    return baseColumns.map((col) => {
+    return baseColumns(filter, handleFilterChange).map((col) => {
       if (col.title === ACTION_TITLE) {
         return {
           ...col,
@@ -104,7 +104,7 @@ export function TutorsPage() {
       }
       return col;
     });
-  }, [handleViewDetail, handleStatusChange]);
+  }, [handleViewDetail, handleStatusChange, filter, handleFilterChange]);
 
   return (
     <div>

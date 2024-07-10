@@ -4,6 +4,7 @@ import { Button, Table } from 'antd';
 import { useMemo, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { usePagingFilter } from '../../+core/hooks/usePagingFilter';
+import { StudentListFilter } from '../../+core/models/student.model';
 import { VoucherTable } from '../../+core/models/voucher.model';
 import {
   convertVoucherListModelToTable,
@@ -24,16 +25,20 @@ export function VouchersPage() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
 
-  const { initialPaging } = useMemo(() => {
+  const { initialPaging, initialFilter } = useMemo(() => {
+    const initialFilter: StudentListFilter = {
+      search: searchParams.get('search') || '',
+    };
     const initialPaging: IPaginationInfo = {
       pageSize: +(searchParams.get('pageSize') || initialPagingState.pageSize),
       page: +(searchParams.get('page') || initialPagingState.page),
     };
-    return { initialPaging };
+    return { initialPaging, initialFilter };
   }, [searchParams]);
 
-  const { filter, handlePageChange } = usePagingFilter({
+  const { filter, handlePageChange, handleFilterChange } = usePagingFilter({
     initialPaging,
+    initialFilter,
     debounceTime: 500,
   });
 
@@ -80,7 +85,7 @@ export function VouchersPage() {
   return (
     <div className='px-4'>
       <span className='text-[24px] font-bold text-black-800'>Voucher</span>
-      <div className='pb-10 flex justify-between items-center'>
+      <div className='flex items-center justify-between pb-10'>
         <div className='text-[16px] text-gray-500 '>Manage your vouchers</div>
         <Button
           type='primary'
@@ -96,6 +101,9 @@ export function VouchersPage() {
         <CustomTextInput
           placeholder='Search'
           prefix={<SearchOutlined />}
+          onChange={(e: any) => {
+            handleFilterChange({ search: e.target.value });
+          }}
           classNameForm='w-2/5 mb-3'
         />
       </div>
@@ -103,6 +111,8 @@ export function VouchersPage() {
         <Table
           columns={Columns({
             handleDeleteVoucher: handleDeleteVoucher,
+            filter,
+            handleFilterChange,
           })}
           dataSource={voucherListQuery.data?.data || []}
           loading={voucherListQuery.isFetching}
