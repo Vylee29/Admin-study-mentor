@@ -87,9 +87,9 @@ export function ReportsPage() {
         visible={visible}
         setVisible={setVisible}
       />
-      <span className='text-[24px] font-bold text-black-800'>Newest Report</span>
+      <span className='text-[24px] font-bold text-black-800'>Báo cáo</span>
       <div className='text-[16px] text-gray-500 pb-6'>
-        {reportListQuery?.data?.data?.length} kết quả tìm thấy
+        {reportListQuery?.data?.pagination?.total} kết quả tìm thấy
       </div>
       <div className='flex justify-between w-full'>
         <CustomTextInput

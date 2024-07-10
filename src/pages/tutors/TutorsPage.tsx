@@ -119,7 +119,7 @@ export function TutorsPage() {
       />
       <span className='text-[24px] font-bold text-black-800'>Người hướng dẫn</span>
       <div className='text-[16px] text-gray-500 pb-6'>
-        {studentListQuery.data?.data.length} kết quả tìm thấy
+        {studentListQuery.data?.pagination?.total} kết quả tìm thấy
       </div>
       <div className='flex justify-between w-full'>
         <CustomTextInput

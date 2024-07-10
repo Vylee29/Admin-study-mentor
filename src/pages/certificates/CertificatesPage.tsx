@@ -121,7 +121,7 @@ export function CertificatesPage() {
       />
       <span className='text-[24px] font-bold text-black-800'>Xét duyệt chứng chỉ </span>
       <div className='text-[16px] text-gray-500 pb-6'>
-        {certificatesListQuery.data?.data.length} kết quả tìm thấy
+        {certificatesListQuery.data?.pagination?.total} kết quả tìm thấy
       </div>
       <div className='flex justify-between w-full'>
         <CustomTextInput

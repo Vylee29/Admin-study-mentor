@@ -65,7 +65,7 @@ export function DetailedQuestion({ questionId }: IProps) {
                 className='border rounded-lg border-gray-600 border-solid p-2 mt-2'
               />
             ) : (
-              <div className='text-gray-300 text-base italic'>Không có nội dung</div>
+              <div className='text-gray-300 text-base italic mb-2'>Không có nội dung</div>
             )}
 
             {detailedQuestionQuery?.data?.fileQuestions &&
@@ -111,7 +111,7 @@ export function DetailedQuestion({ questionId }: IProps) {
                 className='border rounded-lg border-gray-600 border-solid p-2'
               />
             ) : (
-              <div className='text-gray-300 text-base italic'>Không có nội dung</div>
+              <div className='text-gray-300 text-base italic mb-2'>Không có nội dung</div>
             )}
             {detailedQuestionQuery?.data?.answers &&
               detailedQuestionQuery?.data?.answers[0]?.fileAttachmentAnswers.length > 0 && (
@@ -128,7 +128,7 @@ export function DetailedQuestion({ questionId }: IProps) {
                             className='w-full border rounded-lg border-gray-600 flex items-center justify-between p-4 border-solid'
                           >
                             <div className='flex items-center'>
-                              <div className='font-bold text-md mx-4 max-w-4/5 truncate text-black-800'>
+                              <div className='font-bold text-md max-w-4/5 truncate text-black-800'>
                                 {file.fileName}
                               </div>
                             </div>

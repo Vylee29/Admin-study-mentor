@@ -82,9 +82,9 @@ export function QuestionsPage() {
         questionId={selectedQuestion?.questionId}
         status={selectedQuestion?.status}
       />
-      <span className='text-[24px] font-bold text-black-800'>Questions</span>
+      <span className='text-[24px] font-bold text-black-800'>Câu hỏi</span>
       <div className='text-[16px] text-gray-500 pb-6'>
-        {questionListQuery.data?.data.length} kết quả tìm thấy
+        {questionListQuery.data?.pagination?.total} kết quả tìm thấy
       </div>
       <div className='flex justify-between w-full'>
         <CustomTextInput

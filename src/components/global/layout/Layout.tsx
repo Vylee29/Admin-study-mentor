@@ -1,5 +1,4 @@
 import {
-  CommentOutlined,
   DashboardOutlined,
   FileTextOutlined,
   FlagOutlined,
@@ -47,11 +46,11 @@ const menuList = [
     icon: <SafetyCertificateOutlined />,
     label: 'Chứng chỉ',
   },
-  {
-    key: 'chat',
-    icon: <CommentOutlined />,
-    label: 'Trò chuyện',
-  },
+  // {
+  //   key: 'chat',
+  //   icon: <CommentOutlined />,
+  //   label: 'Trò chuyện',
+  // },
   {
     key: 'reports',
     icon: <FileTextOutlined />,
@@ -65,7 +64,7 @@ const menuList = [
   {
     key: 'level',
     icon: <FlagOutlined />,
-    label: 'Cấp dộ',
+    label: 'Cấp độ',
   },
 ];
 
