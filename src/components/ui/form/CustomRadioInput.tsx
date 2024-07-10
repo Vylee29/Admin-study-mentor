@@ -1,5 +1,5 @@
-import { OptionItems } from '@/utils/types/option.type';
 import { Form, FormItemProps, Radio, RadioChangeEvent } from 'antd';
+import { OptionItems } from '../../../+core/types/option.type';
 import './CustomRadioInput.scss';
 
 export type CustomRadioInputProps<T extends object> = {

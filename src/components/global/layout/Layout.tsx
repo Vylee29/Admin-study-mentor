@@ -2,6 +2,7 @@ import {
   CommentOutlined,
   DashboardOutlined,
   FileTextOutlined,
+  FlagOutlined,
   GiftOutlined,
   QuestionCircleOutlined,
   SafetyCertificateOutlined,
@@ -61,6 +62,11 @@ const menuList = [
     icon: <GiftOutlined />,
     label: 'Mã giảm giá',
   },
+  {
+    key: 'level',
+    icon: <FlagOutlined />,
+    label: 'Cấp dộ',
+  },
 ];
 
 const { Content, Sider } = LayoutAntDesign;
@@ -94,7 +100,6 @@ export default function Layout() {
   }, []);
 
   useEffect(() => {
-    console.log('isLoggedIn', isLoggedIn);
     if (isLoggedIn && !isLoggedIn) {
       navigate(MY_ROUTE.LOGIN);
     }

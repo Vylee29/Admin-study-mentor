@@ -3,7 +3,12 @@ import { api } from '../https/http';
 import { BaseResp } from '../models/base.model';
 import { ReportListFilter, ReportModel, ReportTable } from '../models/report.model';
 import { UserModel } from '../models/user.model';
-import { VoucherModel, VoucherTable } from '../models/voucher.model';
+import {
+  CreateVoucherReq,
+  UpdateVoucherReq,
+  VoucherModel,
+  VoucherTable,
+} from '../models/voucher.model';
 import { IPaginationInfo, PagingResp } from '../types/paging.type';
 import { initKeys } from '../utilities/query-key.utility';
 
@@ -54,4 +59,16 @@ export const getStudentReportApi = async (reportId: string) => {
 export const getTutorReportKeys = initKeys('tutor-report-keys');
 export const getTutorReportApi = async (reportId: string) => {
   return api.get<PagingResp<ReportModel>>(`/api/tutor/report-tutor/${reportId}`);
+};
+
+export const deleteVoucher = async (id: string) => {
+  return await api.delete(`/api/admin/manage/voucher/${id}`);
+};
+
+export const createVoucher = async (body: CreateVoucherReq) => {
+  return await api.post(`/api/admin/manage/voucher`, body);
+};
+
+export const updateVoucher = async (body: UpdateVoucherReq) => {
+  return await api.put(`/api/admin/manage/voucher`, body);
 };
