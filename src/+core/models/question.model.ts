@@ -39,6 +39,7 @@ export type GetQuestionResponseModel = {
   tutor?: UserModel;
   subject: Subject;
   answers: AnswerResponseModel[] | null;
+  amountDue: number;
   isAnswered: boolean;
   roomId?: string;
   step?: QuestionStep;
@@ -51,5 +52,8 @@ export type GetQuestionResponseModel = {
 
 export type QuestionListFilter = {
   status?: QuestionStatusString;
+  search?: string;
+  sortBy?: string;
+  sortDir?: boolean;
 };
 export type QuestionListReq = QuestionListFilter & IPaginationInfo;
