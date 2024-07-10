@@ -55,8 +55,6 @@ export function StudentsPage() {
   const updateUserStatusMutation = useMutation({
     mutationFn: (status: Status) => updateUserStatus(selectedStudentId, status),
     onSuccess: () => {
-      console.log('onSuccess');
-
       toastSuccess('Cập nhật trạng thái thành công');
     },
     onError: handleError,

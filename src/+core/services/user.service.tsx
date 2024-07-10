@@ -3,7 +3,12 @@ import { api } from '../https/http';
 import { BaseResp } from '../models/base.model';
 import { ReportListFilter, ReportModel, ReportTable } from '../models/report.model';
 import { ChartRevenueItem, FeedbackReportReq, UserModel } from '../models/user.model';
-import { VoucherModel, VoucherTable } from '../models/voucher.model';
+import {
+  CreateVoucherReq,
+  UpdateVoucherReq,
+  VoucherModel,
+  VoucherTable,
+} from '../models/voucher.model';
 import { IPaginationInfo, PagingResp } from '../types/paging.type';
 import { initKeys } from '../utilities/query-key.utility';
 
@@ -61,4 +66,16 @@ export const getChartRevenueApi = async (days: number) => {
   return api.get<BaseResp<ChartRevenueItem[]>>(`api/admin/chart/system-income`, {
     params: { option: days },
   });
+};
+
+export const deleteVoucher = async (id: string) => {
+  return await api.delete(`/api/admin/manage/voucher/${id}`);
+};
+
+export const createVoucher = async (body: CreateVoucherReq) => {
+  return await api.post(`/api/admin/manage/voucher`, body);
+};
+
+export const updateVoucher = async (body: UpdateVoucherReq) => {
+  return await api.put(`/api/admin/manage/voucher`, body);
 };
