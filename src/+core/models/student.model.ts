@@ -26,6 +26,8 @@ export type StudentModel = {
 
 export type StudentListFilter = {
   search?: string;
+  sortBy?: string;
+  sortDir?: boolean;
 };
 
 export type StudentListReq = StudentListFilter & IPaginationInfo;

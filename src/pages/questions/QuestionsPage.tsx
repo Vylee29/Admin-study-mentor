@@ -54,7 +54,7 @@ export function QuestionsPage() {
 
   // Update the columns with action handlers
   const columns = useMemo(() => {
-    return baseColumns.map((col) => {
+    return baseColumns(filter, handleFilterChange).map((col) => {
       if (col.title === ACTION_TITLE) {
         return {
           ...col,
@@ -71,7 +71,7 @@ export function QuestionsPage() {
       }
       return col;
     });
-  }, [handleViewDetail]);
+  }, [handleViewDetail, filter, handleFilterChange]);
 
   return (
     <div>

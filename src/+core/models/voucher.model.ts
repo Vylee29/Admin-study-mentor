@@ -15,3 +15,20 @@ export type VoucherTable = {
   status: number;
   isDefault: boolean;
 };
+
+export type CreateVoucherReq = {
+  code: string;
+  percentage: number;
+  quantity: number;
+  status: number;
+  isDefault: boolean;
+};
+
+export type UpdateVoucherReq = {
+  voucherId: string;
+  code: string;
+  percentage: number;
+  quantity: number;
+  status: number;
+  isDefault: boolean;
+};

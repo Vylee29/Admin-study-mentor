@@ -10,3 +10,4 @@ export const DATE_FORMAT = 'dd/MM/yyyy HH:mm';
 export const DEFAULT_TAB_ITEM_VALUE = 'dashboard';
 export const STUDENTS = 'students';
 export const MENTORS = 'mentors';
+export const SHORT_DATE_FORMAT = 'dd/MM';

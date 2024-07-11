@@ -2,12 +2,30 @@ import { Avatar, Image } from 'antd';
 import { ColumnsType } from 'antd/es/table';
 import { ACTION_TITLE } from '../../../+core/constants/shared.contant';
 import { UserResp } from '../../../+core/models/profile.model';
+import { StudentListFilter } from '../../../+core/models/student.model';
 import { imageUtility } from '../../../+core/utilities/image.utility';
 
-export const columns: ColumnsType<UserResp> = [
+export const columns = (
+  filter: StudentListFilter,
+  handleFilterChange: (filter: StudentListFilter) => void,
+): ColumnsType<UserResp> => [
   {
     title: 'Tên học viên',
     dataIndex: 'fullName',
+    onHeaderCell: () => {
+      return {
+        className: 'cursor-pointer hover:!bg-gray-600',
+        onClick: () => {
+          handleFilterChange({
+            sortDir: filter.sortBy === 'fullName' ? !filter.sortDir : true,
+            sortBy: 'fullName',
+          });
+        },
+      };
+    },
+    // sorter: true,
+    // showSorterTooltip: false,
+
     render: (value, record) => {
       return (
         <div className='flex items-center gap-4'>
@@ -32,6 +50,17 @@ export const columns: ColumnsType<UserResp> = [
   {
     title: 'Email',
     dataIndex: 'email',
+    onHeaderCell: () => {
+      return {
+        className: 'cursor-pointer hover:!bg-gray-600',
+        onClick: () => {
+          handleFilterChange({
+            sortDir: filter.sortBy === 'email' ? !filter.sortDir : true,
+            sortBy: 'email',
+          });
+        },
+      };
+    },
     render: (value) => <div className='flex flex-col text-sm font-normal'>{value}</div>,
   },
   {
