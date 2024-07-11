@@ -1,4 +1,10 @@
-import { EyeOutlined, SearchOutlined, TagsOutlined } from '@ant-design/icons';
+import {
+  EyeOutlined,
+  SearchOutlined,
+  TagsOutlined,
+  MoneyCollectOutlined,
+  CheckOutlined,
+} from '@ant-design/icons';
 import { keepPreviousData, useMutation, useQuery } from '@tanstack/react-query';
 import { Button, Modal, Table, Tooltip } from 'antd';
 import { useMemo, useState } from 'react';
@@ -98,14 +104,14 @@ export function QuestionsPage() {
                 <Tooltip placement='top' title='Thông tin tài khoản ngân hàng'>
                   <Button
                     type='primary'
-                    icon={<EyeOutlined />}
+                    icon={<MoneyCollectOutlined />}
                     onClick={() => handleViewDetail(record, false)}
                   />
                 </Tooltip>
                 <Tooltip placement='top' title={`Thanh toán - ${formatPriceVND(record.amountDue)}`}>
                   <Button
                     type='primary'
-                    icon={<TagsOutlined />}
+                    icon={<CheckOutlined />}
                     className='!bg-green-500'
                     onClick={() =>
                       markPayMutation.mutate({
