@@ -68,9 +68,9 @@ export const columns = (
     dataIndex: 'status',
     render: (value) =>
       value === 0 ? (
-        <div className='text-[#28A745]'>Active</div>
+        <div className='text-[#28A745]'>Đã kích hoạt</div>
       ) : (
-        <div className='text-[#F63F3F]'>Inactive</div>
+        <div className='text-[#F63F3F]'>Vô hiệu hóa</div>
       ),
   },
   {

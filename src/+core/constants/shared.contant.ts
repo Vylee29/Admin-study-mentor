@@ -3,6 +3,7 @@ export const EMAIL_VALIDATION_EXPIRE_TIME = 5 * 60 * 1000; //5 minute
 export const EMAIL_VALIDATION_CODE_LENGTH = 6;
 export const INVALID_DATE = 'Invalid date';
 export const ACTION_TITLE = 'Hành động';
+export const PAYMENT_QUESTION = 'Thanh toán';
 
 export const STORAGE = {
   ACCESS_TOKEN: 'accessToken',

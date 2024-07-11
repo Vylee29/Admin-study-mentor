@@ -1,7 +1,7 @@
 import { ColumnsType } from 'antd/es/table';
 import { format } from 'date-fns';
 import { DATE_FORMAT } from '../../../+core/constants/commons.constant';
-import { ACTION_TITLE } from '../../../+core/constants/shared.contant';
+import { ACTION_TITLE, PAYMENT_QUESTION } from '../../../+core/constants/shared.contant';
 import { GetQuestionResponseModel } from '../../../+core/models/question.model';
 import { StudentListFilter } from '../../../+core/models/student.model';
 import { getQuestionStatus } from '../../../+core/utilities/question.utility';
@@ -31,17 +31,6 @@ export const columns = (
   {
     title: 'Tên học viên',
     dataIndex: 'studentName',
-    onHeaderCell: () => {
-      return {
-        className: 'cursor-pointer hover:!bg-gray-600',
-        onClick: () => {
-          handleFilterChange({
-            sortDir: filter.sortBy === 'studentName' ? !filter.sortDir : true,
-            sortBy: 'studentName',
-          });
-        },
-      };
-    },
     render: (_, record) => (
       <div className='flex flex-col text-sm font-normal'>{record?.student?.fullName}</div>
     ),
@@ -49,19 +38,10 @@ export const columns = (
   {
     title: 'Tên người hướng dẫn',
     dataIndex: 'tutorName',
-    onHeaderCell: () => {
-      return {
-        className: 'cursor-pointer hover:!bg-gray-600',
-        onClick: () => {
-          handleFilterChange({
-            sortDir: filter.sortBy === 'tutorName' ? !filter.sortDir : true,
-            sortBy: 'tutorName',
-          });
-        },
-      };
-    },
     render: (_, record) => (
-      <div className='flex flex-col text-sm font-normal'>{record?.tutor?.fullName}</div>
+      <div className='flex flex-col text-sm font-normal'>
+        {record?.tutor?.fullName ? record?.tutor?.fullName : 'N/A'}
+      </div>
     ),
   },
   {
@@ -87,20 +67,11 @@ export const columns = (
   {
     title: 'Thời gian trả lời',
     dataIndex: 'updatedAt',
-    onHeaderCell: () => {
-      return {
-        className: 'cursor-pointer hover:!bg-gray-600',
-        onClick: () => {
-          handleFilterChange({
-            sortDir: filter.sortBy === 'updateAte' ? !filter.sortDir : true,
-            sortBy: 'updateAte',
-          });
-        },
-      };
-    },
     render: (_, record) => (
       <div className='flex flex-col text-sm font-normal'>
-        {format(record?.answerTime, DATE_FORMAT)}
+        {record?.answers?.[0]?.createdAt
+          ? format(record?.answers?.[0]?.createdAt, DATE_FORMAT)
+          : 'N/A'}
       </div>
     ),
   },
@@ -113,6 +84,10 @@ export const columns = (
   },
   {
     title: ACTION_TITLE,
+    dataIndex: 'action',
+  },
+  {
+    title: PAYMENT_QUESTION,
     dataIndex: 'action',
   },
 ];

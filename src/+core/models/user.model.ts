@@ -26,6 +26,11 @@ export type UserModel = {
   avatar?: FileReq;
   subjects?: Subject[];
   certificates: IFileAttachment[];
+
+  nameUserOfBanking?: string;
+  idOfBanking?: string;
+  numberOfBanking?: string;
+  nameOfBanking?: string;
 };
 
 export type Subject = {

@@ -16,7 +16,6 @@ import { useEffect, useState } from 'react';
 import { Line } from 'react-chartjs-2';
 import { SHORT_DATE_FORMAT } from '../../../+core/constants/commons.constant';
 import { getChartRevenueApi, getChartRevenueKeys } from '../../../+core/services/user.service';
-import CustomSkeletonParagraph from '../skeleton/CustomSkeletonParagraphProps';
 
 ChartJS.register(
   CategoryScale,
@@ -50,6 +49,7 @@ export function AreaChart({ optionsChart }: { optionsChart: { value: number; lab
   const [option, setOption] = useState(optionsChart[0].value);
   const [labels, setLabels] = useState<string[]>([]);
   const [revenues, setRevenues] = useState<number[]>([]);
+  const [sum, setSum] = useState<number>(0);
 
   const getChartRevenueQuery = useQuery({
     queryKey: getChartRevenueKeys.list({ option }),
@@ -68,6 +68,7 @@ export function AreaChart({ optionsChart }: { optionsChart: { value: number; lab
 
       setLabels(data.map((item) => format(new Date(item.date), SHORT_DATE_FORMAT)));
       setRevenues(data.map((item) => item.totalCost));
+      setSum(data.reduce((acc, item) => acc + item.totalCost, 0));
     }
   }, [getChartRevenueQuery?.data?.data?.data]);
 
@@ -87,9 +88,15 @@ export function AreaChart({ optionsChart }: { optionsChart: { value: number; lab
     ],
   };
   return (
-    <div className='w-full bg-white-900 rounded-sm p-9 shadow-lg mb-9'>
-      <div className='flex flex-col px-4 pt-0 pb-6'>
-        <span className='text-lg font-bold text-black-500'>Doanh thu</span>
+    <div className='w-full bg-white-900 rounded-sm p-9 pt-0 shadow-lg mb-4'>
+      <div className='flex flex-col px-4 pt-0 pb-2'>
+        <span className='text-lg font-bold text-black-500'>
+          Tổng doanh thu = <span className='font-bold text-2xl'>{sum}</span> đồng
+        </span>
+        <span className='italic text-gray-300 font-semibold'>
+          (Doanh thu = Tổng của 20% * số tiền mỗi câu hỏi có trạng thái là &quot;Đã hoàn thành
+          &quot;)
+        </span>
         <div className='w-full flex justify-end'>
           <Select
             options={optionsChart}
@@ -99,11 +106,7 @@ export function AreaChart({ optionsChart }: { optionsChart: { value: number; lab
           />
         </div>
       </div>
-      {getChartRevenueQuery.isFetching ? (
-        <CustomSkeletonParagraph height={300} />
-      ) : (
-        <Line options={options} data={data} className='!h-[300px] !w-full' />
-      )}
+      <Line options={options} data={data} className='!w-full' />
     </div>
   );
 }
