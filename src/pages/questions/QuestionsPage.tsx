@@ -1,9 +1,9 @@
 import {
-  EyeOutlined,
-  SearchOutlined,
-  TagsOutlined,
-  MoneyCollectOutlined,
+  CheckCircleOutlined,
   CheckOutlined,
+  EyeOutlined,
+  MoneyCollectOutlined,
+  SearchOutlined,
 } from '@ant-design/icons';
 import { keepPreviousData, useMutation, useQuery } from '@tanstack/react-query';
 import { Button, Modal, Table, Tooltip } from 'antd';
@@ -108,19 +108,33 @@ export function QuestionsPage() {
                     onClick={() => handleViewDetail(record, false)}
                   />
                 </Tooltip>
-                <Tooltip placement='top' title={`Thanh toán - ${formatPriceVND(record.amountDue)}`}>
-                  <Button
-                    type='primary'
-                    icon={<CheckOutlined />}
-                    className='!bg-green-500'
-                    onClick={() =>
-                      markPayMutation.mutate({
-                        questionId: record.questionId,
-                        tutorId: record.tutor?.id || '',
-                      })
-                    }
-                  />
-                </Tooltip>
+
+                {record.isPaid ? (
+                  <Tooltip placement='top' title={`Đã thanh toán`}>
+                    <Button
+                      type='primary'
+                      icon={<CheckCircleOutlined />}
+                      className='!bg-green-500'
+                    />
+                  </Tooltip>
+                ) : (
+                  <Tooltip
+                    placement='top'
+                    title={`Thanh toán - ${formatPriceVND(record.amountDue)}`}
+                  >
+                    <Button
+                      type='primary'
+                      icon={<CheckOutlined />}
+                      className='!bg-orange-400'
+                      onClick={() =>
+                        markPayMutation.mutate({
+                          questionId: record.questionId,
+                          tutorId: record.tutor?.id || '',
+                        })
+                      }
+                    />
+                  </Tooltip>
+                )}
               </div>
             ) : (
               <></>

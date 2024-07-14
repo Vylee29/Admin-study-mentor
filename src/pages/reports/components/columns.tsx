@@ -40,7 +40,7 @@ export const columns: ColumnsType<ReportTable> = [
   //   ),
   // },
   {
-    title: 'Trạng thái phản hổi',
+    title: 'Trạng thái phản hồi',
     dataIndex: 'hasFeedback',
     render: (value) =>
       value ? (
