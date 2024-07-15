@@ -4,9 +4,11 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import 'react-toastify/dist/ReactToastify.css';
 import { RootState } from '../../../+core/store';
+import { removeUser, setLoggedIn } from '../../../+core/store/reducers/authentication.reducer';
 import { setCollapsed } from '../../../+core/store/reducers/sidebar.reducer';
 import { onConnect, onDisconnect } from '../../../+core/store/reducers/socket.reducer';
 import { defaultSocket } from '../../../socket';
+import ButtonPrimary from '../../ui/button/ButtonPrimary';
 
 const Header = () => {
   const user = useSelector((state: RootState) => state.user);
@@ -61,7 +63,7 @@ const Header = () => {
       <div className='self-center m-auto text-2xl font-light text-center'>
         Welcome back, <span className='text-4xl font-medium'>{user.user?.fullName}</span>
       </div>
-      <div className='flex items-center gap-4'>
+      {/* <div className='flex items-center gap-4'>
         <div className='w-[55px] h-[55px] rounded-full cursor-pointer'>
           <img
             src='https://images.unsplash.com/photo-1499952127939-9bbf5af6c51c?q=80&w=2676&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
@@ -73,7 +75,17 @@ const Header = () => {
           <div className='text-xl font-semibold'>Sterling</div>
           <div className='font-normal text-gray-400'>Super admin</div>
         </div>
-      </div>
+      </div> */}
+      {user.user?.fullName && (
+        <ButtonPrimary
+          title='Đăng xuất'
+          className='!mr-4'
+          onClick={() => {
+            dispatch(setLoggedIn(false));
+            dispatch(removeUser());
+          }}
+        />
+      )}
     </header>
   );
 };
