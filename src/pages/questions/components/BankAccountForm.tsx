@@ -9,9 +9,9 @@ import {
 } from '../../../+core/models/profile.model';
 import {
   createQRCodeApi,
+  getBankingInfo,
   getBankListApi,
   getBankListKeys,
-  getTutorBankInfoApi,
   getTutorBankInfoKeys,
   lookUpBankNumberApi,
   updateTutorialBankInfoApi,
@@ -25,21 +25,12 @@ import { toastSuccess } from '../../../+core/utilities/toast.utility';
       getTutorBankInfoQuery?.data?.nameOfBanking
 */
 type Props = {
-  idOfBanking?: string;
-  numberOfBanking?: string;
-  nameOfBanking?: string;
-  nameUserOfBanking?: string;
   money?: number;
+  questionId?: string;
+  userId?: string;
 };
 
-function BankAccountForm({
-  idOfBanking,
-  numberOfBanking,
-  nameOfBanking,
-  nameUserOfBanking,
-  money,
-}: Props) {
-  console.log('first render', idOfBanking, numberOfBanking, nameOfBanking, nameUserOfBanking);
+function BankAccountForm({ money, questionId, userId }: Props) {
   const [form] = Form.useForm<BankAccountInput>();
   const [isUpdate, setIsUpdate] = useState<boolean>(false);
   const [qrCodeImage, setQrCodeImage] = useState<string>('');
@@ -101,16 +92,37 @@ function BankAccountForm({
   };
 
   const getBankListQuery = useQuery({
-    queryKey: getBankListKeys.all,
+    queryKey: getBankListKeys.list({ questionId }),
     queryFn: () => getBankListApi(),
     select: (resp) => resp.data.data,
   });
 
   const getTutorBankInfoQuery = useQuery({
-    queryKey: getTutorBankInfoKeys.all,
-    queryFn: () => getTutorBankInfoApi(),
+    queryKey: getTutorBankInfoKeys.list({ questionId }),
+    queryFn: () => getBankingInfo(userId ?? ''),
     select: (resp) => resp.data.data,
+    enabled: !!userId,
   });
+
+  const setFormValues = () => {
+    if (!getTutorBankInfoQuery?.data?.idOfBanking || !getTutorBankInfoQuery?.data?.numberOfBanking)
+      return;
+
+    form.setFieldsValue({
+      binBank: getTutorBankInfoQuery?.data?.idOfBanking,
+      accountNumber: getTutorBankInfoQuery?.data?.numberOfBanking,
+      accountName: getTutorBankInfoQuery?.data?.nameUserOfBanking,
+    });
+
+    const requestCreateQRCode: QRCodeReq = {
+      accountNo: getTutorBankInfoQuery?.data?.numberOfBanking,
+      accountName: getTutorBankInfoQuery?.data?.nameUserOfBanking ?? '',
+      acqId: +getTutorBankInfoQuery?.data?.idOfBanking,
+      template: 'qr_only',
+    };
+
+    createQRCode.mutate(requestCreateQRCode);
+  };
 
   useEffect(() => {
     if (lookUpMutation.data?.data?.data?.accountName) {
@@ -133,23 +145,14 @@ function BankAccountForm({
   }, [getBankListQuery?.data]);
 
   useEffect(() => {
-    if (idOfBanking && numberOfBanking && nameOfBanking && nameUserOfBanking) {
-      form.setFieldsValue({
-        binBank: idOfBanking,
-        accountNumber: numberOfBanking,
-        accountName: nameUserOfBanking,
-      });
-
-      const requestCreateQRCode: QRCodeReq = {
-        accountNo: numberOfBanking,
-        accountName: nameUserOfBanking ?? '',
-        acqId: +idOfBanking,
-        template: 'qr_only',
-      };
-
-      createQRCode.mutate(requestCreateQRCode);
+    if (
+      getTutorBankInfoQuery?.data &&
+      getTutorBankInfoQuery?.data?.idOfBanking &&
+      getTutorBankInfoQuery?.data?.numberOfBanking
+    ) {
+      setFormValues();
     }
-  }, [idOfBanking, numberOfBanking, nameOfBanking, nameUserOfBanking]);
+  }, [getTutorBankInfoQuery?.data?.idOfBanking]);
 
   return (
     <div className='flex flex-col items-start gap-4 p-8 mb-8 rounded-md bg-white-900'>

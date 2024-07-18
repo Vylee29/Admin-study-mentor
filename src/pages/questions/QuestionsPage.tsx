@@ -164,11 +164,9 @@ export function QuestionsPage() {
         footer={null}
       >
         <BankAccountForm
-          idOfBanking={selectedQuestion?.tutor?.idOfBanking}
-          nameOfBanking={selectedQuestion?.tutor?.nameOfBanking}
-          numberOfBanking={selectedQuestion?.tutor?.numberOfBanking}
-          nameUserOfBanking={selectedQuestion?.tutor?.nameUserOfBanking}
           money={selectedQuestion?.amountDue}
+          questionId={selectedQuestion?.questionId}
+          userId={selectedQuestion?.tutor?.id}
         />
       </Modal>
       <span className='text-[24px] font-bold text-black-800'>Câu hỏi</span>

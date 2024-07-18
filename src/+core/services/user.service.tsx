@@ -130,3 +130,7 @@ export type MarkPayReq = {
 export const markPaymentTutor = async (body: MarkPayReq) => {
   return await api.post(`/api/admin/tutor/mark-paid`, body);
 };
+
+export const getBankingInfo = async (tutorId: string) => {
+  return await api.get<BaseResp<BankModel>>(`api/users/${tutorId}/banking`);
+};
