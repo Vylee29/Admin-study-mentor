@@ -93,7 +93,7 @@ export function TutorsPage() {
       if (col.title === ACTION_TITLE) {
         return {
           ...col,
-          render: (value: any, record: UserResp) => (
+          render: (_: any, record: UserResp) => (
             <UserAction
               record={record}
               handleStatusChange={handleStatusChange}

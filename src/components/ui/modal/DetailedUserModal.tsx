@@ -59,7 +59,7 @@ function DetailedUserModal({
       ]}
     >
       <div>
-        <div className='flex gap-x-2 items-center'>
+        <div className='flex items-center gap-x-2'>
           {/* Avatar and full name */}
           <Image
             className='!w-10 !h-10 rounded-full object-cover'
@@ -70,34 +70,34 @@ function DetailedUserModal({
         </div>
         {/* Email */}
         {getUserByIdQuery?.data?.email && (
-          <div className='flex items-center gap-x-2 mt-2'>
+          <div className='flex items-center mt-2 gap-x-2'>
             <span className='font-bold'>Email: </span>
             <div>{getUserByIdQuery?.data?.email}</div>
           </div>
         )}
         {/* Phone number */}
         {getUserByIdQuery?.data?.phone && (
-          <div className='flex items-center gap-x-2 mt-2'>
+          <div className='flex items-center mt-2 gap-x-2'>
             <span className='font-bold'>Số điện thoại: </span>
             <div>{getUserByIdQuery?.data?.phone}</div>
           </div>
         )}
         {/* Date of birth */}
         {getUserByIdQuery?.data?.dateOfBirth && (
-          <div className='flex items-center gap-x-2 mt-2'>
+          <div className='flex items-center mt-2 gap-x-2'>
             <span className='font-bold'>Năm sinh: </span>
             <div>{getUserByIdQuery?.data?.dateOfBirth}</div>
           </div>
         )}
         {/* Gender */}
-        <div className='flex items-center gap-x-2 mt-2'>
+        <div className='flex items-center mt-2 gap-x-2'>
           <span className='font-bold'>Giới tính: </span>
           <div>{getUserByIdQuery?.data?.gender === Gender.Male ? 'Nam' : 'Nữ'}</div>
         </div>
         {userType === UserType.TUTOR && (
           <>
             {/* Subjects */}
-            <div className='flex items-center gap-x-2 mt-2'>
+            <div className='flex items-center mt-2 gap-x-2'>
               <span className='font-bold'>Danh sách môn học đang đăng ký: </span>
               <div className='text-[#0064FF] text-sm font-semibold'>
                 {Array.isArray(getUserByIdQuery?.data?.subjects) &&
@@ -115,13 +115,13 @@ function DetailedUserModal({
               <div className='text-sm font-semibold'>
                 {isCertificates && <span className='font-bold'>Danh sách chứng chỉ: </span>}
                 {isCertificates ? (
-                  getUserByIdQuery?.data?.certificates.map((file, index) => (
+                  getUserByIdQuery?.data?.certificates.map((file) => (
                     <div
                       key={file.fileKey}
-                      className='flex border rounded-lg border-gray-600 border-solid mt-1 items-center justify-between p-4 gap-1'
+                      className='flex items-center justify-between gap-1 p-4 mt-1 border border-gray-600 border-solid rounded-lg'
                     >
                       <div className='flex items-center'>
-                        <div className='font-bold text-md mx-4 max-w-4/5 truncate '>
+                        <div className='mx-4 font-bold truncate text-md max-w-4/5 '>
                           {file.fileName}
                         </div>
                       </div>
@@ -130,7 +130,7 @@ function DetailedUserModal({
                         type='download'
                         className='hover:opacity-90'
                       >
-                        <DownloadOutlined className=' text-2xl cursor-pointer' />
+                        <DownloadOutlined className='text-2xl cursor-pointer ' />
                       </a>
                     </div>
                   ))
@@ -142,7 +142,7 @@ function DetailedUserModal({
           </>
         )}
         {/* Status */}
-        <div className='flex items-center gap-x-2 mt-2'>
+        <div className='flex items-center mt-2 gap-x-2'>
           <span className='font-bold'>Trạng thái tài khoản: </span>
           <div>
             {getUserByIdQuery?.data?.status === Status.ACTIVE ? (

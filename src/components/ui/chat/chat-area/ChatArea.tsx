@@ -1,79 +1,71 @@
-import { SendOutlined } from '@ant-design/icons';
-import { Button, Input } from 'antd';
-import { KeyboardEvent, useEffect, useRef, useState } from 'react';
-import { RoomModel, TextModel, UserChatModel } from '../../../../+core/models/chat.model';
-import AttachmentIcon from '../../../../assets/icons/attachment';
-import ThreeDotIcon from '../../../../assets/icons/three-dot';
-import Question from '../../../../pages/chat/components/Question';
+function ChatArea() {
+  // const [chats, setChats] = useState<TextModel[]>([]);
+  // const [currentUser, setCurrentUser] = useState<UserChatModel>();
+  // const [userReply, setUserReply] = useState<UserChatModel>();
+  // const [inputValue, setInputValue] = useState<string>('');
+  // const chatContainerRef = useRef<HTMLDivElement>(null);
 
-function ChatArea({ chatArea }: { chatArea?: RoomModel }) {
-  const [chats, setChats] = useState<TextModel[]>([]);
-  const [currentUser, setCurrentUser] = useState<UserChatModel>();
-  const [userReply, setUserReply] = useState<UserChatModel>();
-  const [inputValue, setInputValue] = useState<string>('');
-  const chatContainerRef = useRef<HTMLDivElement>(null);
+  // useEffect(() => {
+  //   setUserReply(
+  //     chatArea?.userReply.userId === chatArea?.idOfUserCreateChat
+  //       ? chatArea?.userReply
+  //       : chatArea?.userChat,
+  //   );
+  //   setCurrentUser(
+  //     chatArea?.userChat?.userId === chatArea?.idOfUserCreateChat
+  //       ? chatArea?.userReply
+  //       : chatArea?.userChat,
+  //   );
+  // }, [chatArea?.chatId]);
 
-  useEffect(() => {
-    setUserReply(
-      chatArea?.userReply.userId === chatArea?.idOfUserCreateChat
-        ? chatArea?.userReply
-        : chatArea?.userChat,
-    );
-    setCurrentUser(
-      chatArea?.userChat?.userId === chatArea?.idOfUserCreateChat
-        ? chatArea?.userReply
-        : chatArea?.userChat,
-    );
-  }, [chatArea?.chatId]);
+  // useEffect(() => {
+  //   currentUser && userReply && setChats([...userReply.chats, ...currentUser.chats]);
+  // }, [currentUser, userReply]);
 
-  useEffect(() => {
-    currentUser && userReply && setChats([...userReply.chats, ...currentUser.chats]);
-  }, [currentUser, userReply]);
+  // const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   setInputValue(e.target.value);
+  // };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInputValue(e.target.value);
-  };
+  // const handleSendMessage = () => {
+  //   if (currentUser && userReply) {
+  //     const newChat: TextModel = {
+  //       textId: (Math.random() * (999 - 1) + 1).toString(),
+  //       userId: currentUser?.userId,
+  //       value: inputValue,
+  //       createdAt: new Date().toString(),
+  //       textReplyId: userReply?.userId,
+  //     };
+  //     chats && setChats([...chats, newChat]);
+  //     setInputValue('');
+  //   }
+  // };
 
-  const handleSendMessage = () => {
-    if (currentUser && userReply) {
-      const newChat: TextModel = {
-        textId: (Math.random() * (999 - 1) + 1).toString(),
-        userId: currentUser?.userId,
-        value: inputValue,
-        createdAt: new Date().toString(),
-        textReplyId: userReply?.userId,
-      };
-      chats && setChats([...chats, newChat]);
-      setInputValue('');
-    }
-  };
+  // const handleEnterInput = (e: KeyboardEvent<HTMLInputElement>) => {
+  //   if (e.key === 'Enter' && currentUser && userReply) {
+  //     handleSendMessage();
+  //   }
+  // };
 
-  const handleEnterInput = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter' && currentUser && userReply) {
-      handleSendMessage();
-    }
-  };
+  // useEffect(() => {
+  //   if (chats) {
+  //     setTimeout(scrollToBottom);
+  //   }
+  // }, [chats]);
 
-  useEffect(() => {
-    if (chats) {
-      setTimeout(scrollToBottom);
-    }
-  }, [chats]);
-
-  function scrollToBottom() {
-    if (!chatContainerRef.current) {
-      return;
-    }
-    chatContainerRef.current.scrollTo({
-      top: chatContainerRef.current.scrollHeight,
-      behavior: 'smooth',
-    });
-  }
+  // function scrollToBottom() {
+  //   if (!chatContainerRef.current) {
+  //     return;
+  //   }
+  //   chatContainerRef.current.scrollTo({
+  //     top: chatContainerRef.current.scrollHeight,
+  //     behavior: 'smooth',
+  //   });
+  // }
 
   return (
     <div className='w-full h-full'>
-      {chatArea?.chatId && userReply && currentUser ? (
-        <div className='w-full h-full relative'>
+      {/* {chatArea?.chatId && userReply && currentUser ? (
+        <div className='relative w-full h-full'>
           <div className='flex items-center justify-between pb-6 border-b-[1px] border-gray-400 border-l-0 border-t-0 border-r-0 border-solid'>
             <div className='flex items-center gap-6'>
               <div className='w-[75px] h-[75px] rounded-full'>
@@ -84,7 +76,7 @@ function ChatArea({ chatArea }: { chatArea?: RoomModel }) {
                 />
               </div>
               <div>
-                <div className='font-semibold text-3xl'>{userReply.name ?? ''}</div>
+                <div className='text-3xl font-semibold'>{userReply.name ?? ''}</div>
                 <div className='font-light text-gray-200'>
                   {userReply.isOnline ? 'Online' : 'Offline'}
                 </div>
@@ -107,7 +99,7 @@ function ChatArea({ chatArea }: { chatArea?: RoomModel }) {
               chats.length > 0 &&
               chats.map((chat: TextModel) => {
                 return chat.userId === chatArea.idOfUserCreateChat ? (
-                  <div className='mt-4 flex items-end gap-2' key={chat.textId}>
+                  <div className='flex items-end gap-2 mt-4' key={chat.textId}>
                     <div className='w-6 h-6 rounded-full'>
                       <img
                         src={userReply.avatar}
@@ -132,7 +124,7 @@ function ChatArea({ chatArea }: { chatArea?: RoomModel }) {
           <div className='absolute bottom-0 left-0 right-0 mt-8'>
             <Input
               addonAfter={<SendOutlined className='cursor-pointer' onClick={handleSendMessage} />}
-              addonBefore={<AttachmentIcon color='#333333' className='h-4 w-4 cursor-pointer' />}
+              addonBefore={<AttachmentIcon color='#333333' className='w-4 h-4 cursor-pointer' />}
               placeholder='Send something ...'
               onChange={handleInputChange}
               onKeyDown={handleEnterInput}
@@ -143,7 +135,7 @@ function ChatArea({ chatArea }: { chatArea?: RoomModel }) {
         </div>
       ) : (
         <></>
-      )}
+      )} */}
     </div>
   );
 }

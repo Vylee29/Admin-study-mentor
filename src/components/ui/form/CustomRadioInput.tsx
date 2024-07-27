@@ -39,8 +39,8 @@ export const CustomRadioInput = <T extends object>({
         className={`flex gap-4 ${classNameRadio}`}
         onChange={onChange}
       >
-        {values.map((value) => (
-          <Radio key={value.label} value={value.value}>
+        {values.map((value, index) => (
+          <Radio key={index} value={value.value}>
             {value.label}
           </Radio>
         ))}

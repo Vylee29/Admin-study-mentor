@@ -2,7 +2,7 @@ import { SearchOutlined } from '@ant-design/icons';
 import { keepPreviousData, useMutation, useQuery } from '@tanstack/react-query';
 import { Button, Table } from 'antd';
 import { useState } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { usePagingFilter } from '../../+core/hooks/usePagingFilter';
 import {
   deleteSubject,
@@ -24,7 +24,6 @@ type Props = {
 export function SubjectPage({ levelId, gradeId }: Props) {
   // Hooks
   const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
 
   // const { initialPaging } = useMemo(() => {
   //   const initialPaging: IPaginationInfo = {

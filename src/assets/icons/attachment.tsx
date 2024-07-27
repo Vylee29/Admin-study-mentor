@@ -14,6 +14,7 @@ export default function AttachmentIcon(props: AttachmentProps): ReactElement {
       viewBox='0 0 28 32'
       fill='none'
       xmlns='http://www.w3.org/2000/svg'
+      {...rest}
       className={className}
     >
       <path

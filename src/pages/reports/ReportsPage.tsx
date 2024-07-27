@@ -34,7 +34,7 @@ export function ReportsPage() {
   const [visible, setVisible] = useState(false);
   const [selectedReport, setSelectedReport] = useState<ReportModel>();
 
-  const { filter, handlePageChange, handleFilterChange } = usePagingFilter<ReportListFilter>({
+  const { filter, handlePageChange } = usePagingFilter<ReportListFilter>({
     initialPaging,
     initialFilter,
     debounceTime: 500,
@@ -63,7 +63,7 @@ export function ReportsPage() {
       if (col.title === ACTION_TITLE) {
         return {
           ...col,
-          render: (value: any, record: ReportModel) => (
+          render: (_: any, record: ReportModel) => (
             <Tooltip placement='top' title='Xem chi tiết'>
               <Button
                 type='primary'

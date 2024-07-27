@@ -84,7 +84,7 @@ export function QuestionsPage() {
       if (col.title === ACTION_TITLE) {
         return {
           ...col,
-          render: (value: any, record: GetQuestionResponseModel) => (
+          render: (_: any, record: GetQuestionResponseModel) => (
             <Tooltip placement='top' title='Xem chi tiết'>
               <Button
                 type='primary'
@@ -98,7 +98,7 @@ export function QuestionsPage() {
       if (col.title === PAYMENT_QUESTION) {
         return {
           ...col,
-          render: (value: any, record: GetQuestionResponseModel) =>
+          render: (_: any, record: GetQuestionResponseModel) =>
             record.status === QuestionStatus.DONE ? (
               <div className='flex gap-2'>
                 <Tooltip placement='top' title='Thông tin tài khoản ngân hàng'>

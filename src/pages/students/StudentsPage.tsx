@@ -1,7 +1,7 @@
 import { SearchOutlined } from '@ant-design/icons';
 import { keepPreviousData, useMutation, useQuery } from '@tanstack/react-query';
-import { Button, Table } from 'antd';
-import { useEffect, useMemo, useState } from 'react';
+import { Table } from 'antd';
+import { useMemo, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { ACTION_TITLE } from '../../+core/constants/shared.contant';
 import { Status, UserType } from '../../+core/enums/user.enum';
@@ -18,7 +18,6 @@ import DetailedUserModal from '../../components/ui/modal/DetailedUserModal';
 import { PaginationCore } from '../../components/ui/pagination/pagination';
 import UserAction from '../../components/ui/user-action/UserAction';
 import { columns as baseColumns } from './components/columns';
-import axios from 'axios';
 
 export function StudentsPage() {
   const [searchParams] = useSearchParams();
@@ -40,7 +39,6 @@ export function StudentsPage() {
   });
   const [visible, setVisible] = useState(false);
   const [selectedStudentId, setSelectedStudentId] = useState('');
-  const [token, setToken] = useState<string | null>(localStorage.getItem('accessToken'));
 
   const studentListQuery = useQuery({
     queryKey: studentListKeys.list(filter),
@@ -93,7 +91,7 @@ export function StudentsPage() {
       if (col.title === ACTION_TITLE) {
         return {
           ...col,
-          render: (value: any, record: UserResp) => (
+          render: (_: any, record: UserResp) => (
             <UserAction
               record={record}
               handleStatusChange={handleStatusChange}

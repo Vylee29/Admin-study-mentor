@@ -14,6 +14,7 @@ export default function ArrowIcon(props: ArrowProps): ReactElement {
       height='11'
       viewBox='0 0 15 11'
       fill={color}
+      {...rest}
       xmlns='http://www.w3.org/2000/svg'
       className={clsx('h-4 w-4 fill-black', className)}
     >

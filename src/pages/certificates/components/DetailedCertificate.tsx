@@ -56,7 +56,7 @@ function DetailedCertificate({
       ]}
     >
       <div className='w-full'>
-        <div className='w-full flex flex-col gap-2'>
+        <div className='flex flex-col w-full gap-2'>
           {/* Full name */}
           <div className='flex items-center gap-x-2'>
             <span className='font-bold'>Tên người hướng dẫn: </span>
@@ -85,20 +85,20 @@ function DetailedCertificate({
             <div className='text-sm font-semibold'>
               <span className='font-bold'>Danh sách chứng chỉ: </span>
               {Array.isArray(certificate?.certificates) && certificate?.certificates.length > 0 ? (
-                certificate?.certificates.map((file, index) => (
+                certificate?.certificates.map((file) => (
                   <div
                     key={file.fileKey}
-                    className='flex border rounded-lg border-gray-600 border-solid mt-1 items-center justify-between p-4 gap-1'
+                    className='flex items-center justify-between gap-1 p-4 mt-1 border border-gray-600 border-solid rounded-lg'
                   >
                     <div className='flex items-center'>
-                      <div className='font-bold text-md max-w-4/5 truncate '>{file.fileName}</div>
+                      <div className='font-bold truncate text-md max-w-4/5 '>{file.fileName}</div>
                     </div>
                     <a
                       href={imageUtility(file.fileKey)}
                       type='download'
                       className='hover:opacity-90'
                     >
-                      <DownloadOutlined className=' text-2xl cursor-pointer' />
+                      <DownloadOutlined className='text-2xl cursor-pointer ' />
                     </a>
                   </div>
                 ))
@@ -110,7 +110,7 @@ function DetailedCertificate({
         </div>
         {showInput && (
           <div className='mt-2'>
-            <div className='font-bold mb-1'>Nhập lý do từ chối: </div>
+            <div className='mb-1 font-bold'>Nhập lý do từ chối: </div>
             <TextArea
               value={input}
               rows={4}

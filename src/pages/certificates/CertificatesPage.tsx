@@ -94,7 +94,7 @@ export function CertificatesPage() {
       if (col.title === ACTION_TITLE) {
         return {
           ...col,
-          render: (value: any, record: CertificateNotApproved) => (
+          render: (_: any, record: CertificateNotApproved) => (
             <Tooltip placement='top' title='Xem chi tiết'>
               <Button
                 type='primary'

@@ -24,7 +24,7 @@ const CustomPasswordInput: React.FC<CustomPasswordInputProps> = ({
   wrapperCol = 24,
   classNameForm,
 }: CustomPasswordInputProps) => {
-  const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [_, setShowPassword] = useState<boolean>(false);
 
   const togglePasswordVisibility = () => {
     setShowPassword((prev) => !prev);

@@ -16,7 +16,7 @@ export const columns: ColumnsType<CertificateNotApproved> = [
   {
     title: 'Môn học đăng ký',
     dataIndex: 'subjectIds',
-    render: (value, record) => (
+    render: (_, record) => (
       <div className='flex flex-col text-sm font-normal'>
         {record.subjectIds.map((subject) => subject.name).join(', ')}
       </div>

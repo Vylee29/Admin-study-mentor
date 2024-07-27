@@ -1,6 +1,6 @@
-import { OptionItems } from '@/utils/types/option.type';
 import { Form, Select } from 'antd';
 import React from 'react';
+import { OptionItems } from '../../../+core/types/option.type';
 
 export type CustomSelectInputProps<T> = {
   label?: React.ReactNode;
