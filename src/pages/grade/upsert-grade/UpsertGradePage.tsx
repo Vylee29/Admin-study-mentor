@@ -46,6 +46,7 @@ export default function UpsertGradePage() {
     onSuccess: (resp) => {
       toastSuccess('Tạo Lớp học thành công');
       navigate(MY_ROUTE.GRADE.DETAIL(levelId!, resp.data.data.id));
+      navigate(-1);
     },
     onError: handleError,
     onSettled: () => {
@@ -57,11 +58,9 @@ export default function UpsertGradePage() {
     mutationFn: (body: GradeModel) => updateGrade(body),
     onSuccess: () => {
       toastSuccess('Cập nhật Lớp học thành công');
-    },
-    onError: handleError,
-    onSettled: () => {
       navigate(-1);
     },
+    onError: handleError,
   });
 
   //handlers
@@ -69,6 +68,7 @@ export default function UpsertGradePage() {
     if (!id) {
       const body: GradeModel = {
         ...values,
+        id: levelId!,
       };
       createGradeMutation.mutate(body);
     } else {

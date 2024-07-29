@@ -66,7 +66,10 @@ export const createGrade = async (body: GradeModel) => {
     BaseResp<{
       id: string;
     }>
-  >(`api/admin/grades/`, body);
+  >(`api/admin/grades/`, {
+    gradeName: body.gradeName,
+    levelId: body.id,
+  });
 };
 
 export const updateGrade = async (body: GradeModel) => {
