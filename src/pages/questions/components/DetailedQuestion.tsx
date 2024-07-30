@@ -24,20 +24,38 @@ export function DetailedQuestion({ questionId }: IProps) {
       {detailedQuestionQuery?.isFetching ? (
         <CustomSkeletonParagraph height={60} />
       ) : (
-        <div className='flex items-center gap-4'>
-          <Image
-            src={imageUtility(detailedQuestionQuery?.data?.student?.avatar?.fileKey)}
-            alt='avatar'
-            className='rounded-full !w-10 !h-10 object-cover'
-          />
-          <div>
-            <div className='text-xl'>Câu hỏi của</div>
-            <div className='font-bold text-2xl'>
-              {detailedQuestionQuery?.data?.student.fullName}
+        <div className='flex items-center gap-5'>
+          <div className='flex items-center gap-4'>
+            <Image
+              src={imageUtility(detailedQuestionQuery?.data?.student?.avatar?.fileKey)}
+              alt='avatar'
+              className='rounded-full !w-10 !h-10 object-cover'
+            />
+            <div>
+              <div className='text-xl'>Học viên</div>
+              <div className='font-bold text-2xl'>
+                {detailedQuestionQuery?.data?.student.fullName}
+              </div>
             </div>
           </div>
+          {detailedQuestionQuery?.data?.tutor?.id && (
+            <div className='flex items-center gap-4'>
+              <Image
+                src={imageUtility(detailedQuestionQuery?.data?.tutor?.avatar?.fileKey)}
+                alt='avatar'
+                className='rounded-full !w-10 !h-10 object-cover'
+              />
+              <div>
+                <div className='text-xl'>Người hướng dẫn</div>
+                <div className='font-bold text-2xl'>
+                  {detailedQuestionQuery?.data?.tutor.fullName}
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       )}
+
       <div className='h-[1px] w-full my-8 bg-gray-600' />
       <div>
         <div className='w-full font-bold text-lg text-black mb-4 items-center flex'>
