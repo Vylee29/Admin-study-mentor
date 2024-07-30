@@ -97,6 +97,7 @@ export function ReportsPage() {
         questionId={selectedReport?.questionId}
         visible={visible}
         setVisible={setVisible}
+        option={filter.option}
       />
 
       <span className='text-[24px] font-bold text-black-800'>Báo cáo</span>
