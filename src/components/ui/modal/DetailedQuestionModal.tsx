@@ -22,7 +22,7 @@ function DetailedQuestionModal({ title, visible, questionId, setVisible, status 
       onCancel={() => setVisible(false)}
     >
       {questionId && <DetailedQuestion questionId={questionId} />}
-      <div className='w-full font-bold text-lg text-black mb-4 items-center flex'>
+      <div className='w-full font-bold text-lg text-black mb-4 items-center flex mt-8'>
         <div className='h-[27px] w-[3px] bg-primary-600 mr-2 inline-block' />
         Trạng thái câu hỏi
       </div>

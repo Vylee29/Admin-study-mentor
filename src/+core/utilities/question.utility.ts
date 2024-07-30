@@ -12,7 +12,9 @@ export const getQuestionStatus = (status: number) => {
       return 'Bị từ chối';
     case QuestionStatus.EXPIRED:
       return 'Hết hạn';
+    case QuestionStatus.ANSWERED:
+      return 'Đã được người hướng dẫn trả lời';
     default:
-      return '-';
+      return 'N/A';
   }
 };

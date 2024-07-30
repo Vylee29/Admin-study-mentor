@@ -123,12 +123,12 @@ export const updateTutorialBankInfoApi = async (data: BankModel) => {
 };
 
 export type MarkPayReq = {
-  tutorId: string;
+  userId?: string;
   questionId: string;
 };
 
 export const markPaymentTutor = async (body: MarkPayReq) => {
-  return await api.post(`/api/admin/tutor/mark-paid`, body);
+  return await api.post(`/api/admin/users/mark-paid`, body);
 };
 
 export const getBankingInfo = async (tutorId: string) => {
