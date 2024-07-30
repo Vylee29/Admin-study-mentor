@@ -45,6 +45,7 @@ function ReportForm({ reportId, setVisible, option }: IProps) {
     onSuccess: () => {
       toastSuccess('Gửi phản hồi thành công');
       setVisible(false);
+      form.resetFields();
       queryClient.invalidateQueries(reportListKeys.all as InvalidateQueryFilters);
     },
   });
@@ -71,7 +72,7 @@ function ReportForm({ reportId, setVisible, option }: IProps) {
             <div className='h-[27px] w-[3px] bg-primary-600 mr-2 inline-block' />
             Thông tin phản hồi
           </div>
-          {detailedReportQuery?.data?.hasFeedback ? (
+          {detailedReportQuery?.data?.contentFeedback ? (
             <div>{detailedReportQuery?.data?.contentFeedback}</div>
           ) : (
             <Form

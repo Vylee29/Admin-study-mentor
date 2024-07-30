@@ -30,7 +30,7 @@ import { columns as baseColumns } from './components/column';
 export function QuestionsPage() {
   const [searchParams] = useSearchParams();
   const { initialPaging, initialFilter } = useMemo(() => {
-    const initialFilter: StudentListFilter & { status?: 'DONE' } = {
+    const initialFilter: StudentListFilter & { status?: 'DONE,EXPIRED' } = {
       search: searchParams.get('search') || '',
     };
     const initialPaging: IPaginationInfo = {
@@ -55,9 +55,9 @@ export function QuestionsPage() {
       toastSuccess('Cập nhật trạng thái thành công');
     },
     onError: handleError,
-    // onSettled: () => {
-    //   levelListQuery.refetch();
-    // },
+    onSettled: () => {
+      questionListQuery.refetch();
+    },
   });
 
   const questionListQuery = useQuery({
@@ -99,7 +99,7 @@ export function QuestionsPage() {
         return {
           ...col,
           render: (_: any, record: GetQuestionResponseModel) =>
-            record.status === QuestionStatus.DONE ? (
+            record.status === QuestionStatus.DONE || record.status === QuestionStatus.EXPIRED ? (
               <div className='flex gap-2'>
                 <Tooltip placement='top' title='Thông tin tài khoản ngân hàng'>
                   <Button
@@ -129,7 +129,9 @@ export function QuestionsPage() {
                       onClick={() =>
                         markPayMutation.mutate({
                           questionId: record.questionId,
-                          tutorId: record.tutor?.id || '',
+                          userId: record.answers?.length
+                            ? record.tutor?.id
+                            : record.student.id || '',
                         })
                       }
                     />
@@ -183,9 +185,11 @@ export function QuestionsPage() {
           }}
         />
         <ButtonPrimary
-          title={filter.status === 'DONE' ? 'Tất cả câu hỏi' : 'Câu hỏi cần thanh toán'}
+          title={filter.status === 'DONE,EXPIRED' ? 'Tất cả câu hỏi' : 'Câu hỏi cần thanh toán'}
           onClick={() => {
-            handleFilterChange({ status: filter.status === 'DONE' ? undefined : 'DONE' });
+            handleFilterChange({
+              status: filter.status === 'DONE,EXPIRED' ? undefined : 'DONE,EXPIRED',
+            });
           }}
         />
       </div>
