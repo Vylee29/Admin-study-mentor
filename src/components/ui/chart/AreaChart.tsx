@@ -94,7 +94,7 @@ export function AreaChart({ optionsChart }: { optionsChart: { value: number; lab
           Tổng doanh thu = <span className='font-bold text-2xl'>{sum}</span> đồng
         </span>
         <span className='italic text-gray-300 font-semibold'>
-          (Doanh thu = Tổng của 20% * số tiền mỗi câu hỏi có trạng thái là &quot;Đã hoàn thành
+          (Doanh thu = Tổng của 10% * số tiền mỗi câu hỏi có trạng thái là &quot;Đã hoàn thành
           &quot;)
         </span>
         <div className='w-full flex justify-end'>
