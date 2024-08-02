@@ -5,6 +5,7 @@ import {
   useQueryClient,
 } from '@tanstack/react-query';
 import { Button, Form } from 'antd';
+import { OptionReport } from '../../../+core/models/report.model';
 import { FeedbackReportInput, FeedbackReportReq } from '../../../+core/models/user.model';
 import {
   feedbackReportApi,
@@ -20,14 +21,21 @@ import CustomSkeletonParagraph from '../../../components/ui/skeleton/CustomSkele
 type IProps = {
   reportId: string;
   setVisible: (value: boolean) => void;
+  option?: OptionReport;
 };
-function ReportForm({ reportId, setVisible }: IProps) {
+function ReportForm({ reportId, setVisible, option }: IProps) {
   const [form] = Form.useForm<FeedbackReportInput>();
   const queryClient = useQueryClient();
 
   const detailedReportQuery = useQuery({
     queryKey: getDetailedReportKeys.list({ reportId }),
-    queryFn: () => getDetailedReportApi(reportId),
+    queryFn: () =>
+      getDetailedReportApi(
+        reportId,
+        option && {
+          option: option,
+        },
+      ),
     select: (data) => data?.data.data,
   });
 
@@ -60,7 +68,7 @@ function ReportForm({ reportId, setVisible }: IProps) {
         <CustomSkeletonParagraph height={60} />
       ) : (
         <>
-          <div className='w-full font-bold text-lg text-black mb-4 items-center flex'>
+          <div className='flex items-center w-full mb-4 text-lg font-bold text-black'>
             <div className='h-[27px] w-[3px] bg-primary-600 mr-2 inline-block' />
             Thông tin phản hồi
           </div>

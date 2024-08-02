@@ -1,6 +1,6 @@
 import { EyeOutlined, SearchOutlined } from '@ant-design/icons';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
-import { Button, Table, Tooltip } from 'antd';
+import { Button, Table, Tabs, TabsProps, Tooltip } from 'antd';
 import { useMemo, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { usePagingFilter } from '../../+core/hooks/usePagingFilter';
@@ -19,11 +19,22 @@ import {
 } from '../../+core/services/user.service';
 import DetailedReportModal from '../../components/ui/modal/DetailedReportModal';
 
+const items: TabsProps['items'] = [
+  {
+    key: OptionReport.STUDENT,
+    label: 'Học sinh',
+  },
+  {
+    key: OptionReport.TUTOR,
+    label: 'Người hướng dẫn',
+  },
+];
+
 export function ReportsPage() {
   const [searchParams] = useSearchParams();
   const { initialPaging, initialFilter } = useMemo(() => {
     const initialFilter: ReportListFilter = {
-      option: (searchParams.get('option') as OptionReport) || '',
+      option: (searchParams.get('option') as OptionReport) || OptionReport.STUDENT,
     };
     const initialPaging: IPaginationInfo = {
       pageSize: +(searchParams.get('pageSize') || initialPagingState.pageSize),
@@ -34,7 +45,7 @@ export function ReportsPage() {
   const [visible, setVisible] = useState(false);
   const [selectedReport, setSelectedReport] = useState<ReportModel>();
 
-  const { filter, handlePageChange } = usePagingFilter<ReportListFilter>({
+  const { filter, handlePageChange, handleFilterChange } = usePagingFilter<ReportListFilter>({
     initialPaging,
     initialFilter,
     debounceTime: 500,
@@ -86,7 +97,9 @@ export function ReportsPage() {
         questionId={selectedReport?.questionId}
         visible={visible}
         setVisible={setVisible}
+        option={filter.option}
       />
+
       <span className='text-[24px] font-bold text-black-800'>Báo cáo</span>
       <div className='text-[16px] text-gray-500 pb-6'>
         {reportListQuery?.data?.pagination?.total} kết quả tìm thấy
@@ -98,6 +111,17 @@ export function ReportsPage() {
           classNameForm='w-3/5 mb-3'
         />
       </div>
+      <Tabs
+        activeKey={filter.option}
+        items={items}
+        className='!w-fit'
+        onChange={(key) => {
+          handleFilterChange({
+            option: key as OptionReport,
+          });
+        }}
+      />
+
       <div className='flex flex-col py-8 rounded-md bg-white-900'>
         <Table
           columns={columns}

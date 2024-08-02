@@ -9,7 +9,7 @@ import {
   QRCodeReq,
   QRCodeResp,
 } from '../models/profile.model';
-import { ReportListFilter, ReportModel, ReportTable } from '../models/report.model';
+import { OptionReport, ReportListFilter, ReportModel, ReportTable } from '../models/report.model';
 import { ChartRevenueItem, FeedbackReportReq, UserModel } from '../models/user.model';
 import {
   CreateVoucherReq,
@@ -60,8 +60,8 @@ export function convertVoucherListModelToTable(r: VoucherModel): VoucherTable {
 }
 
 export const getDetailedReportKeys = initKeys('detailed-report-keys');
-export const getDetailedReportApi = async (reportId: string) => {
-  return api.get<PagingResp<ReportModel>>(`api/admin/users/report/${reportId}`);
+export const getDetailedReportApi = async (reportId: string, params?: { option: OptionReport }) => {
+  return api.get<PagingResp<ReportModel>>(`api/admin/users/report/${reportId}`, { params });
 };
 
 export const feedbackReportApi = async (req: FeedbackReportReq) => {
